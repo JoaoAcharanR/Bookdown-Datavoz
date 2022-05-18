@@ -1,4 +1,4 @@
-down-the-rabbit-hole
+introducción
 procesamiento-de-base-de-datos
 operadores-de-utilidad-general
 operadores-relacionales
@@ -51,9 +51,8 @@ clasificación-por-nivel-socio-económico-metodología-aim
 construcción-con-ingreso
 a.-cargar-nuestros-datos
 b.-recodificar-nuestras-variables
+d-exportar-bbdd-con-clasificación-socioeconómica
 construcción-sin-ingreso-proxy
 a.-cargar-nuestros-datos-1
 b.-recodificar-nuestras-variables-1
-introducción
-d-exportar-bbdd-con-clasificación-socioeconómica
 d-exportar-bbdd-con-clasificación-socioeconómica-1
