@@ -2,15 +2,27 @@
 
 Como analistas de datos nos encontramos trabajando constantemente con formas de clasificación social, siendo la clasificación por nivel socio-económico la principal de ellas. 
 
+Existen diversas maneras de generar estas clasificaciones. Una de ellas es la que propone la Asociación de Investigadores de Mercado y Opinión Pública (AIM). Tal asociación propone dos caminos para su construcción: 1) utilizando el nivel de ingreso, más el nivel educacional y ocupación del jefe de hogar; y 2) a falta del ingreso, utilizar un proxy mediante la cantidad de bienes que posee el jefe de hogar, sumado a su nivel educacional y su ocupación.
 
-## 1) Construcción con ingreso
+Para más información sobre el método [ingrese aquí](https://aimchile.cl/gse-chile/)
 
-### **a. Cargar nuestros datos**
+Para más información sobre el manual [ingrese aquí](https://aimchile.cl/wp-content/uploads/2022/03/Actualizacio%CC%81n-y-Manual-GSE-AIM-2019-1.pdf)
+
+En Datavoz contamos con dos archivos que contienen las categorías estandarizadas para cada una de las formas de construcción.
+
+|**Archivos**|
+|:------------:|
+|[Ingresos](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/GSE_2019_ingresos.rds)|
+|[Bienes](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/GSE_2019_bienes.rds)|
+
+
+## Construcción con ingreso
+
+### **a. cargar nuestros datos**
 
 ```{r}
 # cargar datos estandarizados de clasificación
 t_ing <- readRDS("BBDD/GSE_2019_ingresos.rds")
-t_bienes <- readRDS("BBDD/GSE_2019_bienes.rds")
 
 # cargar df de datos a trabajar
 library(haven)
@@ -128,12 +140,20 @@ df %>%
 ```
 
 
-## 2) Construcción sin ingreso (proxy)
+### **d) exportar BBDD con clasificación socioeconómica
+```{r}
+### OJO: quitar comentarios para guardar ###
+# write_sav(base,                                                 # BBDD
+#          "220209 Base GPS-Derechos Digitales-ponderadores.sav") # Nombre
+```
+
+
+
+## Construcción sin ingreso (proxy)
 
 ### **a. Cargar nuestros datos**
 ```{r}
 # cargar datos estandarizados de clasificación
-t_ing <- readRDS("BBDD/GSE_2019_ingresos.rds")
 t_bienes <- readRDS("BBDD/GSE_2019_bienes.rds")
 
 # cargar df de datos a trabajar
@@ -234,7 +254,7 @@ Para el caso de los bienes del jefe de hogar, debemos mantener la distribución:
 
 ```{r}
 # reocodificacion de bienes
-# "
+# "bien1 = si F_11_1 es igual a 1, pegame un 1, de lo contrario un 0"
 df<- df %>% mutate(bien1=ifelse(F_11_1==1, 1, 0))
 df<- df %>% mutate(bien2=ifelse(F_11_2==1, 1, 0))
 df<- df %>% mutate(bien3=ifelse(F_11_3==1, 1, 0))
@@ -251,71 +271,34 @@ df$bienes<- rowSums(subset(df, select=c("bien1", "bien2", "bien3", "bien4")))
 df$educ<-as.double(df$educ)
 df$ocup<-as.double(df$ocup)
 df$bienes<-as.character(df$bienes)
-
 ```
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+###**c. integrar la variable gse y generar recodificación**
+
+```{r}
+# # unir categorías de gse en nuestra df de datos
+df<-left_join(df,t_bienes,by=c("educ","bienes","ocup"))
+
+# recodificar gse
+df <-df %>% mutate(gse_rec = case_when(gse %in% c("AB","C1a","C1b") ~ "Alto (AB+C1a+C1b)",
+                                           gse %in% c("C2","C3") ~ "Medio (C2+C3)",
+                                           gse %in% c("D","E") ~ "Bajo (D+E)",
+                                           TRUE ~ "Sin información"))
+```
+
+**Al realizar los pasos anteriores deberíamos contar con las siguientes variables y el gse construido**
+```{r echo=FALSE}
+df %>% 
+  select(SbjNum, ocup, educ, gse, gse_rec) %>% 
+  head() %>% 
+  flextable::flextable()
+```
+
+
+### **d) exportar BBDD con clasificación socioeconómica
+```{r}
+### OJO: quitar comentarios para guardar ###
+# save(df,                           # BBDD
+#      file="MPlaza_pond_gse.Rdata") # Nombre
+```

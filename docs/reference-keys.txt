@@ -55,3 +55,5 @@ construcción-sin-ingreso-proxy
 a.-cargar-nuestros-datos-1
 b.-recodificar-nuestras-variables-1
 introducción
+d-exportar-bbdd-con-clasificación-socioeconómica
+d-exportar-bbdd-con-clasificación-socioeconómica-1
