@@ -115,7 +115,7 @@ df$ocup<-as.double(df$ocup)
 df$tramo<-as.character(df$tramo)
 ```
 
-###**c. integrar la variable gse y generar recodificación**
+### **c. integrar la variable gse y generar recodificación**
 
 Como hemos homologado las variables, podemos unir ambas dfs de datos con total seguridad.
 
@@ -274,7 +274,7 @@ df$bienes<-as.character(df$bienes)
 ```
 
 
-###**c. integrar la variable gse y generar recodificación**
+### **c. integrar la variable gse y generar recodificación**
 
 ```{r}
 # # unir categorías de gse en nuestra df de datos
@@ -296,7 +296,7 @@ df %>%
 ```
 
 
-### **d) exportar BBDD con clasificación socioeconómica
+### **d) exportar BBDD con clasificación socioeconómica**
 ```{r}
 ### OJO: quitar comentarios para guardar ###
 # save(df,                           # BBDD

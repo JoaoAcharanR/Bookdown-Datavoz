@@ -51,8 +51,10 @@ clasificación-por-nivel-socio-económico-metodología-aim
 construcción-con-ingreso
 a.-cargar-nuestros-datos
 b.-recodificar-nuestras-variables
+c.-integrar-la-variable-gse-y-generar-recodificación
 d-exportar-bbdd-con-clasificación-socioeconómica
 construcción-sin-ingreso-proxy
 a.-cargar-nuestros-datos-1
 b.-recodificar-nuestras-variables-1
+c.-integrar-la-variable-gse-y-generar-recodificación-1
 d-exportar-bbdd-con-clasificación-socioeconómica-1
