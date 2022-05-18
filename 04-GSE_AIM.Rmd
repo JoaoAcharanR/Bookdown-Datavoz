@@ -1,0 +1,321 @@
+# Clasificación por nivel socio-económico (Metodología AIM)
+
+Como analistas de datos nos encontramos trabajando constantemente con formas de clasificación social, siendo la clasificación por nivel socio-económico la principal de ellas. 
+
+
+## 1) Construcción con ingreso
+
+### **a. Cargar nuestros datos**
+
+```{r}
+# cargar datos estandarizados de clasificación
+t_ing <- readRDS("BBDD/GSE_2019_ingresos.rds")
+t_bienes <- readRDS("BBDD/GSE_2019_bienes.rds")
+
+# cargar df de datos a trabajar
+library(haven)
+
+df <- read_sav("BBDD/220208-Base GPS-Derechos-Digitales-ponderadores.sav")
+```
+
+
+### **b. recodificar nuestras variables**
+
+Para lograr trabajar con la metodología propuesta por la AIM, debemos recodificar nuestras variables de ocupación, nivel educacional e ingresos, en función de las categorías estandarizadas del `.RDS "t_ing"`
+
+**_b.1) ocupación_**
+
+La ocupación responde a la siguiente distribución:
+
+
+| **Ocupación***    |   **Codificación**   |
+|:----------------|:--------------------:|
+|Trabajadores no calificados|1|
+|Oficiales, Operarios y Artesanos|2|
+|Vendedores, operadores de máquinas, agricultores, trabajadores calificados, sin dato|3|
+|Empleados de Oficina|4|
+|Técnicos y Profesionales de Nivel Medio|5|
+|Directivos y Profesionales de Nivel Alto|6|
+
+*_Nota: ocupaciones creadas en df a CIUO-88._
+
+
+En este sentido, para nuestra df de ejemplo, recodificaremos de la siguiente manera la variable S6_B, que contiene los valores de ocupación utilizados en el cuestionario original.
+
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+# recodificar ocupacion
+df <- df %>% mutate(ocup = case_when(S6_B == 1 ~ 1,
+                                         S6_B == 2 ~ 2,
+                                         S6_B %in% c(3,4,5,10) ~ 3,
+                                         S6_B == 6 ~ 4,
+                                         S6_B == 7 ~ 5,
+                                         S6_B %in% c(8,9) ~ 6))
+```
+
+**_b.2) nivel educacional_**
+
+Para el caso del nivel educacional, debemos mantener la distribución:
+
+|          **Nivel educacional**         |   **Codificación**   |
+|:---------------------------------------|:--------------------:|
+|Básica completa o menos                 |1                     |
+|Media incompleta                        |2                     |
+|Media completa                          |3                     |
+|Técnica incompleta o completa, Univ. incompleta|4              |
+|Universitaria completa o más            |5                     |
+
+
+```{r echo=FALSE}
+# 
+df <- df %>% mutate(educ = coalesce(S6_A,S5))
+```
+
+```{r}
+# recodificar n. educ
+df <- df %>% mutate(educ = case_when(educ %in% c(1,2) ~ 1,
+                                         educ == 3 ~ 2,
+                                         educ %in% c(4,5) ~ 3,
+                                         educ %in% c(6,7,8) ~ 4,
+                                         educ %in% c(9,10) ~ 5))
+```
+
+
+**_b.3) tramo de ingresos_**
+
+```{r}
+# colapsar todas las variables de ingreso en una nueva variable
+df <- df %>% mutate(tramo = coalesce(S8_1,S8_2,S8_3,S8_4,S8_5,S8_6,S8_7))
+```
+
+
+**_b.4) homologar variables_**
+
+Luego de haber recodificado nuestras variables, tendremos que homologarlas a la naturaleza de las variables de `"t_ing"` para evitar conflictos al momento de unir ambas dfs de datos.
+
+```{r}
+# homologar variables
+df$educ<-as.double(df$educ)
+df$ocup<-as.double(df$ocup)
+df$tramo<-as.character(df$tramo)
+```
+
+###**c. integrar la variable gse y generar recodificación**
+
+Como hemos homologado las variables, podemos unir ambas dfs de datos con total seguridad.
+
+```{r}
+# unir categorías de gse en nuestra df de datos
+df <- left_join(df,t_ing,by=c("educ","ocup","tramo")) ###Tienen que tener la misma clase###
+
+# recodificar gse
+df <-df %>% mutate(gse_rec = case_when(gse %in% c("AB","C1a","C1b") ~ "Alto (AB+C1a+C1b)",
+                                           gse %in% c("C2","C3") ~ "Medio (C2+C3)",
+                                           gse %in% c("D","E") ~ "Bajo (D+E)",
+                                           TRUE ~ "Sin información"))
+```
+
+
+**Al realizar los pasos anteriores deberíamos contar con las siguientes variables y el gse construido**
+```{r echo=FALSE}
+df %>% 
+  select(respondent_id, ocup, educ, tramo, gse, gse_rec) %>% 
+  head() %>% 
+  flextable::flextable()
+```
+
+
+## 2) Construcción sin ingreso (proxy)
+
+### **a. Cargar nuestros datos**
+```{r}
+# cargar datos estandarizados de clasificación
+t_ing <- readRDS("BBDD/GSE_2019_ingresos.rds")
+t_bienes <- readRDS("BBDD/GSE_2019_bienes.rds")
+
+# cargar df de datos a trabajar
+library(haven)
+
+load("BBDD/Mallplaza_Pond.Rdata")
+df<- mallplaza
+```
+
+### **b. recodificar nuestras variables**
+
+Para lograr trabajar con la metodología propuesta por la AIM, debemos recodificar nuestras variables de ocupación, nivel educacional y aquellas que repsondan a los bienes del jefe del hogar. Todo esto en función de las categorías estandarizadas del `.RDS "t_bienes"`
+
+**_b.1) ocupación_**
+
+La ocupación responde a la siguiente distribución:
+
+
+| **Ocupación***    |   **Codificación**   |
+|:----------------|:--------------------:|
+|Trabajadores no calificados|1|
+|Oficiales, Operarios y Artesanos|2|
+|Vendedores, operadores de máquinas, agricultores, trabajadores calificados, sin dato|3|
+|Empleados de Oficina|4|
+|Técnicos y Profesionales de Nivel Medio|5|
+|Directivos y Profesionales de Nivel Alto|6|
+
+*_Nota: ocupaciones creadas en df a CIUO-88._
+
+
+En este sentido, para nuestra df de ejemplo, recodificaremos de la siguiente manera la variable F_7, que contiene los valores de ocupación utilizados en el cuestionario original.
+
+```{r echo=FALSE, message=FALSE}
+library(tidyverse)
+```
+
+```{r}
+# recodificar ocupacion
+#Las dos útlimas líneas imputan educacion a 6 casos sin info
+df <- df %>% mutate(ocup = case_when(F_7 == 1 ~ 1,
+                                         F_7 == 2 ~ 2,
+                                         F_7 %in% c(3,4,5,10) ~ 3,
+                                         F_7 == 6 ~ 4,
+                                         F_7 == 7 ~ 5,
+                                         F_7 %in% c(8,9) ~ 6,
+                                         F_7==99 & F_4<10~3,
+                                         F_7==99 & F_4==10~8))
+```
+
+**_b.2) nivel educacional_**
+
+Para el caso del nivel educacional, debemos mantener la distribución:
+
+|          **Nivel educacional**         |   **Codificación**   |
+|:---------------------------------------|:--------------------:|
+|Básica completa o menos                 |1                     |
+|Media incompleta                        |2                     |
+|Media completa                          |3                     |
+|Técnica incompleta o completa, Univ. incompleta|4              |
+|Universitaria completa o más            |5                     |
+
+```{r}
+#Educacion jefe de hogar (f5=1 es jefe de hogar, f6 es educacion jefe de hogar)
+# "si F_5=1 pegame los valores de F_4, sino pegame los valores de F_6"
+df<- df %>% mutate(ed_jh=ifelse(F_5==1, F_4, F_6))
+
+
+#Quedan 5 casos sin información. 2 adultos jóvenes que reportan educacion propia
+#   pero no son jefes de hogares, y tres >55 años que no reportan nada.
+#   Les imputamos valores:
+
+df<- df %>% mutate(ed_jh=ifelse(ed_jh==99, F_4, ed_jh))
+
+df<- df %>% mutate(ed_jh=ifelse(ed_jh==99, 9, ed_jh))
+
+# recodificar
+df <- df %>% mutate(educ = case_when(ed_jh %in% c(1,2) ~ 1,
+                                         ed_jh == 3 ~ 2,
+                                         ed_jh %in% c(4,5) ~ 3,
+                                         ed_jh %in% c(6,7,8) ~ 4,
+                                         ed_jh %in% c(9,10) ~ 5))
+```
+
+
+**_b.3) bienes_**
+
+Para el caso de los bienes del jefe de hogar, debemos mantener la distribución:
+
+
+|  **Variables proxy de ingreso**  |**Tiene**|**No tiene**|
+|:---------------------------------|:-------:|:-----------|
+|Isapre PSH                        |1        |0           |
+|Línea de crédito PSH              |1        |0           |
+|Celular con contrato PSH          |1        |0           |
+|Vehículo laboral o particular PSH |1        |0           |
+|Total bienes que tiene PSH        |4        |0           |
+
+
+```{r}
+# reocodificacion de bienes
+# "
+df<- df %>% mutate(bien1=ifelse(F_11_1==1, 1, 0))
+df<- df %>% mutate(bien2=ifelse(F_11_2==1, 1, 0))
+df<- df %>% mutate(bien3=ifelse(F_11_3==1, 1, 0))
+df<- df %>% mutate(bien4=ifelse(F_11_4==1, 1, 0))
+
+# crear variable con el total de bienes
+df$bienes<- rowSums(subset(df, select=c("bien1", "bien2", "bien3", "bien4")))
+```
+
+**_b.4) homologar variables_**
+
+```{r}
+####HOMOLOGAR CLASE DE VARIABLE
+df$educ<-as.double(df$educ)
+df$ocup<-as.double(df$ocup)
+df$bienes<-as.character(df$bienes)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

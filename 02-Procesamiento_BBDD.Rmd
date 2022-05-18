@@ -1,0 +1,1110 @@
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(janitor)
+library(gapminder)
+library(flextable)
+library(data.table)
+library(DT)
+library(tidyr)
+library(car)
+
+```
+
+# Procesamiento de Base de Datos
+
+El presente capítulo tiene como objetivo registrar y explicar diversos códigos de utilidad para el procesamiento y limpieza de bases de datos. De esta manera, el capítulo se subdivide en diversas estrategias con las cuales el analista podrá enfrentarse a las bases de datos antes de comenzar con los procedimientos estadísticos.
+
+Dentro de cada subdivisión se encontrarán una serie de formas para realizar el mismo procedimiento, cubriendo así posibles errores y maximizando la utilidad de esta guía.
+
+## Operadores de utilidad general
+
+### **1. Operadores relacionales**
+
+ Se usan para hacer comparaciones. Cuando en la *Tabla 1* nos referimos a `un valor`, esto refiere tambien a `variables`
+ 
+   | Símbolo  | Función |
+   |---------:|:--------|
+   | `<`      |  Un valor es menor que otro |
+   | `>`      |  Un valor es mayor que otro |
+   | `==`     |  Un valor es igual que otro [^1] |
+   | `<=`     |  Un valor es menor o igual que otro |
+   | `>=`     |  Un valor es mayor o igual que otro |
+   | `!=`     |  Un valor es distinto o diferente que otro|
+   | `%in%`   |  Un valor pertenece al conjunto designado [^2] |
+   | `is.na()`|  El valor es perdido o `NA` |
+   | `!is.na()`| El valor es distinto de  `NA` |
+
+
+### **2. Operadores aritméticos**
+
+ Realizan operaciones, como la suma, resta, división, entre otros.
+ 
+   | Símbolo  | Función |
+   |---------:|:--------|
+   | `+`      |  Suma |
+   | `-`      |  Resta|
+   | `*`     |  Multiplicación |
+   | `/`     |  División |
+   | `^`     |  Elevado |
+
+### **3. Operadores de asignación**
+
+
+ Hay dos formas de asignar `objetoA <- objetoB` o `objetoA = objetoB`. Ambas 
+ implican que lo que se este realizando en el *objetoB* implica que eso va a 
+ producir o generar al *objetoA*
+
+
+### **4. Operadores booleanos** 
+
+ Describen relaciones **lógicas** o **condicionales**
+ 
+ | Símbolo  | Función |
+ |---------:|:--------|
+ | `&`      |  Indica un *y* lógico |
+ | `|`      |  Indica un *o* lógico |
+ | `xor()`  |  Excluye la condición  |
+ | `!`      |  Distinto de ... |
+ | `any`    |  Ninguna de las condiciones serán utilizadas |
+ | `all`    |  Todas las condiciones serán ocupadas |
+
+
+### **5. Operador pipeline (%>%)**
+
+¡Aquí mucha atención! Este operador `%>%` (llamado `pipe`) no es un operador que este contenido en las funciones base del lenguaje R. Este operador proviene de la función `magrittr` de `tidyverse`, y es de los operadores más útiles y utilizados en R.
+ 
+¿Para qué sirve? Para concatenar múltiples funciones y procesos. *Imagina que quieres filtrar una base de datos a partir de tramos etarios. Pero no tienes esa variable creada. ¿Que hacer? La respuesta: concatenar el proceso de creación de variables y luego filtrar.* Eso se puede hacer gracias a ` %>% ` (ya mostraremos como utilizar esta herramienta), que por lo demás es muy fácil de ejecutar.
+ 
+ - `Ctrl + shift + M` Para Windows
+ - `⌘ + shift + M` Para Mac
+
+
+## Manipulación de estructutura de bases de datos
+
+### Tipos de variables
+
+Antes de hacer cualquier cálculo con un nuevo conjunto de datos, es importante asegurarnos que nuestro dataframe se encuentre en óptimas condiciones y nuestras variables posean las características necesarias para realizar los análisis solicitados. 
+
+**Recordemos que en R trabajamos con los siguientes tipos de variables**
+
+| **Tipo de dato** |   **Descripción**    |   **Ejemplo**    |
+|:----------------:|:--------------------:|:----------------:|
+|    integer       |   Números enteros    |   -1, 0, 1       |  
+|    numeric       |   Números reales     |   -0.5, 1/2, 1   |
+|    character     |   Texto              |   "palabra" "y"  |
+|    Factor        |   Categorías         |1 = Mujer; 2 = Hombre|
+|    logical       |   Verdadero o falso  |   "TRUE", "FALSE"|
+
+
+En relación a lo anterior, un problema que solemos observar al trabajar con R y RStudio es, por ejemplo, que nuestras variables numéricas estén codificadas como character, es decir, R considera esos valores como texto. Para solucionar este tipo de problemas utilizamos la "coerción explícita", es decir, cambiamos la naturaleza de la variable a nuestra discreción.
+
+Para ello debemos, en primer lugar, consultar la estructura de datos. De esta forma evaluamos si el conjunto de variables, o una variable específica, requiere la aplicación de una coerción explícita. Existen diversas maneras de realizar este procedimiento, a través de R base o mediante librerías.
+
+---
+
+**1. R Base**
+```{r}
+# Para este ejemplo cargamos BBDD en el objeto df
+df <- iris
+```
+
+**Consulta de estructura de datos para todo el dataframe**
+```{r}
+str(df)
+```
+
+Como podemos observar, este código nos entrega un detallado informe sobre los tipos de datos que cuenta nuestro dataframe, indicando el nombre, su naturaleza y los valores que considera
+
+---
+
+**Consulta de estructura de dato para una variable específica**
+```{r}
+# a) utilizamos la función str(), pero indicamos la variable de interés
+str(df$Petal.Length)
+
+
+# b) la función class() nos arroja la naturaleza de lo que solicitamos. 
+#    Para este caso queremos saber la clase de la variable "Species" 
+#    alojada en nuestro dataframe
+class(df$Species)
+```
+
+Tal como expresan los resultados, la función str() se comporta de la misma manera que cuando se aplicó a todo el dataframe. En cambio la función class() solo nos entrega la naturaleza de la variable, sin otro tipo de información. En tal sentido, la variable "Species" es de tipo factor.
+
+---
+
+**2. Librería Janitor**
+
+Si bien la función str() funciona de manera correcta y nos entrega información precisa, muchas veces tal información no es de nuestra utilidad, pues solo buscamos saber la naturaleza de la variable, y ello sumado a que como analistas generalmente trabajamos con enormes BBDD, precisamos de alguna herramienta que únicamente nos entregue la información de interés. Para este caso existen otras funciones que se albergan en librerías de terceros, siendo Janitor una de ellas.
+
+```{r, warning=FALSE, message=FALSE}
+# Cargamos la librería
+library(janitor)
+```
+
+
+```{r}
+# Utilizamos la función compare_df_cols(). Esto nos entrega de manera 
+# simplificada los tipos de datos de nuestro dataframe
+compare_df_cols(df)
+```
+
+
+### Coerción explícita
+
+Una vez identificamos las variables que no cumplen con nuestros requerimientos, procedemos a intervenirlas mediante coerción explícita.
+
+---
+
+- **Transformar a variable numérica**
+
+```{r echo=FALSE}
+df$Sepal.Length <- as.character(df$Sepal.Length)
+```
+
+```{r}
+# evaluamos nuestras variables
+compare_df_cols(df)
+```
+
+Como observamos, la variable "Sepal.Length" es tipo character, no obstante, si obervamos nuestro dataframe, la variable debería ser de tipo numérica.
+Para corregir esta inconsistencia debemos usar la función as.numeric() y luego corroboramos que el cambio se haya realizado:
+
+```{r}
+# coerción explícita
+df$Sepal.Length <- as.numeric(df$Sepal.Length)
+
+# comprobación
+class(df$Sepal.Length)
+```
+
+---
+
+- **Transformar a variable character**
+
+```{r echo=FALSE}
+df$Species <- as.numeric(df$Species)
+```
+
+```{r}
+# evaluamos nuestras variables
+compare_df_cols(df)
+```
+
+En este caso, la variable "Species" es de tipo numérica, aun cuando se trata de respuestas de tipo texto. Para corregir la variable y transofrmarla a tipo texto, utilizamos la función as.character()
+
+```{r}
+# coerción explícita
+df$Species<- as.character(df$Species)
+
+# comprobación
+class(df$Species)
+```
+
+---
+
+- **Transformar a variable factor**
+
+En el paso anterior hemos convertido la variable a character, pero ¿qué ocurre si en el libro de códigos las categorías de esta variable se encuentran ligadas a un orden específico? Para resolver este tipo de situaciones utilizamos la función as.factor() y comprobamos su naturaleza
+
+```{r}
+# coerción explícita
+df$Species <- as.factor(df$Species)
+
+# comprobación
+class(df$Species)
+```
+
+Ok, de acuerdo a nuestra evaluación hemos convertido la variable a tipo factor, ¿pero qué ocurre si le pedimos a R una tabla de frecuencias simple?
+
+```{r}
+table(df$Species)
+```
+
+Tal como indica la tabla, la variable contiene únicamente los niveles en términos numéricos, no se encuentran asignadas a las categorías que representan. **Si lo que queremos es convertir a factor y además indicar los nombres de las categorías, debemos utilizar la función factor()**, pues esta función nos permite integrar otros argumentos de utilidad para completar la coerción.
+
+
+```{r}
+# Coerción. Para este caso convertimos la variable Species a factor
+# y además definimos las categorías con el argumento "labels = "
+df$Species <- factor(df$Species, labels = c("setosa",
+                                            "versicolor",
+                                            "virginica"))
+
+# compbrobación
+class(df$Species)
+
+# frecuencias simple
+table(df$Species)
+```
+De acuerdo a los resultados, hemos coercionado la variable a tipo factor y, además de ello, según lo expuesto la tabla de frecuencias simple, logramos asignar los niveles o categorías a la variable.
+
+---
+
+- **Transformar a variable integer**
+
+Por último, vamos a crear una nueva variable numérica que utilizaremos como identificador de la especie. Para este caso, al tratarse de un identificador, queremos establecer que contenga únicamente números enteros, debido a esto, haremos una coerción a variable "integer".
+
+
+Primero creamos nuestra nueva variable que acturará como identificador de la especie.
+```{r}
+# utilizaremos las funciones presentes en tidyverse para crear nuestra nueva variable
+library(tidyverse)
+
+
+# construcción de nueva variable
+df <- df %>% 
+  mutate(Categoria = case_when(Species == "setosa" ~ 1,
+                               Species == "versicolor" ~ 2,
+                               Species == "virginica" ~ 3))
+```
+
+Ahora que tenemos nuestra variable, vamos a conertirla a una variable integer mediante coerción explícita utilizando la función "as.integer".
+
+```{r}
+# Coerción. Para este caso convertimos la nueva variable a integer
+df$Categoria <- as.integer(df$Categoria)
+
+# compbrobación
+class(df$Categoria)
+```
+
+
+
+## Crear nuevas variables
+
+Ahora que aprendimos los tipos de datos y cómo coercionarlos, podemos proceder a crear nuestras propias variables. Para ello, de igual manera que al consultar la estructura de datos, podemos utilizar R base o apoyarnos en librerías de terceros.
+
+---
+
+### **1. R Base**
+
+```{r}
+# Para este ejemplo utilizaremos la base de datos mtcars que será almacenada en el objeto "df"
+df <- mtcars
+```
+
+Como primer ejercicio, crearemos la variable peso_kg, la cual corresponderá los pesos de los vehículos en kilogramos, ya que en la base original estos pesos vienen en libras.
+
+Para realizar este procedimiento debemos asignar el nombre de variable, seguido de la operación que queremos implementar en la variable. Para este caso, la transformación de libras a kilos, la cual se realiza multiplicando el peso el libras por mil, para luego dividirlo en dos.
+
+```{r}
+# creación de nueva variable
+df$peso_kg <- (df$wt*1000)/2
+
+# observamos nuestra nueva variable
+df %>% 
+  select(wt, peso_kg) %>% 
+  head() %>% 
+  flextable()
+```
+
+Como podemos apreciar, se ha creado la variable peso_kg de manera correcta.
+
+---
+
+### **2. Tidyverse**
+
+Si bien R Base nos permite crear variables e integrarlas a nuestro conjunto de datos, existen librerías que nos proporcionan mayores opciones para crear nuestras variables. Este es el caso de "tidyverse", donde podemos definir variables utilizando formatos condicionales, o incluso replicar la construcción de la variable peso_kg mediante la función "mutate".
+
+
+```{r echo=FALSE}
+df <- mtcars
+```
+
+```{r}
+# creación de peso_kg con sintaxis tidyverse
+df <- df %>% 
+  mutate(peso_kg = (wt*1000)/2)
+
+# observamos nuestra nueva variable
+df %>% 
+  select(wt, peso_kg) %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+Continuando con el ejercicio anterior, y haciendo uso de esta librería, haremos una nueva variable que nos indique, según nuestros parámetros, cuando un auto es pesado, liviano o ni pesado ni liviano.
+
+Utilizaremos la función "case_when" para indicar nuestras condiciones.
+
+```{r}
+# creamos nuestra variable peso_text
+df <- df %>% 
+  mutate(peso_text = case_when(peso_kg > 1800 ~ "Pesado",
+                               peso_kg < 1000 ~ "Liviano",
+                               peso_kg > 1000 & peso_kg < 1800 ~ "Ni pesado, ni livano"))
+
+# observamos nuestras nuevas variables
+df %>% 
+  select(peso_kg, peso_text) %>% 
+  head() %>% 
+  flextable(cwidth = 2)
+```
+
+Al seleccionar nuestras nuevas variables podemos corroborar que tanto peso_kg como peso_text fueron creadas y almacenadas con éxito en nuestro conjunto de datos.
+
+---
+
+Otra manera de hacer esto es utilizando valores lógicos y la función "ifelse", es decir, valores "TRUE" o "FALSE" si se cumple la condición. En este sentido, se crea una variable que indica "TRUE" cuando la condición se cumple.
+
+```{r}
+df <- df %>% 
+  mutate(auto_pesado = ifelse(peso_kg > 1800, TRUE, FALSE)) %>% 
+  mutate(auto_liviano = ifelse(peso_kg < 1000, TRUE, FALSE)) %>% 
+  mutate(auto_nini = ifelse(peso_kg > 1000 & peso_kg < 18000, TRUE, FALSE))
+
+df %>% 
+  select(peso_kg, auto_pesado, auto_liviano, auto_nini) %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+También podemos crear variables dummy, asignando el valor 1 cuando se cumpla la condición y 0 cuando no.
+
+```{r echo=FALSE}
+df <- mtcars
+
+df <- df %>% 
+  mutate(peso_kg = (wt*1000)/2)
+```
+
+
+```{r}
+# variable dummy cuando el auto es pesado
+df %>% 
+  mutate(pesado_dummy = ifelse(peso_kg > 1800, 1, 0)) %>% 
+  arrange(desc(pesado_dummy)) %>% 
+  select(peso_kg, pesado_dummy) %>% 
+  head() %>% 
+  flextable()
+```
+De esta manera, pesado_dummy nos indica con el valor 1 todos aquellos autos que pesen más de 1800 kg.
+
+
+
+## Limpiar y renombrar variables
+
+Muchas veces las variables que integran las bases de datos poseen nombres que no son lo bastante intuitivos. Nos encontramos con variables que tienen nombres con mayúsculas, espacios u otros caracteres especiales, o simplemente no aluden a la lógica de la variable. Para estos casos podemos limpiar los nombres mediante librerías o renombrar las variables de forma manual.
+
+---
+
+### **1. Limpiar nombre de variables, librería "janitor"**
+
+Para esta sección utilizaremos una base de datos que contiene información sobre países del mundo.
+
+```{r message=FALSE, warning=FALSE}
+# librería que contiene los datos
+library(gapminder)
+
+# asignamos los datos al objeto df
+df <- gapminder
+```
+
+```{r echo=FALSE}
+colnames(df)[3] <- "Year"
+```
+
+
+```{r}
+# primero observamos los nombres de nuestro conjunto de datos y evaluamos si se debe aplicar,
+# o no, una limpieza de nombres. Para esta caso, contamos con variables que integran letras
+# mayúsculas, las cuales pueden entorpecer la manera de generar código.
+head(df) %>%
+  flextable()
+
+# también podemos solicitar solo los nombres de las variables
+names(df)
+```
+
+```{r}
+# para limpiar los espacios, mayúsculas o caracteres especiales de nuestras variables utilizaremos
+# nuevamente la librería Janitor
+library(janitor)
+
+# limpiar los nombres de mi conjunto de datos
+df <- clean_names(df)
+
+# observamos los cambios
+head(df) %>% # vemos las primeras seis observaciones del df
+  flextable()
+
+names(df) # vemos solo nos nombres de las variables
+```
+
+Como podemos ver, las variables "life_exp", "year" y "gdp_percap" transformaron sus letras a minúscula de manera automática.
+
+
+
+### **2. Renombrar variables**
+
+Si no estamos contentos con el trabajo automático que realiza janitor podemos    renombrar las variables de forma manual. Para ello tenemos funciones de R base y de otras librerías.
+
+---
+
+##### - **R base**
+
+Con R base podemos renombrar variables según su posición en la base de datos. En este caso la primera variable es "country", pero cambiaremos su nombre a "pais".
+
+```{r}
+# renombrar variable utilizando la posición que utiliza en la base de datos
+# colnames(data)[posición] <- "nuevo_nombre"
+colnames(df)[1] <- "pais"
+
+# corroboramos el cambio de nombre de la primera variable
+names(df)
+```
+También podemos renombrar variables en conjunto. Por ejemplo, renombrar desde la variable 2 a la 4
+
+```{r}
+# renombrar variables
+colnames(df)[2:4] <- c("continente",
+                       "año",
+                       "esperanza_vida")
+
+# comprobar los cambios
+names(df)
+```
+
+---
+
+
+#### - **Tidyverse**
+
+```{r echo=FALSE}
+df <- gapminder
+df <- clean_names(df)
+```
+
+Además de R base, también contamos con una función especial dentro del Tidyverse: **rename()**, la cual cuenta con diversas formas de renombrar.
+
+**Forma 1: rename()**
+manera por defecto de utilizar la función.
+```{r}
+# rename(nombre_nuevo = nombre_original) + corroborar nombres
+df %>% 
+  rename(esperanza_vida = life_exp,
+         poblacion = pop) %>% 
+  names()
+```
+
+---
+
+**Forma 2: rename_at()**
+se utiliza para para renombrar variables con determinados parámetros. En este caso, aquellas que comienzan con "C".
+```{r}
+# renombrar todas aquellas variables que comiencen con "c"
+df %>% 
+  rename_at(vars(starts_with("c")), ~ c("pais", "continente")) %>% 
+  names()
+```
+Tanto "country" como "continent" fueron reemplazados por "pais" y "continente"
+
+---
+
+**Forma 3: rename_if()** 
+nos permite reemplazar los nombres de las variables siguiendo alguna condición que indiquemos.
+
+```{r}
+# renombrar todas las variables numéricas
+df %>% 
+  rename_if(is.numeric, ~ c("año", "esperanza_vida", "poblacion", "ingreso_percap")) %>% 
+  names()
+```
+Como se observa, se reemplazaron todas las variables numéricas.
+
+---
+
+## Reordenar variables
+
+Una vez que hemos creado o renombrado nuestras variables, seguramente querremos organizarlas en un orden determinado.
+
+Retomando el conjunto de datos mtcars y las nuevas variables que fuimos incorporando, nos quedó una base de datos como esta:
+
+```{r echo=FALSE}
+df <- mtcars
+
+# creación de peso_kg con sintaxis tidyverse
+df <- df %>% 
+  mutate(peso_kg = (wt*1000)/2) %>% 
+  mutate(peso_text = case_when(peso_kg > 1800 ~ "Pesado",
+                               peso_kg < 1000 ~ "Liviano",
+                               peso_kg > 1000 & peso_kg < 1800 ~ "Ni pesado, ni livano"))
+```
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+df %>% 
+  head() %>% 
+  flextable::flextable()
+```
+Tal como se muestra en la tabla, nuestras nuevas variables fueron creadas al final del conjunto de datos. Mas, no queremos mantener este orden, sino que esperamos tener la variable peso_kg y peso_text junto a la variable wt, para así mantener un orden en nuestro dataframe. Esto se logra realizar de diversas maneras, tanto desde R base como de librerías y funciones personalizadas que nos simplifican el proceso.
+
+---
+
+### **1. R base**
+
+**Utilizando ubicación de las variables**
+
+Recordemos que buscábamos ordenar wt, peso_kg, peso_text, y si observamos la tabla, lo hemos conseguido solo utilizando las posiciones de las variables. 
+
+Para este caso, en el código mantuvimos las posiciones de las variables 1:6, correspondientes desde mpg a wt, para luego indicar que las variables con posiciones 12 y 13 (peso_kg y peso_text respectivamente) seguirían a la variable 6 (wt), y finalmente mantener el orden de de las variables que ocupan la posición 7 a la 11.
+
+```{r}
+# reordenar variables usando sus posiciones
+df[, c(1:6,12,13, 7:11)] %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+### **2. Tidyverse**
+
+**a) Función relocate()**
+
+En el ejemplo le hemos indicado a R que las variables "peso_kg" y "peso_text" se posicionen después de la variables "wt".
+
+```{r}
+# utilizando los nombres de las variables
+# relocate(c("var_x"), after = "variable_a_la_que_seguiran")
+df %>%
+  relocate(c("peso_kg", "peso_text"), .after = "wt") %>% 
+  head() %>% 
+  flextable()
+
+# de igual manera, con el argumento "before =" se puede indicar las variables 
+# se posicionen antes de una variable específica 
+
+# (en caso obtendríamos la misma tabla)
+# df %>% relocate(c("peso_kg", "peso_text"), .before = "qsec")
+```
+
+
+También podemos realizar este mismo procedimiento utilizando la posición que ocupan las variables en nuestro conjunto de datos.
+
+En este caso hemos indicado que las variables 12 y 13 (peso_kg y peso_texto) se posicionen antes que la variable 7 (qsec).
+
+```{r}
+# utilizando la posición de las variables
+# relocate(c("var_x"), before = "variable")
+df %>%
+  relocate(12:13, .before = 7) %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+**b) Función select()**
+
+Otra de las funciones presentes el tidyverse es select(), de la librería dplyr. Existen diversas manera de utilizar esta función, sin embargo, la eficiencia de estas dependerán de la cantidad de variables que contenga nuestra base de datos.
+
+
+**_b.1) Cuando contamos con pocas variables_**
+
+La primera manera de utilizar esta función es seleccionando el orden de las variables de acuerdo a los nombres que poseen en el dataframe.
+
+Para este ejemplo utilizaremos la siguiente tabla y buscaremos cambiar el orden de las variables departamento y salario, donde esta última ocupe la segunda posición de la tabla.
+
+```{r echo=FALSE}
+# df ejemplo pocas vars
+data <- data.frame(id = c(7058, 7059, 7060, 7089,
+						7072, 7078, 7093, 7034),
+					
+				departmento = c('IT','sales','finance',
+								'IT','finance','sales',
+								'HR','HR'),
+					
+				salario = c(34500.00, 560890.78, 67000.78,
+							25000.00, 78900.00, 25000.00,
+							45000.00, 90000))
+
+```
+
+```{r echo=FALSE}
+# observamos la tabla
+data %>% 
+  head() %>% 
+  flextable()
+```
+Para realizar este cambio utilizamos la función select(), indicando el nombre de las variables según el orden que buscamos. Para este caso, la variable id queremos que se encuentre en la primera posición, seguido de salario y departamento, dando paso a la siguiente tabla.
+
+```{r}
+# reordenar con select() utilizando los nombres de las variables
+data %>% 
+  select(id, salario, departmento) %>% 
+  head() %>% 
+  flextable()
+```
+**_b.2) Cuando trabajamos con muchas variables_**
+
+Generalmente como analistas nos enfrentamos a manejar bases de datos con múltiples variables. Para aquellos casos, la función anterior no sería la más eficiente, pues deberíamos escribir un sin fin de variables según sus nombres, los cuales muchas veces no son de los más sencillos.
+
+Para estos casos es mejor utilizar las posiciones de las variables. Un ejemplo: tenemos una gran base de datos con diez variables que corresponden a una tanda de preguntas relacionadas y necesitamos llevarlas al inicio de nuestro conjunto de datos, ¿cómo lo hacemos?
+
+Para este ejemplo tenemos la siguiente base datos, con 19 variables, de las cuales las últimas 10 las queremos posicionar después de la variable "day".
+
+```{r}
+# librería que contiene la BBDD
+library(nycflights13)
+
+# cargar BBDD al objeto df
+df <- flights
+
+# observamos nuestros datos
+df %>%
+  head() %>% 
+  datatable(fillContainer = TRUE)
+```
+
+
+Como habíamos mencionado, en estos casos es más eficiente trabajar con las posiciones numéricas de las variables. En este sentido, en el código hemos indicado que mantendremos las posiciones de las primeras tres variables, seguidas de las variables 10 a la 19, y finalizando con las variables de la 4 a la 9, dando paso a la siguiente distribución de la base de datos:
+
+```{r}
+# ordenar variables con select() utilizando las posiciones de las variables
+df %>% 
+  select(1:3, 10:19, 4:9) %>% 
+  head() %>% 
+  datatable(fillContainer = TRUE)
+```
+
+---
+
+### **3. Función personalizada**
+
+Si bien las anteriores funciones nos permiten lograr nuestros cometidos de reordenar las variables a nuestro antojo, estas lo hacen en largas líneas de código o nos hacen interactuar con aquellas otras variables que no queremos modificar.
+
+Debido a lo anterior, se ha creado la siguiente función personalizada que nos permite reordenar las variables de una manera mucho más sencilla, donde solo debemos asignar la posición que queremos que utilice la variable.
+
+**Para que la función se integre a nuestro entorno de trabajo** debemos copiar el código a continuación y correrlo en nuestro script o chunk de .rmd. De esta manera, la función se guardará en nuestro enviroment bajo el nombre de "arrange.vars", permitiéndonos llamarla y utilizarla cuando deseemos.
+
+**_Código con la función: copiar y pegar en nuestro script_**
+```{r}
+## FORMA DE UTILIZAR LA FUNCION ##
+
+## df <- arrange.vars(c("nombre.variable.x"= posición))
+## df <- arrange.vars(c("nombre.variable.A"= 1,
+##                      "nombre.variable.B" = 12,             
+##                      "nombre.variable.C = X))
+
+
+arrange.vars <- function(data, vars){
+  ##stop if not a data.frame (but should work for matrices as well)
+  stopifnot(is.data.frame(data))
+  
+  ##sort out inputs
+  data.nms <- names(data)
+  var.nr <- length(data.nms)
+  var.nms <- names(vars)
+  var.pos <- vars
+  ##sanity checks
+  stopifnot( !any(duplicated(var.nms)), 
+             !any(duplicated(var.pos)) )
+  stopifnot( is.character(var.nms), 
+             is.numeric(var.pos) )
+  stopifnot( all(var.nms %in% data.nms) )
+  stopifnot( all(var.pos > 0), 
+             all(var.pos <= var.nr) )
+  
+  ##prepare output
+  out.vec <- character(var.nr)
+  out.vec[var.pos] <- var.nms
+  out.vec[-var.pos] <- data.nms[ !(data.nms %in% var.nms) ]
+  stopifnot( length(out.vec)==var.nr )
+  
+  ##re-arrange vars by position
+  data <- data[ , out.vec]
+  return(data)
+}
+```
+
+Ahora que se ha creado la función en nuestro enviroment podremos llamarla y trabajar con ella. Retomando nuestro ejemplo anterior, obtuvimos la siguiente tabla, pero me he percatado que la variable "time_hour" estaría mejor posicionada si estuviese seguida a la variable "day".
+
+```{r echo=FALSE}
+# ordenar variables con select() utilizando las posiciones de las variables
+df <- df %>% 
+  select(1:3, 10:19, 4:9)
+```
+
+```{r echo=FALSE}
+df %>% 
+  head() %>% 
+  datatable(fillContainer = TRUE)
+```
+
+Para reordenar únicamente la variable "time_hour" utilzaremos la nueva función creada, indicando que queremos que ocupe la posición 4 en nuestro dataframe. Como se observa, el cambio fue efectivo.
+
+Utilizar esta función personalizada agiliza el código y nos permite trabajar tanto con variables individuales como conjuntos.
+
+```{r}
+df %>% 
+  arrange.vars(c("time_hour" = 4)) %>% 
+  head() %>% 
+  datatable(fillContainer = TRUE)
+```
+
+## Recodificación de variables
+
+Una vez que hemos creado, limpiado, renombrado y reordenado nuestras variables, es probable que debamos realizar ciertas recodificaciones a estas variables. Nuevamente, para ello contamos con una alternativa de R base, o también mediante librerías de terceros.
+
+Para los siguientes ejercicios utilizaremos una BBDD que contiene información de autos. En ella recodificaremos la variable cyl que se encuentra en valores numéricos a las catergoría de "baja cilindrada", "media cilindrada" y "alta cilindrada"
+
+```{r}
+# cargar BBDD al objeto df
+df <- mpg
+```
+
+
+```{r echo=FALSE}
+# observamos nuestra BBDD
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+### **1. R base**
+
+Una manera de recodificar variables utilizando R base es mediante la aplicación de los corchetes "[]". 
+
+**_a) Recodificar en la misma variable_**
+
+Como se puede apreciar en la tabla, en la variable cyl, aquellos valores que eran "4" ahora son "baja cilindrada", los que eran "6" son ahora "media cilindrada", y aquellos de valor "8" ahora son "alta cilindrada"
+
+```{r}
+# recodificar con R base en la misma variable
+df$cyl[df$cyl == 4] <- "baja cilindrada"
+df$cyl[df$cyl == 6] <- "media cilindrada"
+df$cyl[df$cyl == 8] <- "alta cilindrada"
+
+# BBDD con recodificación
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r echo=FALSE}
+# cargar BBDD al objeto df
+df <- mpg
+```
+
+
+**_b) Recodificar en distintas variables_**
+
+Anteriormente recodificamos dentro de la misma variable, pero habrán momentos en que necesitemos crear una nueva variable con esta recodificación para así no alterar la variable original.
+
+Esto también lo podemos realizar empleando los corchetes, pues únicamente debemos cambiar la variable de destino por el nombre que llevará la nueva variable. En nuestro caso, la variable que contenga la recodificación será "cyl_rec".
+
+Como se puede apreciar en la tabla, aquellos valores "4" de la varible cyl se guardaron en cyl_rec como "baja cilindrara", aquellos 6 como "media cilindrada" y los "8" como "alta cilindrada".
+
+```{r warning=FALSE}
+# recodificar con R base en distinta variable
+df$cyl_rec[df$cyl == 4] <- "baja cilindrada"
+df$cyl_rec[df$cyl == 6] <- "media cilindrada"
+df$cyl_rec[df$cyl == 8] <- "alta cilindrada"
+
+# BBDD con recodificación
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+```{r echo=FALSE}
+# cargar BBDD al objeto df
+df <- mpg
+```
+
+
+### **2. Tidyverse**
+
+Otra herramienta útil que posee el universo tidy es la función recode(). Ella nos permitirá recodificar diversas variables dentro de un mismo código.
+
+Retomemos el ejercicio anterior con esta nueva sintaxys de recodificar.
+
+**_a) Recodificar en la misma variable_**
+
+```{r warning=FALSE}
+# 1ra forma: sin usar condicionales
+df %>% 
+  mutate(cyl = dplyr::recode(cyl, "4" = "baja cilindrada", "6" = "media cilindrada", "8" = "alta cilindrada")) %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# 2da forma: utilizando condicionales (en este caso "case_when")
+df %>% 
+  mutate(cyl = case_when(cyl == 4 ~ "baja cilindrada",
+                         cyl == 6 ~ "media cilindrada",
+                         cyl == 8 ~ "alta clindrada")) %>% 
+  head() %>% 
+  flextable()
+```
+
+
+**_b) Recodificar en distintas variables_**
+
+Tal como aprendimos en el apartado de crear variables, para hacer esto el tidyverse utilizamos la función mutate() y asignamos el nombre de la nueva variable. De esta manera, nuestra recodificación se ha guardado en la nueva variable "cyl_rec".
+
+```{r warning=FALSE}
+# 1ra forma: sin usar condicionales
+df %>% 
+  mutate(cyl_rec = dplyr::recode(cyl, "4" = "baja cilindrada", "6" = "media cilindrada","8" = "alta cilindrada")) %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# 2da forma: sin usar condicionales
+
+df %>% 
+  mutate(cyl_rec = case_when(cyl == 4 ~ "baja cilindrada",
+                             cyl == 6 ~ "media cilindrada",
+                             cyl == 8 ~ "alta clindrada")) %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+### **3. Car**
+
+Si luego de las dos opciones anteriores aun no podemos llevar a cabo nuestra recodificación, contamos también con la librería car para realizar los cambios que buscamos. No obstante, su sintaxys es diferente a las anteriores trabajadas.
+
+**_a) Recodificar en la misma variable_**
+
+```{r}
+# recodificar con car en la misma variable
+df$cyl <-  recode(df$cyl, c('"4" = "baja cilindrada";
+                            "6" = "media cilindrada";
+                            "8" = "alta cilindrada"'))
+
+# observar los cambios
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+**_b) Recodificar en distintas variables_**
+
+```{r}
+# recodificar con car en distintas variables
+df$cyl_rec <-  recode(df$cyl, c('"4" = "baja cilindrada";
+                                "6" = "media cilindrada";
+                                "8" = "alta cilindrada"'))
+
+# observar los cambios
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+---
+
+## Selección de variables
+
+A pesar de que como analistas trabajamos con múltiples variables, existirán casos donde solo necesitaremos trabajar con ciertas variables específicas y no con todo el data set.
+
+### **R Base**
+
+```{r echo=FALSE}
+df <- diamonds
+```
+
+Para seleccionar variables con R base utilizamos los corchetes `[]`, donde se trabaja de la siguiente manera:
+
+**df[filas, columnas]**
+
+Si se omiten valores en alguno de los argumentos, R asume que se busca seleccionar todos esos valores. Por ejemplo, `df[,4:7]`, aquí seleccionamos todas las filas y las columnas de la 4 a la 7.
+
+Procederemos a ejemplificar
+
+```{r}
+# seleccionar solo las primeras 4 variables
+df[,1:4] %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# seleccionar las primeras 3 variables, más la número 8 a la 10 y las primeras diez observaciones (filas)
+df[1:10, c(1:3, 8:10)] %>% 
+  flextable()
+```
+
+---
+
+### **Tidyverse**
+
+Nuevamente podemos utilizar las opciones que se encuentran en tidyverse para seleccionar variables. Esta opción nos permite agilizar nuestros códigos al contener funciones para filtrar de mejor manera aquellas variables que buscamos seleccionar.
+
+```{r}
+# seleccionar por nombre de variable
+df %>% 
+  select(carat, cut, color) %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# seleccionar todas las variables, menos las indicadas (-)
+df %>% 
+  select(-price) %>%   # todas las variables, menos precio
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# seleccionar variables que comiencen de una manera en particular
+df %>% 
+  select(starts_with("c")) %>%  #todas la variables que comiencen con la letra "c"
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# seleccionar variables que terminen de una manera en particular
+df %>% 
+  select(ends_with("e")) %>%  #todas la variables que terminen con la letra "e"
+  head() %>% 
+  flextable()
+```
+
+---
+
+## Filtrar casos
+
+### **Tidyverse**
+
+Así como necesitaremos seleccionar variables, también habrán ocasiones donde debamos filtrar nuestro conjunto de datos
+
+```{r}
+# seleccion de casos donde el corte sea premium
+df %>% 
+  filter(cut == "Premium") %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# seleccion de casos donde el corte del mineral sea premium, color E, 
+# y el precio sea mayor a 18100
+df %>% 
+  filter(cut == "Premium",
+         color == "E",
+         price > 18100) %>% 
+  flextable()
+```
+
+
+## Bases de datos Long y Wide
+
+**_¿Qué es long y qué es wider?_**
+
+Existen dos formas de distribuir las bases de datos: en formato largo y ancho.
+El formato largo consiste en transponer columnas a filas, es decir, convertir las variables a observaciones. Mientras que el formato ancho consiste en transformar las observaciones en varables independientes.
+
+```{r echo=FALSE}
+df <- iris
+```
+
+### **1. De long a wider**
+
+Si observamos nuestros datos, podemos apreciar que la variable species se encuentra en formato long, pero necesitamos que cada especie se encuentre en variables diferenciadas, es decir, una variable independiente para cada una de las especies setosa, versicolor y virginica.
+
+```{r}
+df %>% 
+  datatable(fillContainer = TRUE)
+```
+
+Para realizar esto utilizamos la función pivot_wider(), pertenenciente a las herramientas del tidyverse.
+
+```{r warning=FALSE}
+# transformar las los valores de Species a variables independientes
+df %>% 
+  pivot_wider(names_from = Species,       # variable de donde salen los nombres
+              values_from = Species) %>%  # valores que toman las nuevas variables
+  datatable(fillContainer = TRUE)
+```
+
+Como vemos, se crearon tres nuevas variables con los nombre de cada especie, respetando los valores que contenía la variable original.
+
+
+### **2. De wider a long**
+
+También podemos pasar de un formato wider a uno longer, es decir, transformar columnas a filas. Para ello utilizamos la función pivot_longer() del paquete dplyr, alojado en tidyverse.
+
+```{r echo=FALSE}
+df <- relig_income
+```
+
+Como vemos en la tabla, contamos con 10 variables que muestran los ingresos de las personas encuestadas (incluyendo el no sabe/no responde), las cuales queremos convertir a formato long.
+
+```{r}
+# observamos nuestros datos
+df %>% 
+  head() %>% 
+  flextable()
+```
+
+```{r}
+# convertir a longer
+df %>% 
+  pivot_longer(2:11,            # variables a convertir
+               names_to = "ingreso",      # variable donde se ingresarán los nombres de las variables originales
+               values_to = "frecuencia") %>% # variable que contendrá los valores de las variables originales
+  datatable(fillContainer = TRUE)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
