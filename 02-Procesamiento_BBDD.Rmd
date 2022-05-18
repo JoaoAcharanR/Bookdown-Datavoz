@@ -494,19 +494,7 @@ df %>%
 
 ---
 
-**Forma 2: rename_at()**
-se utiliza para para renombrar variables con determinados parámetros. En este caso, aquellas que comienzan con "C".
-```{r}
-# renombrar todas aquellas variables que comiencen con "c"
-df %>% 
-  rename_at(vars(starts_with("c")), ~ c("pais", "continente")) %>% 
-  names()
-```
-Tanto "country" como "continent" fueron reemplazados por "pais" y "continente"
-
----
-
-**Forma 3: rename_if()** 
+**Forma 2: rename_if()** 
 nos permite reemplazar los nombres de las variables siguiendo alguna condición que indiquemos.
 
 ```{r}
@@ -880,7 +868,7 @@ Si luego de las dos opciones anteriores aun no podemos llevar a cabo nuestra rec
 
 ```{r}
 # recodificar con car en la misma variable
-df$cyl <-  recode(df$cyl, c('"4" = "baja cilindrada";
+df$cyl <- car::recode(df$cyl, c('"4" = "baja cilindrada";
                             "6" = "media cilindrada";
                             "8" = "alta cilindrada"'))
 
@@ -894,7 +882,7 @@ df %>%
 
 ```{r}
 # recodificar con car en distintas variables
-df$cyl_rec <-  recode(df$cyl, c('"4" = "baja cilindrada";
+df$cyl_rec <-  car::recode(df$cyl, c('"4" = "baja cilindrada";
                                 "6" = "media cilindrada";
                                 "8" = "alta cilindrada"'))
 
