@@ -1,0 +1,165 @@
+```{r message=FALSE}
+library(tidyverse)
+```
+
+
+# Malla de validación
+
+Una malla de validación permite revisar de manera automática la consistencia de la información proveniente de cada encuesta y los rangos de las respuestas, identificando de manera automática cuando un valor o respuesta específica no corresponda a un rango, previamente determinado, o cuando una respuesta sea inconsistente en relación a respuestas anteriores, según los saltos específicos de cada instrumento.
+
+Veremos como programar los siguientes tipos de errores:
+
+i. errores de valores perdidos, asociados a preguntas de respuesta obligatoria que se encuentren sin respuestas (missing);
+
+ii. errores de programación, como saltos o filtros mal aplicados o preguntas de respuesta múltiples que carezcan de respuesta en al menos una opción;
+
+iii. errores de consistencia, como datos fuera de rangos o extremos (datos que se escapan de los rangos, Ej: Edad.), y detectar inconsistencias lógicas en las respuestas de los participantes.
+
+**Data a utilizar**
+
+Para el ejercicio, se utilizará la base de datos de la Encuesta Nacional de Uso del Tiempo (ENUT) 2015.
+
+Se utilizarán dos versiones de dicha BBDD: una corregida tal como se puede descargar desde la pagina web del Instituto Nacional de Estadísticas y una alterada, en la que se introdujeron errores a propósito para ilustrar el funcionamiento de la malla de validación. Ambas pueden cargarse directamente con el siguiente comando:
+
+```{r message=FALSE}
+library(haven)
+data_enut          <- read_sav("BBDD/BASE_USUARIO_corregida.sav")
+data_enut_alterada <- read_sav("BBDD/BASE_USUARIO_alterada.sav")
+```
+
+Las bases de datos pueden encontrarse en este link: [click aquí](https://github.com/JoaoAcharanR/Malla_validacion/tree/master/raw).
+
+
+## Errores de valores perdidos
+
+En primer lugar, se deberá verificar que todas las variables que debieron a ser respondidas por todos los casos encuestados, no estando sujetas a saltos ni filtros de ningún tipo. Como se trata de preguntas "obligatorias" por las que todos debieron haber pasado, querremos chequear que efectivamente haya sido así. Para eso, verificaremos que no hayan valores perdidas en dichas columnas.
+
+
+Para efectos de estandarizar, se utiliza la expresión "ERRORMISSING_[variable]".
+
+Extra: creacion de un Id , puesto que esta BBDD no lo poseía.
+
+
+```{r}
+# creacion de Id
+data_enut <- data_enut %>% 
+  mutate(Id = paste0(id_vivienda, id_hogar, n_linea_h, id_persona, n_linea_p))
+```
+
+### a) selección de Id y variables de interés
+
+Para este paso solo debemos cambiar la BBDD y la selección de variables obligatorias para cada caso. Además del identificador de la persona o el folio de la encuesta, el cual siempre debe seleccionarse primero, antes de las variables.
+
+Es decir, se debe utilizar de la siguiente manera:
+
+data_perdidos <- select(BBDD,
+                      c(Id, varX:varY))
+
+```{r}
+# seleccion de variables de interes
+# Para este paso debemos asegurarnos que la variable Id quede al inicio de la seleccion
+data_perdidos <- select(data_enut,     #BBDD
+                      c(Id, 98:101)) # Id, variables.
+```
+
+
+### b) casos perdidos por fila
+```{r}
+# debemos asegurarnos que el loop comience con la columna 2, debido a que la 1 es el Id: i in 2:ncol
+# Este loop se encuentra estandarizado. Si seguimos el paso anterior, no deberíamos
+# problemas con copiar y pegar el código
+
+for (i in 2:ncol(data_perdidos)) {
+  data_perdidos[,i] <- ifelse(is.na(data_perdidos[i]), 1, 0)
+  colnames(data_perdidos)[i]<-paste("ERRORMISSING", names(data_perdidos)[i], sep = "_")
+}
+```
+
+**Una vez hemos hecho el loop, el objeto "data_perdidos" debería lucir de la siguiente manera:**
+
+```{r echo=FALSE}
+data_perdidos %>% 
+  head() %>% 
+  DT::datatable(fillContainer = TRUE)
+```
+
+
+```{r}
+### Opcional 1 ###
+# Si lo necesitamos, también podemos integrar los valores perdidos a la bbdd original
+# Para realizar este paso es importante contar con un Id, o alguna otra 
+# variable en común entre los dos conjuntos de datos
+
+data_enut <- full_join(data_enut, data_perdidos, by = "Id")
+
+
+### Opcional 2 ###
+# Si nos cuesta comprender los errores mediante la codificación 0 y 1, tenemos la opción
+# de recodificar estos parámetros a otros más intuitivos
+
+### OJO: realizar este paso opcional no nos permitira realizar el conteo total por variable ###
+
+# data_perdidos<-data_perdidos %>% 
+#   mutate_at(c(2:ncol(data_perdidos)), recode, '1'='NA', '0'='Con Dato')
+
+```
+
+
+
+### c) casos perdidos por columna o variable
+
+La forma anterior responde a la búsqueda de errores según caso (o fila). No obstante, también podemos generar un resumen que nos indique la cantidad total de casos perdidos que contengan nuestras variables de interés.
+
+Para ello seguimos la siguiente línea de códigos:
+
+```{r}
+# crear objeto tibble con la Id y el nombre de las variables
+reporte_errormissing <-  tibble(variable = data_perdidos %>% 
+                                  colnames)
+
+# quitamos el Id de nuestro objeto (al ser variable character tendremos conflictos para sumar la canidad errores)
+reporte_errormissing <- reporte_errormissing %>% 
+  filter(variable != "Id")
+
+# sumamos la cantidad de errores que tengan las variables
+reporte_errormissing$errores <- colSums(data_perdidos[sapply(data_perdidos, is.numeric)], na.rm = F)
+```
+
+**Una vez hemos construido el reporte, tendremos un objeto más o menos así:**
+
+```{r echo=FALSE}
+reporte_errormissing %>% 
+  flextable::flextable()
+```
+
+
+
+## Errores de programación
+
+Por otra parte, nos interesará constatar que los saltos o filtros que contempla el cuestionario se encuentren bien aplicados, de manera que todos los encuestados hayan pasado por la secuencia lógica de preguntas que les correspondía.
+
+A modo de ejemplo, en el cuestionario ENUT, quienes respondieron que en sus hogares sí trabajó personal de servicio doméstico durante la semana anterior a aquella en la que fue aplicada la encuestada, debieron responder posteriormente la pregunta respecto a cuántas personas prestaron esos servicios en dicha vivienda.
+
+En este caso, vamos a denominarlos "ERRORPRO_[n° consecutivo del error]".
+
+Por tanto, vamos a programar dos errores:
+
+Si responde que la semana pasada si trabajó personal servicio doméstico y luego no responde cuántas personas prestaron esos servicios; y al revés,
+
+Si responde que la semana pasada NO trabajó personal servicio doméstico y luego responde cuántas personas trabajaron
+
+En esta ocasión, se utilizará la base de datos alterada (con errores)
+
+Primero, se presenta el caso i):
+
+
+
+
+
+
+
+
+
+
+
+

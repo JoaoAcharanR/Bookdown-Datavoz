@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Capítulo 5 Malla de validación | Bookdown D&amp;A</title>
+  <meta name="description" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  
+  
+  
+
+<meta name="author" content="Jonatan Salazar" />
+
+
+<meta name="date" content="2022-05-20" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="clasificación-por-nivel-socio-económico-metodología-aim.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libs/datatables-binding-0.21/datatables.js"></script>
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libs/dt-core-1.11.3/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libs/dt-core-1.11.3/js/jquery.dataTables.min.js"></script>
+<link href="libs/crosstalk-1.1.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libs/crosstalk-1.1.1/js/crosstalk.min.js"></script>
+<link href="libs/tabwid-1.0.0/tabwid.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Bookdown Datavoz</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html"><i class="fa fa-check"></i><b>2</b> Procesamiento de Base de Datos</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-de-utilidad-general"><i class="fa fa-check"></i><b>2.1</b> Operadores de utilidad general</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-relacionales"><i class="fa fa-check"></i><b>2.1.1</b> <strong>1. Operadores relacionales</strong></a></li>
+<li class="chapter" data-level="2.1.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-aritméticos"><i class="fa fa-check"></i><b>2.1.2</b> <strong>2. Operadores aritméticos</strong></a></li>
+<li class="chapter" data-level="2.1.3" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-de-asignación"><i class="fa fa-check"></i><b>2.1.3</b> <strong>3. Operadores de asignación</strong></a></li>
+<li class="chapter" data-level="2.1.4" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-booleanos"><i class="fa fa-check"></i><b>2.1.4</b> <strong>4. Operadores booleanos</strong></a></li>
+<li class="chapter" data-level="2.1.5" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operador-pipeline"><i class="fa fa-check"></i><b>2.1.5</b> <strong>5. Operador pipeline (%&gt;%)</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#manipulación-de-estructutura-de-bases-de-datos"><i class="fa fa-check"></i><b>2.2</b> Manipulación de estructutura de bases de datos</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tipos-de-variables"><i class="fa fa-check"></i><b>2.2.1</b> Tipos de variables</a></li>
+<li class="chapter" data-level="2.2.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#coerción-explícita"><i class="fa fa-check"></i><b>2.2.2</b> Coerción explícita</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#crear-nuevas-variables"><i class="fa fa-check"></i><b>2.3</b> Crear nuevas variables</a>
+<ul>
+<li class="chapter" data-level="2.3.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#r-base"><i class="fa fa-check"></i><b>2.3.1</b> <strong>1. R Base</strong></a></li>
+<li class="chapter" data-level="2.3.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tidyverse"><i class="fa fa-check"></i><b>2.3.2</b> <strong>2. Tidyverse</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.4" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#limpiar-y-renombrar-variables"><i class="fa fa-check"></i><b>2.4</b> Limpiar y renombrar variables</a>
+<ul>
+<li class="chapter" data-level="2.4.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#limpiar-nombre-de-variables-librería-janitor"><i class="fa fa-check"></i><b>2.4.1</b> <strong>1. Limpiar nombre de variables, librería “janitor”</strong></a></li>
+<li class="chapter" data-level="2.4.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#renombrar-variables"><i class="fa fa-check"></i><b>2.4.2</b> <strong>2. Renombrar variables</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.5" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#reordenar-variables"><i class="fa fa-check"></i><b>2.5</b> Reordenar variables</a>
+<ul>
+<li class="chapter" data-level="2.5.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#r-base-2"><i class="fa fa-check"></i><b>2.5.1</b> <strong>1. R base</strong></a></li>
+<li class="chapter" data-level="2.5.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tidyverse-2"><i class="fa fa-check"></i><b>2.5.2</b> <strong>2. Tidyverse</strong></a></li>
+<li class="chapter" data-level="2.5.3" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#función-personalizada"><i class="fa fa-check"></i><b>2.5.3</b> <strong>3. Función personalizada</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.6" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#recodificación-de-variables"><i class="fa fa-check"></i><b>2.6</b> Recodificación de variables</a>
+<ul>
+<li class="chapter" data-level="2.6.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#r-base-3"><i class="fa fa-check"></i><b>2.6.1</b> <strong>1. R base</strong></a></li>
+<li class="chapter" data-level="2.6.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tidyverse-3"><i class="fa fa-check"></i><b>2.6.2</b> <strong>2. Tidyverse</strong></a></li>
+<li class="chapter" data-level="2.6.3" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#car"><i class="fa fa-check"></i><b>2.6.3</b> <strong>3. Car</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.7" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#selección-de-variables"><i class="fa fa-check"></i><b>2.7</b> Selección de variables</a>
+<ul>
+<li class="chapter" data-level="2.7.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#r-base-4"><i class="fa fa-check"></i><b>2.7.1</b> <strong>R Base</strong></a></li>
+<li class="chapter" data-level="2.7.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tidyverse-4"><i class="fa fa-check"></i><b>2.7.2</b> <strong>Tidyverse</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.8" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#filtrar-casos"><i class="fa fa-check"></i><b>2.8</b> Filtrar casos</a>
+<ul>
+<li class="chapter" data-level="2.8.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#tidyverse-5"><i class="fa fa-check"></i><b>2.8.1</b> <strong>Tidyverse</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="2.9" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#bases-de-datos-long-y-wide"><i class="fa fa-check"></i><b>2.9</b> Bases de datos Long y Wide</a>
+<ul>
+<li class="chapter" data-level="2.9.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#de-long-a-wider"><i class="fa fa-check"></i><b>2.9.1</b> <strong>1. De long a wider</strong></a></li>
+<li class="chapter" data-level="2.9.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#de-wider-a-long"><i class="fa fa-check"></i><b>2.9.2</b> <strong>2. De wider a long</strong></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><i class="fa fa-check"></i><b>3</b> Automatización de tabulaciones de variables (de frecuencia, contingencia y diferencia de medias)</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#tablas-de-frecuenciacontingencia"><i class="fa fa-check"></i><b>3.1</b> Tablas de frecuencia/contingencia</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cargar-nuestra-bbdd"><i class="fa fa-check"></i><b>3.1.1</b> <strong>1. Cargar nuestra BBDD</strong></a></li>
+<li class="chapter" data-level="3.1.2" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-un-banner"><i class="fa fa-check"></i><b>3.1.2</b> <strong>2. Creamos un banner</strong></a></li>
+<li class="chapter" data-level="3.1.3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#una-vez-creamos-nuestro-objeto-banner-debemos-crear-una-función-capaz-de-crear-las-diferencias-proporcionales"><i class="fa fa-check"></i><b>3.1.3</b> <strong>3. Una vez creamos nuestro objeto banner, debemos crear una función capaz de crear las diferencias proporcionales</strong></a></li>
+<li class="chapter" data-level="3.1.4" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creación-de-secciones-recomendado"><i class="fa fa-check"></i><b>3.1.4</b> <strong>4. Creación de secciones (Recomendado)</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#tablas-de-diferencias-de-medias"><i class="fa fa-check"></i><b>3.2</b> Tablas de diferencias de medias</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-un-banner-1"><i class="fa fa-check"></i><b>3.2.1</b> <strong>1. Creamos un banner</strong></a></li>
+<li class="chapter" data-level="3.2.2" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-una-función-que-nos-permita-calcular-las-diferencias-de-medias"><i class="fa fa-check"></i><b>3.2.2</b> <strong>2. Creamos una función que nos permita calcular las diferencias de medias</strong></a></li>
+<li class="chapter" data-level="3.2.3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creación-de-secciones-recomendado-1"><i class="fa fa-check"></i><b>3.2.3</b> <strong>3. Creación de secciones (Recomendado)</strong></a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#exportar-tablas-a-excel"><i class="fa fa-check"></i><b>3.3</b> Exportar tablas a excel</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#independientes-porcentajes"><i class="fa fa-check"></i><b>3.3.1</b> 1. Independientes: porcentajes</a></li>
+<li class="chapter" data-level="3.3.2" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#independientes-diferencia-de-medias"><i class="fa fa-check"></i><b>3.3.2</b> 2. Independientes: diferencia de medias</a></li>
+<li class="chapter" data-level="3.3.3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#en-conjunto-porcentaje-y-dif-de-medias-en-un-solo-archivo"><i class="fa fa-check"></i><b>3.3.3</b> 3. En conjunto: porcentaje y dif de medias en un solo archivo</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html"><i class="fa fa-check"></i><b>4</b> Clasificación por nivel socio-económico (Metodología AIM)</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#construcción-con-ingreso"><i class="fa fa-check"></i><b>4.1</b> Construcción con ingreso</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#a.-cargar-nuestros-datos"><i class="fa fa-check"></i><b>4.1.1</b> <strong>a. cargar nuestros datos</strong></a></li>
+<li class="chapter" data-level="4.1.2" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#b.-recodificar-nuestras-variables"><i class="fa fa-check"></i><b>4.1.2</b> <strong>b. recodificar nuestras variables</strong></a></li>
+<li class="chapter" data-level="4.1.3" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#c.-integrar-la-variable-gse-y-generar-recodificación"><i class="fa fa-check"></i><b>4.1.3</b> <strong>c. integrar la variable gse y generar recodificación</strong></a></li>
+<li class="chapter" data-level="4.1.4" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#d-exportar-bbdd-con-clasificación-socioeconómica"><i class="fa fa-check"></i><b>4.1.4</b> **d) exportar BBDD con clasificación socioeconómica</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#construcción-sin-ingreso-proxy"><i class="fa fa-check"></i><b>4.2</b> Construcción sin ingreso (proxy)</a>
+<ul>
+<li class="chapter" data-level="4.2.1" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#a.-cargar-nuestros-datos-1"><i class="fa fa-check"></i><b>4.2.1</b> <strong>a. Cargar nuestros datos</strong></a></li>
+<li class="chapter" data-level="4.2.2" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#b.-recodificar-nuestras-variables-1"><i class="fa fa-check"></i><b>4.2.2</b> <strong>b. recodificar nuestras variables</strong></a></li>
+<li class="chapter" data-level="4.2.3" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#c.-integrar-la-variable-gse-y-generar-recodificación-1"><i class="fa fa-check"></i><b>4.2.3</b> <strong>c. integrar la variable gse y generar recodificación</strong></a></li>
+<li class="chapter" data-level="4.2.4" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#d-exportar-bbdd-con-clasificación-socioeconómica-1"><i class="fa fa-check"></i><b>4.2.4</b> <strong>d) exportar BBDD con clasificación socioeconómica</strong></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="malla-de-validación.html"><a href="malla-de-validación.html"><i class="fa fa-check"></i><b>5</b> Malla de validación</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="malla-de-validación.html"><a href="malla-de-validación.html#errores-de-valores-perdidos"><i class="fa fa-check"></i><b>5.1</b> Errores de valores perdidos</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="malla-de-validación.html"><a href="malla-de-validación.html#a-selección-de-id-y-variables-de-interés"><i class="fa fa-check"></i><b>5.1.1</b> a) selección de Id y variables de interés</a></li>
+<li class="chapter" data-level="5.1.2" data-path="malla-de-validación.html"><a href="malla-de-validación.html#b-casos-perdidos-por-fila"><i class="fa fa-check"></i><b>5.1.2</b> b) casos perdidos por fila</a></li>
+<li class="chapter" data-level="5.1.3" data-path="malla-de-validación.html"><a href="malla-de-validación.html#c-casos-perdidos-por-columna-o-variable"><i class="fa fa-check"></i><b>5.1.3</b> c) casos perdidos por columna o variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="malla-de-validación.html"><a href="malla-de-validación.html#errores-de-programación"><i class="fa fa-check"></i><b>5.2</b> Errores de programación</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bookdown D&amp;A</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="malla-de-validación" class="section level1 hasAnchor" number="5">
+<h1><span class="header-section-number">Capítulo 5</span> Malla de validación<a href="malla-de-validación.html#malla-de-validación" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Una malla de validación permite revisar de manera automática la consistencia de la información proveniente de cada encuesta y los rangos de las respuestas, identificando de manera automática cuando un valor o respuesta específica no corresponda a un rango, previamente determinado, o cuando una respuesta sea inconsistente en relación a respuestas anteriores, según los saltos específicos de cada instrumento.</p>
+<p>Veremos como programar los siguientes tipos de errores:</p>
+<ol style="list-style-type: lower-roman">
+<li><p>errores de valores perdidos, asociados a preguntas de respuesta obligatoria que se encuentren sin respuestas (missing);</p></li>
+<li><p>errores de programación, como saltos o filtros mal aplicados o preguntas de respuesta múltiples que carezcan de respuesta en al menos una opción;</p></li>
+<li><p>errores de consistencia, como datos fuera de rangos o extremos (datos que se escapan de los rangos, Ej: Edad.), y detectar inconsistencias lógicas en las respuestas de los participantes.</p></li>
+</ol>
+<p><strong>Data a utilizar</strong></p>
+<p>Para el ejercicio, se utilizará la base de datos de la Encuesta Nacional de Uso del Tiempo (ENUT) 2015.</p>
+<p>Se utilizarán dos versiones de dicha BBDD: una corregida tal como se puede descargar desde la pagina web del Instituto Nacional de Estadísticas y una alterada, en la que se introdujeron errores a propósito para ilustrar el funcionamiento de la malla de validación. Ambas pueden cargarse directamente con el siguiente comando:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="malla-de-validación.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
+<span id="cb2-2"><a href="malla-de-validación.html#cb2-2" aria-hidden="true" tabindex="-1"></a>data_enut          <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/BASE_USUARIO_corregida.sav&quot;</span>)</span>
+<span id="cb2-3"><a href="malla-de-validación.html#cb2-3" aria-hidden="true" tabindex="-1"></a>data_enut_alterada <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/BASE_USUARIO_alterada.sav&quot;</span>)</span></code></pre></div>
+<p>Las bases de datos pueden encontrarse en este link: <a href="https://github.com/JoaoAcharanR/Malla_validacion/tree/master/raw">click aquí</a>.</p>
+<div id="errores-de-valores-perdidos" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> Errores de valores perdidos<a href="malla-de-validación.html#errores-de-valores-perdidos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En primer lugar, se deberá verificar que todas las variables que debieron a ser respondidas por todos los casos encuestados, no estando sujetas a saltos ni filtros de ningún tipo. Como se trata de preguntas “obligatorias” por las que todos debieron haber pasado, querremos chequear que efectivamente haya sido así. Para eso, verificaremos que no hayan valores perdidas en dichas columnas.</p>
+<p>Para efectos de estandarizar, se utiliza la expresión “ERRORMISSING_[variable]”.</p>
+<p>Extra: creacion de un Id , puesto que esta BBDD no lo poseía.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="malla-de-validación.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creacion de Id</span></span>
+<span id="cb3-2"><a href="malla-de-validación.html#cb3-2" aria-hidden="true" tabindex="-1"></a>data_enut <span class="ot">&lt;-</span> data_enut <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="malla-de-validación.html#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Id =</span> <span class="fu">paste0</span>(id_vivienda, id_hogar, n_linea_h, id_persona, n_linea_p))</span></code></pre></div>
+<div id="a-selección-de-id-y-variables-de-interés" class="section level3 hasAnchor" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> a) selección de Id y variables de interés<a href="malla-de-validación.html#a-selección-de-id-y-variables-de-interés" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Para este paso solo debemos cambiar la BBDD y la selección de variables obligatorias para cada caso. Además del identificador de la persona o el folio de la encuesta, el cual siempre debe seleccionarse primero, antes de las variables.</p>
+<p>Es decir, se debe utilizar de la siguiente manera:</p>
+<p>data_perdidos &lt;- select(BBDD,
+c(Id, varX:varY))</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="malla-de-validación.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># seleccion de variables de interes</span></span>
+<span id="cb4-2"><a href="malla-de-validación.html#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Para este paso debemos asegurarnos que la variable Id quede al inicio de la seleccion</span></span>
+<span id="cb4-3"><a href="malla-de-validación.html#cb4-3" aria-hidden="true" tabindex="-1"></a>data_perdidos <span class="ot">&lt;-</span> <span class="fu">select</span>(data_enut,     <span class="co">#BBDD</span></span>
+<span id="cb4-4"><a href="malla-de-validación.html#cb4-4" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">c</span>(Id, <span class="dv">98</span><span class="sc">:</span><span class="dv">101</span>)) <span class="co"># Id, variables.</span></span></code></pre></div>
+</div>
+<div id="b-casos-perdidos-por-fila" class="section level3 hasAnchor" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> b) casos perdidos por fila<a href="malla-de-validación.html#b-casos-perdidos-por-fila" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="malla-de-validación.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># debemos asegurarnos que el loop comience con la columna 2, debido a que la 1 es el Id: i in 2:ncol</span></span>
+<span id="cb5-2"><a href="malla-de-validación.html#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Este loop se encuentra estandarizado. Si seguimos el paso anterior, no deberíamos</span></span>
+<span id="cb5-3"><a href="malla-de-validación.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># problemas con copiar y pegar el código</span></span>
+<span id="cb5-4"><a href="malla-de-validación.html#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="malla-de-validación.html#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">2</span><span class="sc">:</span><span class="fu">ncol</span>(data_perdidos)) {</span>
+<span id="cb5-6"><a href="malla-de-validación.html#cb5-6" aria-hidden="true" tabindex="-1"></a>  data_perdidos[,i] <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(data_perdidos[i]), <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb5-7"><a href="malla-de-validación.html#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(data_perdidos)[i]<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">&quot;ERRORMISSING&quot;</span>, <span class="fu">names</span>(data_perdidos)[i], <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
+<span id="cb5-8"><a href="malla-de-validación.html#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<p><strong>Una vez hemos hecho el loop, el objeto “data_perdidos” debería lucir de la siguiente manera:</strong></p>
+<div id="htmlwidget-c4438432840bc90a4b7a" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c4438432840bc90a4b7a">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6"],["11111","11122","11133","11144","11155","22161"],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Id<\/th>\n      <th>ERRORMISSING_c12_1_1<\/th>\n      <th>ERRORMISSING_c13_1_1<\/th>\n      <th>ERRORMISSING_c14_1_1<\/th>\n      <th>ERRORMISSING_c15_1_1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="malla-de-validación.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Opcional 1 </span><span class="al">###</span></span>
+<span id="cb6-2"><a href="malla-de-validación.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Si lo necesitamos, también podemos integrar los valores perdidos a la bbdd original</span></span>
+<span id="cb6-3"><a href="malla-de-validación.html#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Para realizar este paso es importante contar con un Id, o alguna otra </span></span>
+<span id="cb6-4"><a href="malla-de-validación.html#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># variable en común entre los dos conjuntos de datos</span></span>
+<span id="cb6-5"><a href="malla-de-validación.html#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="malla-de-validación.html#cb6-6" aria-hidden="true" tabindex="-1"></a>data_enut <span class="ot">&lt;-</span> <span class="fu">full_join</span>(data_enut, data_perdidos, <span class="at">by =</span> <span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb6-7"><a href="malla-de-validación.html#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="malla-de-validación.html#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="malla-de-validación.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">### Opcional 2 </span><span class="al">###</span></span>
+<span id="cb6-10"><a href="malla-de-validación.html#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Si nos cuesta comprender los errores mediante la codificación 0 y 1, tenemos la opción</span></span>
+<span id="cb6-11"><a href="malla-de-validación.html#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># de recodificar estos parámetros a otros más intuitivos</span></span>
+<span id="cb6-12"><a href="malla-de-validación.html#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="malla-de-validación.html#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="do">### OJO: realizar este paso opcional no nos permitira realizar el conteo total por variable </span><span class="al">###</span></span>
+<span id="cb6-14"><a href="malla-de-validación.html#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-15"><a href="malla-de-validación.html#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="co"># data_perdidos&lt;-data_perdidos %&gt;% </span></span>
+<span id="cb6-16"><a href="malla-de-validación.html#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="co">#   mutate_at(c(2:ncol(data_perdidos)), recode, &#39;1&#39;=&#39;NA&#39;, &#39;0&#39;=&#39;Con Dato&#39;)</span></span></code></pre></div>
+</div>
+<div id="c-casos-perdidos-por-columna-o-variable" class="section level3 hasAnchor" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> c) casos perdidos por columna o variable<a href="malla-de-validación.html#c-casos-perdidos-por-columna-o-variable" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La forma anterior responde a la búsqueda de errores según caso (o fila). No obstante, también podemos generar un resumen que nos indique la cantidad total de casos perdidos que contengan nuestras variables de interés.</p>
+<p>Para ello seguimos la siguiente línea de códigos:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="malla-de-validación.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># crear objeto tibble con la Id y el nombre de las variables</span></span>
+<span id="cb7-2"><a href="malla-de-validación.html#cb7-2" aria-hidden="true" tabindex="-1"></a>reporte_errormissing <span class="ot">&lt;-</span>  <span class="fu">tibble</span>(<span class="at">variable =</span> data_perdidos <span class="sc">%&gt;%</span> </span>
+<span id="cb7-3"><a href="malla-de-validación.html#cb7-3" aria-hidden="true" tabindex="-1"></a>                                  colnames)</span>
+<span id="cb7-4"><a href="malla-de-validación.html#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="malla-de-validación.html#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># quitamos el Id de nuestro objeto (al ser variable character tendremos conflictos para sumar la canidad errores)</span></span>
+<span id="cb7-6"><a href="malla-de-validación.html#cb7-6" aria-hidden="true" tabindex="-1"></a>reporte_errormissing <span class="ot">&lt;-</span> reporte_errormissing <span class="sc">%&gt;%</span> </span>
+<span id="cb7-7"><a href="malla-de-validación.html#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(variable <span class="sc">!=</span> <span class="st">&quot;Id&quot;</span>)</span>
+<span id="cb7-8"><a href="malla-de-validación.html#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="malla-de-validación.html#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sumamos la cantidad de errores que tengan las variables</span></span>
+<span id="cb7-10"><a href="malla-de-validación.html#cb7-10" aria-hidden="true" tabindex="-1"></a>reporte_errormissing<span class="sc">$</span>errores <span class="ot">&lt;-</span> <span class="fu">colSums</span>(data_perdidos[<span class="fu">sapply</span>(data_perdidos, is.numeric)], <span class="at">na.rm =</span> F)</span></code></pre></div>
+<p><strong>Una vez hemos construido el reporte, tendremos un objeto más o menos así:</strong></p>
+<template id="3c564515-28d2-4139-9216-f9edbf57a91d"><style>
+.tabwid table{
+  border-spacing:0px !important;
+  border-collapse:collapse;
+  line-height:1;
+  margin-left:auto;
+  margin-right:auto;
+  border-width: 0;
+  display: table;
+  margin-top: 1.275em;
+  margin-bottom: 1.275em;
+  border-color: transparent;
+}
+.tabwid_left table{
+  margin-left:0;
+}
+.tabwid_right table{
+  margin-right:0;
+}
+.tabwid td {
+    padding: 0;
+}
+.tabwid a {
+  text-decoration: none;
+}
+.tabwid thead {
+    background-color: transparent;
+}
+.tabwid tfoot {
+    background-color: transparent;
+}
+.tabwid table tr {
+background-color: transparent;
+}
+</style><div class="tabwid"><style>.cl-daf5b9f2{}.cl-dae8ab90{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-dae8d282{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-dae8d283{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-dae92570{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dae92571{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dae92572{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dae92573{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dae92574{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-dae92575{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-daf5b9f2'>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-dae92575"><p class="cl-dae8d282"><span class="cl-dae8ab90">variable</span></p></td><td class="cl-dae92574"><p class="cl-dae8d283"><span class="cl-dae8ab90">errores</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-dae92570"><p class="cl-dae8d282"><span class="cl-dae8ab90">ERRORMISSING_c12_1_1</span></p></td><td class="cl-dae92571"><p class="cl-dae8d283"><span class="cl-dae8ab90">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dae92570"><p class="cl-dae8d282"><span class="cl-dae8ab90">ERRORMISSING_c13_1_1</span></p></td><td class="cl-dae92571"><p class="cl-dae8d283"><span class="cl-dae8ab90">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dae92570"><p class="cl-dae8d282"><span class="cl-dae8ab90">ERRORMISSING_c14_1_1</span></p></td><td class="cl-dae92571"><p class="cl-dae8d283"><span class="cl-dae8ab90">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-dae92573"><p class="cl-dae8d282"><span class="cl-dae8ab90">ERRORMISSING_c15_1_1</span></p></td><td class="cl-dae92572"><p class="cl-dae8d283"><span class="cl-dae8ab90">0</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="87c6b7ec-188a-4fc8-9858-449bc1c72b92"></div>
+<script>
+var dest = document.getElementById("87c6b7ec-188a-4fc8-9858-449bc1c72b92");
+var template = document.getElementById("3c564515-28d2-4139-9216-f9edbf57a91d");
+var caption = template.content.querySelector("caption");
+if(caption) {
+  caption.style.cssText = "display:block;text-align:center;";
+  var newcapt = document.createElement("p");
+  newcapt.appendChild(caption)
+  dest.parentNode.insertBefore(newcapt, dest.previousSibling);
+}
+var fantome = dest.attachShadow({mode: 'open'});
+var templateContent = template.content;
+fantome.appendChild(templateContent);
+</script>
+
+</div>
+</div>
+<div id="errores-de-programación" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Errores de programación<a href="malla-de-validación.html#errores-de-programación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Por otra parte, nos interesará constatar que los saltos o filtros que contempla el cuestionario se encuentren bien aplicados, de manera que todos los encuestados hayan pasado por la secuencia lógica de preguntas que les correspondía.</p>
+<p>A modo de ejemplo, en el cuestionario ENUT, quienes respondieron que en sus hogares sí trabajó personal de servicio doméstico durante la semana anterior a aquella en la que fue aplicada la encuestada, debieron responder posteriormente la pregunta respecto a cuántas personas prestaron esos servicios en dicha vivienda.</p>
+<p>En este caso, vamos a denominarlos “ERRORPRO_[n° consecutivo del error]”.</p>
+<p>Por tanto, vamos a programar dos errores:</p>
+<p>Si responde que la semana pasada si trabajó personal servicio doméstico y luego no responde cuántas personas prestaron esos servicios; y al revés,</p>
+<p>Si responde que la semana pasada NO trabajó personal servicio doméstico y luego responde cuántas personas trabajaron</p>
+<p>En esta ocasión, se utilizará la base de datos alterada (con errores)</p>
+<p>Primero, se presenta el caso i):</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="clasificación-por-nivel-socio-económico-metodología-aim.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/Jona-S99/Bookdown/edit/master/05-Malla_validacion.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/Jona-S99/Bookdown/blob/master/05-Malla_validacion.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>
