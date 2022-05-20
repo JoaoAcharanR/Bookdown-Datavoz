@@ -23,7 +23,7 @@
 <meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-05-18" />
+<meta name="date" content="2022-05-20" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -237,6 +237,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="4.2.4" data-path="clasificación-por-nivel-socio-económico-metodología-aim.html"><a href="clasificación-por-nivel-socio-económico-metodología-aim.html#d-exportar-bbdd-con-clasificación-socioeconómica-1"><i class="fa fa-check"></i><b>4.2.4</b> <strong>d) exportar BBDD con clasificación socioeconómica</strong></a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="5" data-path="malla-de-validación.html"><a href="malla-de-validación.html"><i class="fa fa-check"></i><b>5</b> Malla de validación</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="malla-de-validación.html"><a href="malla-de-validación.html#errores-de-valores-perdidos"><i class="fa fa-check"></i><b>5.1</b> Errores de valores perdidos</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="malla-de-validación.html"><a href="malla-de-validación.html#a-selección-de-id-y-variables-de-interés"><i class="fa fa-check"></i><b>5.1.1</b> a) selección de Id y variables de interés</a></li>
+<li class="chapter" data-level="5.1.2" data-path="malla-de-validación.html"><a href="malla-de-validación.html#b-casos-perdidos-por-fila"><i class="fa fa-check"></i><b>5.1.2</b> b) casos perdidos por fila</a></li>
+<li class="chapter" data-level="5.1.3" data-path="malla-de-validación.html"><a href="malla-de-validación.html#c-casos-perdidos-por-columna-o-variable"><i class="fa fa-check"></i><b>5.1.3</b> c) casos perdidos por columna o variable</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="malla-de-validación.html"><a href="malla-de-validación.html#errores-de-programación"><i class="fa fa-check"></i><b>5.2</b> Errores de programación</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -273,10 +283,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb81-7"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTAR BBDD</span></span>
 <span id="cb81-8"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb81-8" aria-hidden="true" tabindex="-1"></a>director <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/220244 BDD_director_escalas.sav&quot;</span>)  <span class="co"># cargar base</span></span>
 <span id="cb81-9"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb81-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(director<span class="sc">$</span>Pond_Nac)      <span class="co"># resumen estadístico del ponderador (si aplica)</span></span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu. 
-##  0.7903  0.7903  0.7903  1.0000  1.3146 
-##    Max. 
-##  1.3146</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 
+##  0.7903  0.7903  0.7903  1.0000 
+## 3rd Qu.    Max. 
+##  1.3146  1.3146</code></pre>
 </div>
 <div id="creamos-un-banner" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> <strong>2. Creamos un banner</strong><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-un-banner" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -493,22 +503,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  Mean |    7.3 |
 ##    sd |   15.2 |
 ##     N |   50.0 |
-##                                        
-##  TIPO Tipo de enseñanza |             |
-##                     H/C | POLIVALENTE |
-##                       A |           B |
-##  ---------------------- | ----------- |
-##                     4.9 |        23.8 |
-##                     0.8 |        40.8 |
-##                    30.0 |         5.0 |
-##        
-##       |
-##   T/P |
-##     C |
-##  ---- |
-##   4.7 |
-##   0.6 |
-##  15.0 |</code></pre>
+##                          
+##  TIPO Tipo de enseñanza |
+##                     H/C |
+##                       A |
+##  ---------------------- |
+##                     4.9 |
+##                     0.8 |
+##                    30.0 |
+##                      
+##              |      |
+##  POLIVALENTE |  T/P |
+##            B |    C |
+##  ----------- | ---- |
+##         23.8 |  4.7 |
+##         40.8 |  0.6 |
+##          5.0 | 15.0 |</code></pre>
 <hr />
 </div>
 </div>

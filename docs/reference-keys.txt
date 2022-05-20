@@ -59,13 +59,8 @@ b.-recodificar-nuestras-variables-1
 c.-integrar-la-variable-gse-y-generar-recodificación-1
 d-exportar-bbdd-con-clasificación-socioeconómica-1
 malla-de-validación
-data-a-utilizar
-a-selección-de-id-y-variables-de-interés
-tab:unnamed-chunk-6
 errores-de-valores-perdidos
-tab:unnamed-chunk-7
+a-selección-de-id-y-variables-de-interés
 b-casos-perdidos-por-fila
-tab:unnamed-chunk-8
-casos-perdidos-por-columna-o-variable
 c-casos-perdidos-por-columna-o-variable
 errores-de-programación
