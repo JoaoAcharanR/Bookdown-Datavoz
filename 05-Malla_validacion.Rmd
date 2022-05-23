@@ -27,7 +27,11 @@ data_enut          <- read_sav("BBDD/BASE_USUARIO_corregida.sav")
 data_enut_alterada <- read_sav("BBDD/BASE_USUARIO_alterada.sav")
 ```
 
-Las bases de datos pueden encontrarse en este link: [click aquí](https://github.com/JoaoAcharanR/Malla_validacion/tree/master/raw).
+Para descargar los datos hacer click en:
+
+[Base alterada](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_alterada.sav)
+
+[Base corregida](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_corregida.sav)
 
 
 ## Errores de valores perdidos
@@ -151,6 +155,42 @@ Si responde que la semana pasada NO trabajó personal servicio doméstico y lueg
 En esta ocasión, se utilizará la base de datos alterada (con errores)
 
 Primero, se presenta el caso i):
+
+
+
+# Errores de consistencia
+
+Finalmente, verificaremos que no existan inconsistencias lógicas en las respuestas de los encuestados (por ejemplo: tener 21 años o menos y afirmar tener nivel educacional de magister o doctarado completo) o la existencia de valores fuera de rango en variables númericas (por ejemplo, variable de edad con casos menores de 18, si es que solo debían responderla mayores de edad).
+
+En este caso, vamos a denominarlos "ERRORCON_[n° consecutivo del error]".
+
+A modo de ejemplo, primero programaremos un caso de respuestas inconsistentes. En este caso, se verificará que no haya casos su edad (c14_1_1) no sea consistente con su nivel educacional (d12_1_1). Para ello, se utilizará la BBDD alterada con errores.
+
+Como se observa en la tabla de salida, tenemos 6 errores con casos cuya edad es inferior a los 20 años, pero declaran poseer estudios de magíster o doctorado.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

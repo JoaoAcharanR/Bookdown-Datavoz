@@ -64,3 +64,4 @@ a-selección-de-id-y-variables-de-interés
 b-casos-perdidos-por-fila
 c-casos-perdidos-por-columna-o-variable
 errores-de-programación
+errores-de-consistencia

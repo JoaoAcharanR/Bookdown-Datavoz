@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Capítulo 5 Malla de validación | Bookdown D&amp;A</title>
-  <meta name="description" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  <title> 5 Malla de validación | Bookdown D&amp;A</title>
+  <meta name="description" content=" 5 Malla de validación | Bookdown D&amp;A" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  <meta property="og:title" content=" 5 Malla de validación | Bookdown D&amp;A" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Capítulo 5 Malla de validación | Bookdown D&amp;A" />
+  <meta name="twitter:title" content=" 5 Malla de validación | Bookdown D&amp;A" />
   
   
   
@@ -23,7 +23,7 @@
 <meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-05-20" />
+<meta name="date" content="2022-05-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="clasificación-por-nivel-socio-económico-metodología-aim.html"/>
-
+<link rel="next" href="errores-de-consistencia.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -247,6 +247,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="5.2" data-path="malla-de-validación.html"><a href="malla-de-validación.html#errores-de-programación"><i class="fa fa-check"></i><b>5.2</b> Errores de programación</a></li>
 </ul></li>
+<li class="chapter" data-level="6" data-path="errores-de-consistencia.html"><a href="errores-de-consistencia.html"><i class="fa fa-check"></i><b>6</b> Errores de consistencia</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -267,7 +268,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="malla-de-validación" class="section level1 hasAnchor" number="5">
-<h1><span class="header-section-number">Capítulo 5</span> Malla de validación<a href="malla-de-validación.html#malla-de-validación" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<h1><span class="header-section-number"> 5</span> Malla de validación<a href="malla-de-validación.html#malla-de-validación" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p>Una malla de validación permite revisar de manera automática la consistencia de la información proveniente de cada encuesta y los rangos de las respuestas, identificando de manera automática cuando un valor o respuesta específica no corresponda a un rango, previamente determinado, o cuando una respuesta sea inconsistente en relación a respuestas anteriores, según los saltos específicos de cada instrumento.</p>
 <p>Veremos como programar los siguientes tipos de errores:</p>
 <ol style="list-style-type: lower-roman">
@@ -281,7 +282,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="malla-de-validación.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(haven)</span>
 <span id="cb119-2"><a href="malla-de-validación.html#cb119-2" aria-hidden="true" tabindex="-1"></a>data_enut          <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/BASE_USUARIO_corregida.sav&quot;</span>)</span>
 <span id="cb119-3"><a href="malla-de-validación.html#cb119-3" aria-hidden="true" tabindex="-1"></a>data_enut_alterada <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/BASE_USUARIO_alterada.sav&quot;</span>)</span></code></pre></div>
-<p>Las bases de datos pueden encontrarse en este link: <a href="https://github.com/JoaoAcharanR/Malla_validacion/tree/master/raw">click aquí</a>.</p>
+<p>Para descargar los datos hacer click en:</p>
+<p><a href="https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_alterada.sav">Base alterada</a></p>
+<p><a href="https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_corregida.sav">Base corregida</a></p>
 <div id="errores-de-valores-perdidos" class="section level2 hasAnchor" number="5.1">
 <h2><span class="header-section-number">5.1</span> Errores de valores perdidos<a href="malla-de-validación.html#errores-de-valores-perdidos" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>En primer lugar, se deberá verificar que todas las variables que debieron a ser respondidas por todos los casos encuestados, no estando sujetas a saltos ni filtros de ningún tipo. Como se trata de preguntas “obligatorias” por las que todos debieron haber pasado, querremos chequear que efectivamente haya sido así. Para eso, verificaremos que no hayan valores perdidas en dichas columnas.</p>
@@ -312,8 +315,8 @@ c(Id, varX:varY))</p>
 <span id="cb122-7"><a href="malla-de-validación.html#cb122-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">colnames</span>(data_perdidos)[i]<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">&quot;ERRORMISSING&quot;</span>, <span class="fu">names</span>(data_perdidos)[i], <span class="at">sep =</span> <span class="st">&quot;_&quot;</span>)</span>
 <span id="cb122-8"><a href="malla-de-validación.html#cb122-8" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p><strong>Una vez hemos hecho el loop, el objeto “data_perdidos” debería lucir de la siguiente manera:</strong></p>
-<div id="htmlwidget-c74554e0757861445eb9" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-c74554e0757861445eb9">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6"],["11111","11122","11133","11144","11155","22161"],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Id<\/th>\n      <th>ERRORMISSING_c12_1_1<\/th>\n      <th>ERRORMISSING_c13_1_1<\/th>\n      <th>ERRORMISSING_c14_1_1<\/th>\n      <th>ERRORMISSING_c15_1_1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-6581637ee054918c79d0" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-6581637ee054918c79d0">{"x":{"filter":"none","vertical":false,"fillContainer":true,"data":[["1","2","3","4","5","6"],["11111","11122","11133","11144","11155","22161"],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0],[0,0,0,0,0,0]],"container":"<table class=\"display fill-container\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Id<\/th>\n      <th>ERRORMISSING_c12_1_1<\/th>\n      <th>ERRORMISSING_c13_1_1<\/th>\n      <th>ERRORMISSING_c14_1_1<\/th>\n      <th>ERRORMISSING_c15_1_1<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,3,4,5]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="malla-de-validación.html#cb123-1" aria-hidden="true" tabindex="-1"></a><span class="do">### Opcional 1 </span><span class="al">###</span></span>
 <span id="cb123-2"><a href="malla-de-validación.html#cb123-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Si lo necesitamos, también podemos integrar los valores perdidos a la bbdd original</span></span>
 <span id="cb123-3"><a href="malla-de-validación.html#cb123-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Para realizar este paso es importante contar con un Id, o alguna otra </span></span>
@@ -346,7 +349,7 @@ c(Id, varX:varY))</p>
 <span id="cb124-9"><a href="malla-de-validación.html#cb124-9" aria-hidden="true" tabindex="-1"></a><span class="co"># sumamos la cantidad de errores que tengan las variables</span></span>
 <span id="cb124-10"><a href="malla-de-validación.html#cb124-10" aria-hidden="true" tabindex="-1"></a>reporte_errormissing<span class="sc">$</span>errores <span class="ot">&lt;-</span> <span class="fu">colSums</span>(data_perdidos[<span class="fu">sapply</span>(data_perdidos, is.numeric)], <span class="at">na.rm =</span> F)</span></code></pre></div>
 <p><strong>Una vez hemos construido el reporte, tendremos un objeto más o menos así:</strong></p>
-<template id="bf04e080-4fab-4741-acc5-a8cd45ad5d8f"><style>
+<template id="7c7ac2a8-d27c-4e3a-9b0d-3fb7ad84ca6d"><style>
 .tabwid table{
   border-spacing:0px !important;
   border-collapse:collapse;
@@ -380,12 +383,12 @@ c(Id, varX:varY))</p>
 .tabwid table tr {
 background-color: transparent;
 }
-</style><div class="tabwid"><style>.cl-a2a83cf4{}.cl-a29987ea{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-a299aedc{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a299aedd{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-a299fcca{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a299fccb{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a299fccc{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a299fccd{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a299fcce{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-a299fccf{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-a2a83cf4'>
-<thead><tr style="overflow-wrap:break-word;"><td class="cl-a299fccf"><p class="cl-a299aedc"><span class="cl-a29987ea">variable</span></p></td><td class="cl-a299fcce"><p class="cl-a299aedd"><span class="cl-a29987ea">errores</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-a299fcca"><p class="cl-a299aedc"><span class="cl-a29987ea">ERRORMISSING_c12_1_1</span></p></td><td class="cl-a299fccb"><p class="cl-a299aedd"><span class="cl-a29987ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a299fcca"><p class="cl-a299aedc"><span class="cl-a29987ea">ERRORMISSING_c13_1_1</span></p></td><td class="cl-a299fccb"><p class="cl-a299aedd"><span class="cl-a29987ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a299fcca"><p class="cl-a299aedc"><span class="cl-a29987ea">ERRORMISSING_c14_1_1</span></p></td><td class="cl-a299fccb"><p class="cl-a299aedd"><span class="cl-a29987ea">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-a299fccd"><p class="cl-a299aedc"><span class="cl-a29987ea">ERRORMISSING_c15_1_1</span></p></td><td class="cl-a299fccc"><p class="cl-a299aedd"><span class="cl-a29987ea">0</span></p></td></tr></tbody></table></div></template>
-<div class="flextable-shadow-host" id="57947310-5b31-48da-8f26-bc7cb3327499"></div>
+</style><div class="tabwid"><style>.cl-994e55a4{}.cl-9942ebb0{font-family:'Arial';font-size:11pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-99431298{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-99431299{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-99436090{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-99436091{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-99436092{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-99436093{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-99436094{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-99436095{width:54pt;background-color:transparent;vertical-align: middle;border-bottom: 2pt solid rgba(102, 102, 102, 1.00);border-top: 2pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style><table class='cl-994e55a4'>
+<thead><tr style="overflow-wrap:break-word;"><td class="cl-99436095"><p class="cl-99431298"><span class="cl-9942ebb0">variable</span></p></td><td class="cl-99436094"><p class="cl-99431299"><span class="cl-9942ebb0">errores</span></p></td></tr></thead><tbody><tr style="overflow-wrap:break-word;"><td class="cl-99436090"><p class="cl-99431298"><span class="cl-9942ebb0">ERRORMISSING_c12_1_1</span></p></td><td class="cl-99436091"><p class="cl-99431299"><span class="cl-9942ebb0">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-99436090"><p class="cl-99431298"><span class="cl-9942ebb0">ERRORMISSING_c13_1_1</span></p></td><td class="cl-99436091"><p class="cl-99431299"><span class="cl-9942ebb0">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-99436090"><p class="cl-99431298"><span class="cl-9942ebb0">ERRORMISSING_c14_1_1</span></p></td><td class="cl-99436091"><p class="cl-99431299"><span class="cl-9942ebb0">0</span></p></td></tr><tr style="overflow-wrap:break-word;"><td class="cl-99436093"><p class="cl-99431298"><span class="cl-9942ebb0">ERRORMISSING_c15_1_1</span></p></td><td class="cl-99436092"><p class="cl-99431299"><span class="cl-9942ebb0">0</span></p></td></tr></tbody></table></div></template>
+<div class="flextable-shadow-host" id="9b55dd43-4268-430e-a19c-e7c6f26fbe27"></div>
 <script>
-var dest = document.getElementById("57947310-5b31-48da-8f26-bc7cb3327499");
-var template = document.getElementById("bf04e080-4fab-4741-acc5-a8cd45ad5d8f");
+var dest = document.getElementById("9b55dd43-4268-430e-a19c-e7c6f26fbe27");
+var template = document.getElementById("7c7ac2a8-d27c-4e3a-9b0d-3fb7ad84ca6d");
 var caption = template.content.querySelector("caption");
 if(caption) {
   caption.style.cssText = "display:block;text-align:center;";
@@ -410,7 +413,6 @@ fantome.appendChild(templateContent);
 <p>Si responde que la semana pasada NO trabajó personal servicio doméstico y luego responde cuántas personas trabajaron</p>
 <p>En esta ocasión, se utilizará la base de datos alterada (con errores)</p>
 <p>Primero, se presenta el caso i):</p>
-
 </div>
 </div>
             </section>
@@ -418,8 +420,8 @@ fantome.appendChild(templateContent);
           </div>
         </div>
       </div>
-<a href="clasificación-por-nivel-socio-económico-metodología-aim.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="clasificación-por-nivel-socio-económico-metodología-aim.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="errores-de-consistencia.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>

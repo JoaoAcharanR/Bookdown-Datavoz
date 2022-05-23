@@ -5,4 +5,4 @@ edit: https://github.com/Jona-S99/Bookdown/edit/master/%s
 view: https://github.com/Jona-S99/Bookdown/blob/master/%s
 language:
   ui:
-    chapter_name: "Capítulo "
+    chapter_name: " "
