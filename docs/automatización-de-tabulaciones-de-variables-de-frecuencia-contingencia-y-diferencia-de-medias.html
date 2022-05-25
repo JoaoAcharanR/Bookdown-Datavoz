@@ -285,10 +285,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb83-7"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTAR BBDD</span></span>
 <span id="cb83-8"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-8" aria-hidden="true" tabindex="-1"></a>director <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/220244 BDD_director_escalas.sav&quot;</span>)  <span class="co"># cargar base</span></span>
 <span id="cb83-9"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(director<span class="sc">$</span>Pond_Nac)      <span class="co"># resumen estadístico del ponderador (si aplica)</span></span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu. 
-##  0.7903  0.7903  0.7903  1.0000  1.3146 
-##    Max. 
-##  1.3146</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##  0.7903  0.7903  0.7903  1.0000  1.3146  1.3146</code></pre>
 </div>
 <div id="creamos-un-banner" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> <strong>2. Creamos un banner</strong><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-un-banner" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -345,16 +343,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb87-5"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-6"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="co"># corroboramos que la seccion se componga con las variables requeridas</span></span>
 <span id="cb87-7"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(seccion_1_prop)</span></code></pre></div>
-<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;  
-##  [3] &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
-##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
-##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
-##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot; 
-## [11] &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
-## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot; 
-## [15] &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
-## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
-## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
+<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;   &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
+##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;   &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
+##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot;  &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
+## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot;  &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
+## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot;  &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
 ## [21] &quot;ConfProc_P21&quot;</code></pre>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una lista que contiene los elementos solicitados ()</span></span>
 <span id="cb89-2"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb89-2" aria-hidden="true" tabindex="-1"></a>list_table_seccion1_banner1 <span class="ot">=</span> <span class="fu">lapply</span>(seccion_1_prop, <span class="cf">function</span>(variable) {</span>
@@ -448,16 +441,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-4"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-5"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># corroboramos que la seccion se componga con las variables requeridas</span></span>
 <span id="cb93-6"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(seccion_1_medias) </span></code></pre></div>
-<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;  
-##  [3] &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
-##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
-##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
-##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot; 
-## [11] &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
-## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot; 
-## [15] &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
-## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
-## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
+<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;   &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
+##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;   &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
+##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot;  &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
+## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot;  &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
+## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot;  &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
 ## [21] &quot;ConfProc_P21&quot;</code></pre>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una lista que contiene los elementos solicitados ()</span></span>
 <span id="cb95-2"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb95-2" aria-hidden="true" tabindex="-1"></a>list_table_seccion1_banner2 <span class="ot">=</span> <span class="fu">lapply</span>(seccion_1_medias, <span class="cf">function</span>(variable) {</span>
@@ -485,22 +473,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  | P1_01 A continuación, se enuncian una serie de AFIRMACIONES SOBRE DISTINTOS ESTAMENTOS DE ESTE LICEO, Por favor, marque su nivel de acuerdo o desacuerdo con cada afirmación, considerando que 1 es Muy en desacuerdo y 6 es Muy de acuerdo:Los docentes de es |
 ##  |                                                                                                                                                                                                                                                                |
 ##  |                                                                                                                                                                                                                                                                |
-##                                          
-##       | #Total | TIPO Tipo de enseñanza |
-##       |        |                    H/C |
-##       |        |                      A |
-##  ---- | ------ | ---------------------- |
-##  Mean |    7.3 |                    4.9 |
-##    sd |   15.2 |                    0.8 |
-##     N |   50.0 |                   30.0 |
-##                      
-##              |      |
-##  POLIVALENTE |  T/P |
-##            B |    C |
-##  ----------- | ---- |
-##         23.8 |  4.7 |
-##         40.8 |  0.6 |
-##          5.0 | 15.0 |</code></pre>
+##                                                               
+##       | #Total | TIPO Tipo de enseñanza |             |      |
+##       |        |                    H/C | POLIVALENTE |  T/P |
+##       |        |                      A |           B |    C |
+##  ---- | ------ | ---------------------- | ----------- | ---- |
+##  Mean |    7.3 |                    4.9 |        23.8 |  4.7 |
+##    sd |   15.2 |                    0.8 |        40.8 |  0.6 |
+##     N |   50.0 |                   30.0 |         5.0 | 15.0 |</code></pre>
 <hr />
 </div>
 </div>
