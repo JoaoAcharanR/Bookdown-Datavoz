@@ -158,7 +158,7 @@ Primero, se presenta el caso i):
 
 
 
-# Errores de consistencia
+## Errores de consistencia
 
 Finalmente, verificaremos que no existan inconsistencias lógicas en las respuestas de los encuestados (por ejemplo: tener 21 años o menos y afirmar tener nivel educacional de magister o doctarado completo) o la existencia de valores fuera de rango en variables númericas (por ejemplo, variable de edad con casos menores de 18, si es que solo debían responderla mayores de edad).
 

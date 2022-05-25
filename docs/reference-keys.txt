@@ -33,6 +33,7 @@ tidyverse-5
 bases-de-datos-long-y-wide
 de-long-a-wider
 de-wider-a-long
+colapsar-variables
 automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias
 tablas-de-frecuenciacontingencia
 cargar-nuestra-bbdd

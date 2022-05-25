@@ -7,6 +7,7 @@ library(data.table)
 library(DT)
 library(tidyr)
 library(car)
+library(tidyselect)
 
 ```
 
@@ -58,6 +59,8 @@ Dentro de cada subdivisión se encontrarán una serie de formas para realizar el
 ### **4. Operadores booleanos** 
 
  Describen relaciones **lógicas** o **condicionales**
+ 
+ **Estos operadores responden a la jerarquía según paréntesis**
  
  | Símbolo  | Función |
  |---------:|:--------|
@@ -1050,11 +1053,72 @@ df %>%
 ```
 
 
+## Colapsar variables
+
+En algunos casos tendremos baterías de preguntas que tendrán los valores en columnas independientes. Un ejemplo de ello es la tabla a continuación, donde cada estado civil corresponde a una variable en particular, teniendo valores en aquellas que responde la persona y valores `NA` en aquellas preguntas ajenas a las que respondió. 
+
+Si bien este tipo de variables son útiles, muchas veces querremos tener una nueva variable que contemple todas las respuestas de tales baterías. Para esto utilizamos la función `coalese()`, la cual nos permitirá colapsar todas las variables en una.
 
 
+```{r echo=FALSE}
+df <- data.frame(id = c(153,154,155,156,157),
+                 p1 = c("casado",NA,NA,NA,"casado"),
+                 p2 = c(NA,"soltero","soltero",NA,NA),
+                 p3 = c(NA,NA,NA,"viudo",NA))
 
+df %>% flextable::flextable()
+```
 
+Para el ejemplo, queremos crear una nueva variable que contenga las respuestas del estado civil. Cuando tengamos una gran batería de preguntas es mejor trabajar con un vector que contenga los nombres de las variables según su posición en el dataframe.
 
+En este caso tenemos tres variables, las cuales se posicionan desde la columna 2 a la 4 dentro del dataframe. Para no escribir variable por variable en la función vamos a crear un vector que contenga los nombres de estas variables.
+
+```{r}
+### CASOS CON 3 O MÁS VARIABLES ###
+
+# a) creamos un vector que contenga los nombres de nuestras variables
+# en este caso las variables p1, p2, p3
+# en otros casos con mas preguntas solo debemos asignar el rango dentro de la funcion
+
+# variables <- colnames(df[x:y])
+
+variables <- colnames(df[2:4])
+
+# b) para ejecutar correctamente el codigo debemos insertar el vector que hemos creado
+# anteriormente, dentro de la funcion syms(VECTOR) y se uiliza de la siguiente manera:
+
+# df <- df %>% 
+#  mutate(nombre_var_nueva = coalesce(!!! syms(variables)))
+
+df <- df %>% 
+  mutate(estado_civil = coalesce(!!! syms(variables)))
+```
+
+```{r echo=FALSE}
+df %>% 
+  flextable()
+```
+
+Otra manera de hacer esto es sin utilizar el vector de variables. Este caso es recomendado cuando tenemos una cantidad menor de variables.
+
+Para este ejemplo solo utilizaremos dos variables, lo cual no requiere mucho tiempo al escribirlas al mano y tendremos un resultado similar al anterior, pero con un cambio en el código, pues para este caso no necesitaremos los argumentos `!!! syms(variables)`
+
+```{r echo=FALSE}
+df <- data.frame(id = c(153,154,155,156,157),
+                 p1 = c("casado",NA,NA,"casado","casado"),
+                 p2 = c(NA,"soltero","soltero",NA,NA))
+```
+
+```{r}
+### CASOS CON 2 VARIABLES ###
+
+df <- df %>% 
+  mutate(estado_civil = coalesce(p1,p2))
+```
+
+```{r echo=FALSE}
+df %>% flextable()
+```
 
 
 
