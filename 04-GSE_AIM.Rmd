@@ -88,11 +88,11 @@ df <- df %>% mutate(educ = coalesce(S6_A,S5))
 
 ```{r}
 # recodificar n. educ
-df <- df %>% mutate(educ = case_when(educ %in% c(1,2) ~ 1,
-                                         educ == 3 ~ 2,
-                                         educ %in% c(4,5) ~ 3,
-                                         educ %in% c(6,7,8) ~ 4,
-                                         educ %in% c(9,10) ~ 5))
+df <- df %>% mutate(educ = case_when(educ_rec %in% c(1,2) ~ 1,
+                                         educ_rec == 3 ~ 2,
+                                         educ_rec %in% c(4,5) ~ 3,
+                                         educ_rec %in% c(6,7,8) ~ 4,
+                                         educ_rec %in% c(9,10) ~ 5))
 ```
 
 
@@ -160,7 +160,7 @@ t_bienes <- readRDS("BBDD/GSE_2019_bienes.rds")
 library(haven)
 
 load("BBDD/Mallplaza_Pond.Rdata")
-df<- mallplaza
+df <- mallplaza
 ```
 
 ### **b. recodificar nuestras variables**
@@ -296,7 +296,7 @@ df %>%
 ```
 
 
-### **d) exportar BBDD con clasificación socioeconómica**
+### **d. exportar BBDD con clasificación socioeconómica**
 ```{r}
 ### OJO: quitar comentarios para guardar ###
 # save(df,                           # BBDD

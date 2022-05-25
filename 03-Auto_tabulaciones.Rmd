@@ -123,7 +123,7 @@ BBDD <- director
 
 # banner
 banner_2 <- BBDD %>%             # base
-  tab_cols(total(), TIPO) %>%    # variables que queremos como columnas***
+  tab_cols(total()) %>%    # variables que queremos como columnas***
   tab_weight(weight = Pond_Nac)  # agregamos el ponderador de nuestra base
 
 # *** tenemos la posibilidad de agregar otras variables de interés.
