@@ -26,7 +26,7 @@ Para llevar a cabo la construcción del ponderador necesitamos los siguientes el
 
 - BBDD de trabajo, a la cual queremos asignar ponderaciones.
 
-- BBDD a seleccionadas por el analista.
+- BBDD seleccionadas por el analista.
 
 - BBDD de proyecciones poblacionales a nivel país. Algo a tener en cuenta es que esta BBDD se actualiza año a año.
 
