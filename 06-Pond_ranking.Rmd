@@ -16,9 +16,9 @@ La siguiente sección pretende ejemplificar la manera de construir un ponderador
 
 Para más información sobre la metodología visitar el siguiente [link](https://www.ine.cl/docs/default-source/documentos-de-trabajo/nueva-metodolog%C3%ADa-de-calibraci%C3%B3n-de-la-ene-m%C3%A9todo-de-calibraci%C3%B3n-raking.pdf?sfvrsn=bfed7e52_2)
 
-Para el ejemplo se pretende ponderar de acuerdo a las variables de: región, sexo, edad y educación. En este sentido, los valores que estimaremos como poblacionales de la región, el sexo y la edad los extraeremos de la BBDD de proyecciones del INE, mientras que los de educación los obtendremos desde la encuesta Casen 2020.
+El siguiente ejemplo pretende ponderar de acuerdo a las variables de: región, sexo, edad y educación. En este sentido, los valores que estimaremos como poblacionales de la región, el sexo y la edad los extraeremos de la BBDD de proyecciones del INE, mientras que los de educación los obtendremos desde la encuesta Casen 2020.
 
-**Importante:** para construir este tipo de ponderador es necesario utilizar la BBDD de estimaciones y proyecciones poblaciones del INE, la cual se puede descargar en el siguiente [link]()
+**Importante: para construir este tipo de ponderador es necesario utilizar la BBDD de estimaciones y proyecciones poblaciones del INE. [Click aquí para descargar](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/estimaciones-y-proyecciones-2002-2035-comunas.xlsx)**
 
 ## Cargar bases de datos necesarias
 
@@ -88,8 +88,8 @@ data1<-data1 %>% mutate(edad_rec=case_when(between(P2,18,30)~ "18 a 30 años",
                                         between(P2,41,54)~ "41 a 54 años",
                                         TRUE ~ "55 años o más"))
 
-# region
-names(data1)[5]="region"
+# renombrar variable region
+data1 <- data1 %>% dplyr::rename("region" = "P4")
 ```
 
 ```{r}
@@ -131,8 +131,8 @@ proy<-proy[,c( "Nombre Region",
               "Edad",
               "Poblacion 2021")]
 
-# recodificar sexo
-names(proy)[2]="sexo"
+# renombrar variable sexo
+proy <- proy %>% dplyr::rename("sexo" = "Sexo\r\n1=Hombre\r\n2=Mujer")
 
 
 # recodificar regiones
@@ -171,7 +171,7 @@ proy.18<-proy.18 %>%
 # proporcion de personas mayores de 18 años por region
 proy.18$porcentaje<-proy.18$n/sum(proy.18$n)
 
-
+# homologar recodificacion segun bbdd de estudio
 proy.18$orden <- case_when(proy.18$`Nombre Region`=="Tarapacá" ~ 1,
           proy.18$`Nombre Region`=="Antofagasta" ~ 2,
           proy.18$`Nombre Region`=="Atacama" ~ 3,
@@ -210,14 +210,17 @@ proy.18.se<-proy.18.se %>% mutate(edad_rec=case_when(between(Edad,18,30)~ "18 a 
                                                     between(Edad,41,54)~ "41 a 54 años",
                                                     TRUE ~ "55 años o más"))
 
-# 
+# frecuencia absoluta
 proy.18.se<-proy.18.se %>% 
   dplyr::group_by(edad_rec,sexo) %>% 
   dplyr::summarise(n=sum(`Poblacion 2021`))
 
 # proy.18.se<-proy.18.se %>% ungroup() # remueve agrupacion
 
+# frecuencia relativa
 proy.18.se$porcentaje<-proy.18.se$n/sum(proy.18.se$n)
+
+# unir sexo y edad en una sola variablepro
 proy.18.se$edad_sexo<-paste0(proy.18.se$sexo," ",proy.18.se$edad_rec)
 ```
 
@@ -286,6 +289,9 @@ Verificar que los nombres de la base en comuna, estén en el mismo orden que en 
 
 Para el ejemplo: como no tienen el mismo orden de levels ordenaré BBDD$REGION EN BASE A LO QUE APARECE EN LAS PROYECCIONES
 
+**¿Cómo se calcula?**
+
+Para calcular estas distribuciones marginales debemos multiplicar el número total de casos de nuestra BBDD de estudio por la frecuencia relativa de las variables externas.
 
 ```{r}
 # REGION
@@ -330,7 +336,7 @@ dummy_gender_rake <-
 # "sabra donde buscar" para encontrar tales variables
 
 ## Comprobamos que los ponderadores esten bien construidos
-# como convención, los valores deben ser mayores a 0.3 y menores a 3
+# como convención, los valores deben ser mayores a 0.3 (Min) y menores a 3 (Max)
 summary(weights(dummy_gender_rake))
 
 ## En caso que no oscilen entre estos valores tenemos dos opciones:
