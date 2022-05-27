@@ -1,0 +1,376 @@
+```{r librerias, echo=FALSE}
+library(stringr)
+library(readxl)
+library(dplyr)
+library(tidyverse)
+library(haven)
+library(survey) # PONDERACION
+library(expss)
+library(tidyr)
+library(sjmisc)
+```
+
+# Construcción de ponderadores por Raking
+
+La siguiente sección pretende ejemplificar la manera de construir un ponderador utilizando la nueva metodología empleada por el Instituto Nacional de Estadísticas de Chile (INE).
+
+Para más información sobre la metodología visitar el siguiente [link](https://www.ine.cl/docs/default-source/documentos-de-trabajo/nueva-metodolog%C3%ADa-de-calibraci%C3%B3n-de-la-ene-m%C3%A9todo-de-calibraci%C3%B3n-raking.pdf?sfvrsn=bfed7e52_2)
+
+Para el ejemplo se pretende ponderar de acuerdo a las variables de: región, sexo, edad y educación. En este sentido, los valores que estimaremos como poblacionales de la región, el sexo y la edad los extraeremos de la BBDD de proyecciones del INE, mientras que los de educación los obtendremos desde la encuesta Casen 2020.
+
+**Importante:** para construir este tipo de ponderador es necesario utilizar la BBDD de estimaciones y proyecciones poblaciones del INE, la cual se puede descargar en el siguiente [link]()
+
+## Cargar bases de datos necesarias
+
+Para llevar a cabo la construcción del ponderador necesitamos los siguientes elementos:
+
+- BBDD de trabajo, a la cual queremos asignar ponderaciones.
+
+- BBDD a seleccionadas por el analista.
+
+- BBDD de proyecciones poblacionales a nivel país. Algo a tener en cuenta es que esta BBDD se actualiza año a año.
+
+```{r}
+# libreria
+library(haven)
+
+# BBDD de nuestro estudio (cambia segun caso)
+data1 <- read_sav("BBDD/Base_final_DS2216_09_05_2022.sav", encoding = "UTF-8")
+
+# BBDD para extraer ponderador de educacion (cambia segun caso)
+# Generalmente usamos CASEN 2017 O CASEN 2020
+educ<-read_sav("BBDD/Casen en Pandemia 2020_STATA PMulti.sav")
+
+# BBDD para construir las proyecciones (se actualiza año a año)
+proy <- read_excel("BBDD/estimaciones-y-proyecciones-2002-2035-comunas.xlsx")
+```
+
+
+
+## Chequeo de variables
+
+Como es costumbre, realizamos un primer análisis descriptivo de los datos para saber si debemos realizar recodificaciones o asignar valores perdidos.
+
+En este ejemplo emplearemos los siguientes códigos para realizar la labor, si embargo, la aplicación de determinadas librerías quedan a discreción del analista en cuestión.
+
+```{r results='hide', message=FALSE, warning=FALSE}
+# Variables cualitativas
+# (sexo, nivel educacional y region)
+library(sjmisc)
+data1 %>% 
+  frq(P1,P3,P4)
+    
+# Variables cuantitativas
+# (edad)
+data1 %>% 
+  sjmisc::descr(P2)
+```
+
+## Recodificaciones
+
+Un requisito esencial para lograr construir el ponderador es que debemos **homologar todas las variables que deseemos utilizar**.
+
+Es decir, realizar todas las recodificaciones necesarias a las variables que extraeremos de las bases de datos externas, para que así presenten la misma composición y orden que las variables de nuestra base de datos de estudio.
+
+**Estas recodificaciones son un elemento central en el cálculo de los ponderadores**, pues con ellas lograremos asignar y reestructurar los pesos en caso de ser necesario.
+
+**Importante:** todas la recodificaciones que se presentan en el ejemplo responden a su contexto. Cualquier otra aplicación debe contener sus propias recodificaciones según el los objetivos del estudio.
+
+### Recodificación de variables en BBDD de estudio
+```{r}
+# sexo
+data1$P1<-ifelse(data1$P1==1,"Hombre","Mujer")
+
+
+# Recodificacion de edad en tramos (valida de emplear solo para variables numericas)
+data1<-data1 %>% mutate(edad_rec=case_when(between(P2,18,30)~ "18 a 30 años",
+                                        between(P2,31,40)~ "31 a 40 años",
+                                        between(P2,41,54)~ "41 a 54 años",
+                                        TRUE ~ "55 años o más"))
+
+# region
+names(data1)[5]="region"
+```
+
+```{r}
+# educacion
+data1$P3<-as.numeric(data1$P3)
+
+data1<-data1 %>% mutate(educ_rec=case_when(between(P3,1,5)~ "humanidades completa o menos",
+                                           between(P3,6,8)~ "CFT inc-Universidad inc",
+                                           TRUE ~ "Universitaria completa o superior"))
+
+data1$educ_rec<-factor(data1$educ_rec, levels = c("humanidades completa o menos",
+                                                  "CFT inc-Universidad inc",
+                                                  "Universitaria completa o superior"))
+
+```
+
+```{r}
+# edad_Sexo
+data1$edad_sexo<-paste0(data1$P1," ",data1$edad_rec)
+
+data1$edad_sexo<-as.character(data1$edad_sexo)
+
+data1$edad_sexo<-factor(data1$edad_sexo, levels = c( "Hombre 18 a 30 años",
+                                                     "Hombre 31 a 40 años",
+                                                     "Hombre 41 a 54 años",
+                                                     "Hombre 55 años o más",
+                                                     "Mujer 18 a 30 años",
+                                                     "Mujer 31 a 40 años",
+                                                     "Mujer 41 a 54 años",
+                                                     "Mujer 55 años o más"))
+```
+
+
+### Recodificaciones en BBDD de proyecciones pobalcionales
+```{r}
+# seleccionar variables de interes
+proy<-proy[,c( "Nombre Region",
+              "Sexo\r\n1=Hombre\r\n2=Mujer",
+              "Edad",
+              "Poblacion 2021")]
+
+# recodificar sexo
+names(proy)[2]="sexo"
+
+
+# recodificar regiones
+proy$region <- case_when(proy$`Nombre Region`=="Tarapacá" ~ 1,
+                         proy$`Nombre Region`=="Antofagasta" ~ 2,
+                         proy$`Nombre Region`=="Atacama" ~ 3,
+                         proy$`Nombre Region`=="Coquimbo" ~ 4,
+                         proy$`Nombre Region`=="Valparaíso" ~ 5,
+                         proy$`Nombre Region`=="Libertador General Bernardo O'Higgins" ~ 6,
+                         proy$`Nombre Region`=="Maule" ~ 7,
+                         proy$`Nombre Region`=="Biobío" ~ 8,
+                         proy$`Nombre Region`=="La Araucanía" ~ 9,
+                         proy$`Nombre Region`=="Los Lagos" ~ 10,
+                         proy$`Nombre Region`=="Aysén del General Carlos Ibáñez del Campo" ~ 11,
+                         proy$`Nombre Region`=="Magallanes y de la Antártica Chilena" ~ 12,
+                         proy$`Nombre Region`=="Metropolitana de Santiago" ~ 13,
+                         proy$`Nombre Region`=="Los Ríos" ~ 14,
+                         proy$`Nombre Region`=="Arica y Parinacota" ~ 15,
+                         proy$`Nombre Region`=="Ñuble" ~ 16)
+
+```
+
+
+### Proyecciones poblacionales mayores a 18 años
+```{r}
+# REGION
+proy.18<-proy %>% 
+  filter(Edad>=18) %>% 
+  select("Nombre Region","Poblacion 2021")
+
+# conteo de poblacion mayor de 18 años por region
+proy.18<-proy.18 %>% 
+  dplyr::group_by(`Nombre Region`) %>% 
+  dplyr::summarise(n=sum(`Poblacion 2021`))
+
+# proporcion de personas mayores de 18 años por region
+proy.18$porcentaje<-proy.18$n/sum(proy.18$n)
+
+
+proy.18$orden <- case_when(proy.18$`Nombre Region`=="Tarapacá" ~ 1,
+          proy.18$`Nombre Region`=="Antofagasta" ~ 2,
+          proy.18$`Nombre Region`=="Atacama" ~ 3,
+          proy.18$`Nombre Region`=="Coquimbo" ~ 4,
+          proy.18$`Nombre Region`=="Valparaíso" ~ 5,
+          proy.18$`Nombre Region`=="Libertador General Bernardo O'Higgins" ~ 6,
+          proy.18$`Nombre Region`=="Maule" ~ 7,
+          proy.18$`Nombre Region`=="Biobío" ~ 8,
+          proy.18$`Nombre Region`=="La Araucanía" ~ 9,
+          proy.18$`Nombre Region`=="Los Lagos" ~ 10,
+          proy.18$`Nombre Region`=="Aysén del General Carlos Ibáñez del Campo" ~ 11,
+          proy.18$`Nombre Region`=="Magallanes y de la Antártica Chilena" ~ 12,
+          proy.18$`Nombre Region`=="Metropolitana de Santiago" ~ 13,
+          proy.18$`Nombre Region`=="Los Ríos" ~ 14,
+          proy.18$`Nombre Region`=="Arica y Parinacota" ~ 15,
+          proy.18$`Nombre Region`=="Ñuble" ~ 16)
+
+# ordenar de forma ascendente
+proy.18<-proy.18[order(proy.18$orden),]
+
+# ordenar de forma descendente
+#proy.18$orden <- proy.18 %>% dplyr::arrange(desc(orden))
+
+```
+
+```{r message=FALSE}
+# SEXO Y EDAD
+proy.18.se<-proy %>% filter(Edad>=18)
+
+# homologamos la variable sexo con la distribucion de la bbdd de estudio
+proy.18.se$sexo<-ifelse(proy.18.se$sexo==1,"Hombre","Mujer")
+
+# homologamos la recodificacion de nuestra bbdd de estudio
+proy.18.se<-proy.18.se %>% mutate(edad_rec=case_when(between(Edad,18,30)~ "18 a 30 años",
+                                                    between(Edad,31,40)~ "31 a 40 años",
+                                                    between(Edad,41,54)~ "41 a 54 años",
+                                                    TRUE ~ "55 años o más"))
+
+# 
+proy.18.se<-proy.18.se %>% 
+  dplyr::group_by(edad_rec,sexo) %>% 
+  dplyr::summarise(n=sum(`Poblacion 2021`))
+
+# proy.18.se<-proy.18.se %>% ungroup() # remueve agrupacion
+
+proy.18.se$porcentaje<-proy.18.se$n/sum(proy.18.se$n)
+proy.18.se$edad_sexo<-paste0(proy.18.se$sexo," ",proy.18.se$edad_rec)
+```
+
+### Recodificación BBDD Casen 2020
+```{r}
+# NIVEL EDCUCACIONAL
+# seleccionamos los casos mayores a 18 años
+educ<-educ %>% filter(edad>=18)
+
+# nuevo dataframe con educacion y personas mayores a 18 años
+educ1<-educ %>% select(educ)
+
+# transformacion de la variable a numérica
+educ1$educ<-as.numeric(educ1$educ)
+
+# eliminamos los valores perdidos codificados como 99
+educ1<-educ1 %>% filter(educ<99)
+
+
+# recodificacion homologa de la variable
+educ1<-educ1 %>% mutate(educ_rec=case_when(between(educ,0,6)~ "humanidades completa o menos",
+                                                   between(educ,7,9)~ "CFT inc-Universidad inc",
+                                                   TRUE ~ "Universitaria completa o superior"))
+
+# asigancion del orden de las categorias
+educ1$educ_rec<-factor(educ1$educ_rec, levels = c("humanidades completa o menos",
+                                                  "CFT inc-Universidad inc",
+                                                  "Universitaria completa o superior"))
+
+## creacion tabla de proporciones ##
+# a. nombres
+educacion.n<-data.frame(names(table(educ1$educ_rec)))
+# b. proporciones
+educacion.n$prop<-as.vector(prop.table(table(educ1$educ_rec)))
+# c. nombre de primera variable
+names(educacion.n)[1]="educ"
+# d. asignacion de categorias
+educacion.n$educ <-factor(educacion.n$educ, levels = c("humanidades completa o menos",
+                                                  "CFT inc-Universidad inc",
+                                                  "Universitaria completa o superior"))
+```
+
+## Construcción del ponderador
+
+### *Creación de un objeto sin pesos*
+
+El argumento ids se utiliza para decirle a la encuesta que todos los datos provienen de una sola unidad primaria de muestreo.
+
+En data debemos agregar nuestra BBDD original.
+```{r}
+library(survey)
+dummy_survey_unweighted <- svydesign(ids = ~1,     
+                                     data = data1, 
+                                     weights = NULL)
+```
+
+### *Crear las  distribuciones marginales poblacionales de cada variable a utilizar para ponderar*
+
+Aquí agregar todas las distribuciones marginales de todas las variables que se desean ponderar. Cada marco de datos consta de dos vectores: uno que describe los niveles del factor asociado y el otro las frecuencias correspondientes. 
+
+Tenga en cuenta que multiplicamos las frecuencias relativas teóricamente conocidas como las hemos obtenido de nuestra población de referencia con el número de filas en el conjunto de datos para el que calculamos los pesos, para obtener frecuencias absolutas.
+
+El nombre del vector que describe los niveles del factor, tiene que ser el mismo nombre que tiene la variable en la bbdd y la misma codificación del factor en la base de datos original.
+
+Verificar que los nombres de la base en comuna, estén en el mismo orden que en la base `proy.18`. 
+
+Para el ejemplo: como no tienen el mismo orden de levels ordenaré BBDD$REGION EN BASE A LO QUE APARECE EN LAS PROYECCIONES
+
+
+```{r}
+# REGION
+# dist. marginal
+reg_dist <- tibble(region = c(names(table(data1$region))), 
+                   Freq = nrow(data1)*c(proy.18$porcentaje))
+
+
+# SEXO_EDAD
+# ordenar variables
+proy.18.se<-proy.18.se[order(proy.18.se$edad_sexo),] 
+
+# dist. marginal
+gender_edad_dist <- tibble(edad_sexo = c(names(table(proy.18.se$edad_sexo))), 
+                           Freq = nrow(data1)*c(proy.18.se$porcentaje))
+
+
+# EDUCACION
+# ordenar variables
+data1<-data1[order(data1$educ_rec),] 
+
+# dist. marginal
+nivel_educ_dist<-tibble(educ_rec = c(names(table(educacion.n$educ))), 
+                        Freq = nrow(data1)*c(educacion.n$prop))
+```
+
+### *Cáluclo del ponderador*
+```{r}
+# CALCULO DE PONDERACIONES
+dummy_gender_rake <- 
+  survey::rake(design = dummy_survey_unweighted,         # objeto sin pesos
+               sample.margins = list(~edad_sexo,         # variables a extraer
+                                     ~region,
+                                     ~educ_rec),
+               population.margins = list(gender_edad_dist, # objetos de donde 
+                                         reg_dist,         # se extraen las
+                                         nivel_educ_dist)) # variables
+
+### ¡OJO, deben tener le mismo orden!
+# si quiero las variables edad_sexo, region y educ_rec, debo asegurarme que 
+# el orden de los objetos debe seguir la misma logica, de esta manera R 
+# "sabra donde buscar" para encontrar tales variables
+
+## Comprobamos que los ponderadores esten bien construidos
+# como convención, los valores deben ser mayores a 0.3 y menores a 3
+summary(weights(dummy_gender_rake))
+
+## En caso que no oscilen entre estos valores tenemos dos opciones:
+# 1) volver a los pasos anteriores y recodificar de tal manera que los pesos
+#    tomen el rango deseado (recomendado).
+
+# 2) utilizar el siguiente codigo, el cual fuerza un recorte de los ponderadores
+#    de acuerdo al rango que le asignemos.
+
+# dummy_gender_rake.rake.trim <-        # nuevo objeto con ponderadores forzados
+#   trimWeights(dummy_gender_rake,      # objeto con ponderadores
+#               lower=0.3,              # rango: minimo
+#               upper=3,                # rango: maximo
+#               strict=TRUE)            # forzar la funcion
+
+
+
+# Pasar los pesos a la bbdd original
+data1$Pond<-weights(dummy_gender_rake)
+
+# asegurarse que la suma de los puntajes de los ponderadores sean igual al
+# n muestral
+data1$Pond %>% sum()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

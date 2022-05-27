@@ -66,3 +66,17 @@ b-casos-perdidos-por-fila
 c-casos-perdidos-por-columna-o-variable
 errores-de-programación
 errores-de-consistencia
+d.-exportar-bbdd-con-clasificación-socioeconómica
+construcción-de-ponderadores-por-raking
+cargar-bases-de-datos-necesarias
+chequeo-de-variables
+recodificación-de-variables-en-bbdd-de-estudio
+recodificaciones-en-bbdd-de-proyecciones-pobalcionales
+recodificación-de-proyecciones-poblacionales-mayores-a-18-años
+recodificación-bbdd-casen-2020
+construcción-del-ponderador
+creación-de-un-objeto-sin-pesos
+crear-las-distribuciones-marginales-poblacionales-de-cada-variable-a-utilizar-para-ponderar
+proyecciones-poblacionales-mayores-a-18-años
+recodificaciones
+cáluclo-del-ponderador
