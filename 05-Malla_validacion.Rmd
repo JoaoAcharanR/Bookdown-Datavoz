@@ -19,34 +19,36 @@ iii. errores de consistencia, como datos fuera de rangos o extremos (datos que s
 
 Para el ejercicio, se utilizará la base de datos de la Encuesta Nacional de Uso del Tiempo (ENUT) 2015.
 
-Se utilizarán dos versiones de dicha BBDD: una corregida tal como se puede descargar desde la pagina web del Instituto Nacional de Estadísticas y una alterada, en la que se introdujeron errores a propósito para ilustrar el funcionamiento de la malla de validación. Ambas pueden cargarse directamente con el siguiente comando:
+Se utilizarán dos versiones de dicha BBDD: una corregida tal como se puede descargar desde la pagina web del Instituto Nacional de Estadísticas y una alterada, en la que se introdujeron errores a propósito para ilustrar el funcionamiento de la malla de validación.
+
+**Comenzaremos trabajando con la BBDD original**
 
 ```{r message=FALSE}
 library(haven)
-data_enut          <- read_sav("BBDD/BASE_USUARIO_corregida.sav")
-data_enut_alterada <- read_sav("BBDD/BASE_USUARIO_alterada.sav")
+df <- read_sav("BBDD/BASE_USUARIO_corregida.sav")
 ```
 
 Para descargar los datos hacer click en:
 
+[Base corregida](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_corregida.sav)
+
 [Base alterada](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_alterada.sav)
 
-[Base corregida](https://github.com/Jona-S99/Bookdown/raw/master/BBDD/BASE_USUARIO_corregida.sav)
 
 
 ## Errores de valores perdidos
 
-En primer lugar, se deberá verificar que todas las variables que debieron a ser respondidas por todos los casos encuestados, no estando sujetas a saltos ni filtros de ningún tipo. Como se trata de preguntas "obligatorias" por las que todos debieron haber pasado, querremos chequear que efectivamente haya sido así. Para eso, verificaremos que no hayan valores perdidas en dichas columnas.
+En primer lugar, se deberá verificar todas las variables que debieron a ser respondidas por todos los casos encuestados, no estando sujetas a saltos ni filtros de ningún tipo. Como se trata de preguntas "obligatorias", por las que todos debieron haber pasado, querremos chequear que efectivamente haya sido así. Para eso, verificaremos que no hayan valores perdidas en dichas columnas.
 
 
-Para efectos de estandarizar, se utiliza la expresión "ERRORMISSING_[variable]".
+Para efectos de estandarizar, se utiliza la expresión **"ERRORMISSING_[variable]"**.
 
 Extra: creacion de un Id , puesto que esta BBDD no lo poseía.
 
 
 ```{r}
 # creacion de Id
-data_enut <- data_enut %>% 
+df <- df %>% 
   mutate(Id = paste0(id_vivienda, id_hogar, n_linea_h, id_persona, n_linea_p))
 ```
 
@@ -60,33 +62,41 @@ data_perdidos <- select(BBDD,
                       c(Id, varX:varY))
 
 ```{r}
-# seleccion de variables de interes
+# Seleccion de variables de interes
 # Para este paso debemos asegurarnos que la variable Id quede al inicio de la seleccion
-data_perdidos <- select(data_enut,     #BBDD
+data_perdidos <- select(df,     #BBDD
                       c(Id, 98:101)) # Id, variables.
 ```
 
 
-### b) casos perdidos por fila
+### b) casos perdidos por fila y columnas
+
+El siguiente loop nos entrega de manera automática dos objetos:
+
+1. `data_perdidos` = en él obtendremos un reporte que nos indicará las variables y el número de Id de la persona encuestada. De esta manera podremos identificar aquellos casos específicos donde se halle un caso perdido.
+
+2. `reporte_errormissing` = este objeto nos mostrará un conteo de errores totales por variable 
+
 ```{r}
-# debemos asegurarnos que el loop comience con la columna 2, debido a que la 1 es el Id: i in 2:ncol
-# Este loop se encuentra estandarizado. Si seguimos el paso anterior, no deberíamos
-# problemas con copiar y pegar el código
+# Debemos asegurarnos que el loop comience con la columna 2, debido a que la 1 es el Id: i in 2:ncol.
+# Este loop se encuentra estandarizado. Si seguimos el paso anterior, no deberíamos tener
+# problemas con copiar y pegar el código.
+
+# OJO: en caso de cambiar el nombre de "data_perdidos" en el paso anterior,
+#      debemos asegurarnos de actualizar el loop sobrescribiendo con ese nuevo
+#      nombre. Por ello, es mejor mantener el nombre original.
 
 for (i in 2:ncol(data_perdidos)) {
   data_perdidos[,i] <- ifelse(is.na(data_perdidos[i]), 1, 0)
   colnames(data_perdidos)[i]<-paste("ERRORMISSING", names(data_perdidos)[i], sep = "_")
+  rep <- data_perdidos %>% select(starts_with("ERROR"))
+  reporte_errormissing <-  tibble(variable = rep %>% colnames)
+  reporte_errormissing <-  reporte_errormissing %>% mutate(errores = rep %>% colSums(na.rm = TRUE))
+#quitar el comentario siguiente si queremos que el reporte no muestre las variables con errores=0  
+  #reporte_errormissing <- reporte_errormissing[reporte_errormissing$errores > 0,]  
+  rm(rep)
 }
 ```
-
-**Una vez hemos hecho el loop, el objeto "data_perdidos" debería lucir de la siguiente manera:**
-
-```{r echo=FALSE}
-data_perdidos %>% 
-  head() %>% 
-  DT::datatable(fillContainer = TRUE)
-```
-
 
 ```{r}
 ### Opcional 1 ###
@@ -94,14 +104,12 @@ data_perdidos %>%
 # Para realizar este paso es importante contar con un Id, o alguna otra 
 # variable en común entre los dos conjuntos de datos
 
-data_enut <- full_join(data_enut, data_perdidos, by = "Id")
+df <- full_join(df, data_perdidos, by = "Id")
 
 
 ### Opcional 2 ###
 # Si nos cuesta comprender los errores mediante la codificación 0 y 1, tenemos la opción
 # de recodificar estos parámetros a otros más intuitivos
-
-### OJO: realizar este paso opcional no nos permitira realizar el conteo total por variable ###
 
 # data_perdidos<-data_perdidos %>% 
 #   mutate_at(c(2:ncol(data_perdidos)), recode, '1'='NA', '0'='Con Dato')
@@ -109,33 +117,7 @@ data_enut <- full_join(data_enut, data_perdidos, by = "Id")
 ```
 
 
-
-### c) casos perdidos por columna o variable
-
-La forma anterior responde a la búsqueda de errores según caso (o fila). No obstante, también podemos generar un resumen que nos indique la cantidad total de casos perdidos que contengan nuestras variables de interés.
-
-Para ello seguimos la siguiente línea de códigos:
-
-```{r}
-# crear objeto tibble con la Id y el nombre de las variables
-reporte_errormissing <-  tibble(variable = data_perdidos %>% 
-                                  colnames)
-
-# quitamos el Id de nuestro objeto (al ser variable character tendremos conflictos para sumar la canidad errores)
-reporte_errormissing <- reporte_errormissing %>% 
-  filter(variable != "Id")
-
-# sumamos la cantidad de errores que tengan las variables
-reporte_errormissing$errores <- colSums(data_perdidos[sapply(data_perdidos, is.numeric)], na.rm = F)
-```
-
-**Una vez hemos construido el reporte, tendremos un objeto más o menos así:**
-
-```{r echo=FALSE}
-reporte_errormissing %>% 
-  flextable::flextable()
-```
-
+---
 
 
 ## Errores de programación
@@ -148,14 +130,188 @@ En este caso, vamos a denominarlos "ERRORPRO_[n° consecutivo del error]".
 
 Por tanto, vamos a programar dos errores:
 
-Si responde que la semana pasada si trabajó personal servicio doméstico y luego no responde cuántas personas prestaron esos servicios; y al revés,
+1. `ERRORPROG_1` = Si responde que la semana pasada SÍ trabajó personal servicio doméstico y luego no responde cuántas personas prestaron esos servicios; y al revés,
 
-Si responde que la semana pasada NO trabajó personal servicio doméstico y luego responde cuántas personas trabajaron
+2. `ERRORPROG_2` = Si responde que la semana pasada NO trabajó personal servicio doméstico y luego responde cuántas personas trabajaron
+
+Lo anterior expresado de manera gráfica sería algo así:
+
+Pregunta filtro ---> 1. Sí trabajó personal servicio doméstico; 2. No trabajó personal servicio doméstico.
+Pregunta llegada --> N° de personas que trabajaron
+
+
+| P. Filtro           | P. Llegada                         | Tipo de error   |
+|:-------------------:|:----------------------------------:|:---------------:|
+| 1 (responde que sí) | 3 (debe responder y lo hace)       | Filtro correcto |
+| 1 (responde que sí) | NA (debe responder y no lo hace)   | Error prog 1    | 
+| 2 (responde que no) | 4 (no debe responder y lo hace)    | Error prog 2    |
+| NA (no responde)    | 2 (no debe responder y lo hace)    | Error prog 2    |
+| NA (no responde)    | NA (no debe responder y no lo hace)| Caso perdido    |
+
+
 
 En esta ocasión, se utilizará la base de datos alterada (con errores)
 
-Primero, se presenta el caso i):
+```{r}
+# cargar bbdd
+df <- read_sav("BBDD/BASE_USUARIO_alterada.sav")
 
+# crear id (el mismo que el caso anterior)
+df <- df %>% 
+  mutate(Id = paste0(id_vivienda, id_hogar, n_linea_h, id_persona, n_linea_p))
+```
+
+### a) creación de excel y criterios de salto
+
+Para lograr automatizar el proceso, es necesario generar un excel con las siguientes características
+
+<center>
+
+![](Imagenes/excel_errorprog.jpg)
+</center>
+
+Donde:
+
+- `Salida`: variable de filtro. Si tenemos una pregunta filtro que guía a otras múltiples preguntas, debemos repetir la variable filtro las veces necesarias, tal como se muestra en el ejemplo.
+
+- `Llegada`: preguntas que debería contestar si se aplica el filtro.
+
+- `Criterio`: valor que debe seleccionar la persona para que se haga efectivo el filtro.
+Este criterio puede establecerse por valores enteros o rangos:
+
+|Criterio                                                     | Secuencia| Rangos  |
+|:------------------------------------------------------------|:--------:|:-------:|
+|Si responde 1, 2 o 3 debe responder las preguntas de llegada |1,2,3     |1:3      |
+|Si responde 1 o 3 debe respondes las preguntas de llegada    |1,3       |No aplica|
+
+
+En este sentido, el ejemplo se leería de la siguiente manera: si la persona responde "sí" en la pregunta f11_1_1, debe responder también la pregunta f12_1_1. A su vez, si responde "sí" en la pregunta f11_1_1, también debería resonder la pregunta f13_1_2
+
+**¡IMPORTANTE: ES NECESARIO QUE LAS COLUMNAS DEL EXCEL SE ENCUENTREN EN FORMATO TEXTO!**
+
+
+### b) aplicación del loop
+
+El loop que viene a continuación se encuentra automatizado. Si se han seguido correctamente los pasos anteriores y el excel se encuentra correctamente construido no deberían haber problemas en su ejecución.
+
+
+En este sentido, lo primero que debemos hacer es cargar nuestro excel con las preguntas listas.
+
+```{r}
+library(readxl)
+varsprog <- read_xlsx("BBDD/ERRORPROG_EJ.xlsx")
+```
+
+
+Luego, crearemos vectores específicos con los elementos provenientes de nuestro excel.
+
+```{r}
+# vectores de variables y criterios ---------------------------------------
+salida<-c(varsprog$Salida)
+llegada<-c(varsprog$Llegada)
+criterio.salto<-c(varsprog$Criterio)
+criterio.salto<- str_replace(criterio.salto, "\\.", ",")
+```
+
+
+El siguiente paso es generar un nuevo objeto donde se almacenen los resultados del loop y que contenga el Id del encuestado, para poder así identificar el caso a caso.
+
+```{r}
+# la seleccion del Id puede cambiar segun BBDD. En este ejemplo el id se
+# llamada "Id".
+
+### OJO: si cambian el nombre de "erroresprog" deberán cambiarlo también dentro del loop ###
+erroresprog<-data.frame(df$Id)
+```
+
+
+Finalmente, ejecutamos el loop:
+
+```{r}
+# Creamos una funcion que servira para traducir en una secuencia de numeros imputs
+# como "1 3" o "9". Para ambos casos devolver?a "1 2 3"  y "9" respectivamente
+secuencia<-function(objeto){
+  n<-length(objeto)
+  seq(objeto[[1]],objeto[[n]])
+}
+
+
+# LOOP
+for (i in 1:length(salida)){
+  
+  # 1ra parte, traducir en un rango de numeros imputs de caracteres como por ejemplo
+  # "2,5" en los numeros "2 5". imputs como "1:3", en rangos "1 2 3". Y unidades
+  # como "4", en el numero al que corresponden 
+  
+  ifelse ((str_detect(criterio.salto[i],",")), 
+          rango<- criterio.salto[i] %>% str_split(",") %>% 
+            unlist() %>% as.numeric(),
+          
+          rango<-criterio.salto[i] %>% str_split(":") %>%
+            unlist() %>% as.numeric() %>% secuencia
+  )
+  
+  # Identifica la posicion en el data frame, de la variable/columna de salto
+  coordenada1<-grep(paste("^",salida[i],"$",sep=""), names(df))
+  # Identifica la posicion en el data frame, de la variable/columna de llegada
+  coordenada2<-grep(paste("^",llegada[i],"$",sep=""), names(df))
+  
+  # Chequea si la variable de salto tiene obervaciones que cumplen la condicion 
+  # de salto
+  s.check<-((as.integer(unlist(df[,coordenada1]))) %in% rango)*1
+  
+  # Chequea si la variable de llegada tiene obervaciones
+  ll.check<-(!is.na(df)[,coordenada2])*1
+  
+  # Se pegan los resultados anteriores, que son agregados al a otro data frame
+  # creado previamente, donde se registrar?n los resultados para cada individuo
+  revision<-paste0(s.check,ll.check)
+  erroresprog<-cbind(revision,erroresprog)
+  rm(coordenada1, coordenada2, ll.check, s.check, rango, i, revision)
+}
+
+# Creamos un vector vacio para almacenar los nombres de las variables
+nombres.u<-c()
+
+# Ingresamos los nombres de las columnas del data frame de revision, pegando los
+# nombres de las variables y salto llegada que correspondan, mas el criterio de salto 
+for (i in 1:length(llegada)){
+  x1<-paste0(salida[i],"-",llegada[i], " (",criterio.salto[i],")")
+  nombres.u<-append(nombres.u,x1)
+}
+rm(salida, llegada, criterio.salto, i, x1)
+
+# Reordenar base de datos de revision y añadir etiquetas
+erroresprog <- rev(erroresprog)
+etiquetas <- append("id", nombres.u)
+colnames(erroresprog)<-etiquetas
+rm(etiquetas, nombres.u, secuencia)
+
+# Recodificar la nomenclatura de error para una mejor comprension
+erroresprog<-erroresprog %>%
+  dplyr::mutate_at(c(2:ncol(erroresprog)), 
+                   dplyr::recode,
+                   '11'='FILTRO_CORRECTO',
+                   '10'='ERRORPROG_1',
+                   '01'='ERRORPROG_2',
+                   '00'='VALOR_PERDIDO')
+```
+
+Una vez tengamos los resultados del loop insertos en nuestro objeto `erroresprog`, podemos generar tablas de frecuecia que nos indiquen la cantidad de errores en las variables.
+
+Para ello utilizaremos la librería `sjmisc` y su función `frq`.
+
+```{r message=FALSE}
+library(sjmisc)
+
+# Para generar reportes solo pedimos de la frecuencia de las variables de interes
+# frq(errorprog$variable_x)
+frq(erroresprog$`f11_1_1-f12_1_1 (1)`)
+```
+**Como vemos, tenemos 8 casos de Errorporg_1 y 11 con Errorprog_2 (aquellos que fueron alterados de forma manual en la BBDD para efectos del ejemplo).**
+
+
+---
 
 
 ## Errores de consistencia
