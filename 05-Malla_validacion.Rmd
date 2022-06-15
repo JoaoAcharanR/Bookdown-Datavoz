@@ -197,7 +197,7 @@ El loop que viene a continuación se encuentra automatizado. Si se han seguido c
 
 En este sentido, lo primero que debemos hacer es cargar nuestro excel con las preguntas listas.
 
-```{r}
+```{r message=FALSE}
 library(readxl)
 varsprog <- read_xlsx("BBDD/ERRORPROG_EJ.xlsx")
 ```
@@ -263,8 +263,8 @@ for (i in 1:length(salida)){
   # Chequea si la variable de llegada tiene obervaciones
   ll.check<-(!is.na(df)[,coordenada2])*1
   
-  # Se pegan los resultados anteriores, que son agregados al a otro data frame
-  # creado previamente, donde se registrar?n los resultados para cada individuo
+  # Se pegan los resultados anteriores, que son agregados al otro data frame
+  # creado previamente, donde se registraron los resultados para cada individuo
   revision<-paste0(s.check,ll.check)
   erroresprog<-cbind(revision,erroresprog)
   rm(coordenada1, coordenada2, ll.check, s.check, rango, i, revision)
@@ -322,19 +322,151 @@ En este caso, vamos a denominarlos "ERRORCON_[n° consecutivo del error]".
 
 A modo de ejemplo, primero programaremos un caso de respuestas inconsistentes. En este caso, se verificará que no haya casos su edad (c14_1_1) no sea consistente con su nivel educacional (d12_1_1). Para ello, se utilizará la BBDD alterada con errores.
 
+```{r}
+# cargar bbdd
+df <- read_sav("BBDD/BASE_USUARIO_alterada.sav")
+
+# crear id (el mismo que el caso anterior)
+df <- df %>% 
+  mutate(Id = paste0(id_vivienda, id_hogar, n_linea_h, id_persona, n_linea_p))
+```
+
 Como se observa en la tabla de salida, tenemos 6 errores con casos cuya edad es inferior a los 20 años, pero declaran poseer estudios de magíster o doctorado.
 
+```{r}
+##ERRORCON_1: Responde que tiene estudios de magister o doctorado y edad inferior a 21 años
+data_errorcon   <- df %>% mutate(ERRORCON_1 = case_when(c14_1_1 <= 21 & (d12_1_1 == 14 | d12_1_1 == 15) ~ 1, TRUE ~ 0))
+data_errorcon_ce_1 <- data_errorcon %>% filter(ERRORCON_1 == 1)
+data_errorcon_ce_1 <- data_errorcon_ce_1 %>% select(Id,ERRORCON_1,c14_1_1,d12_1_1)
+knitr::kable(data_errorcon_ce_1, caption = "Tabla: Identificación de observaciones con ERRORCON_1")
+```
 
 
+---
 
 
+## Errores de rango
+
+Para el caso de los errores de rango, se hará uso de un loop para delimitar el límite inferior y superior en el que se espera que se encuentren los valores, generando un error cuando el valor observado se encuentra fuera de ese rango. En este caso, se utilizará la BBDD corregida, estableciendo un rango de edad que se mueve entre 0 y 99 años.
 
 
+### a) creación de excel y criterios de rango
+
+Para lograr automatizar el proceso, es necesario generar un excel con las siguientes características
+
+<center>
+
+![](Imagenes/Excel_errorrango.jpg)
+</center>
 
 
+Donde:
+
+- `Variable`: son todas aquellas variables que queremos identificar el correcto rango.
+
+- `Criterio`: rango que deben contener las respuestas
 
 
+### b) aplicación del loop
 
+El loop que viene a continuación se encuentra automatizado. Si se han seguido correctamente los pasos anteriores y el excel se encuentra correctamente construido no deberían haber problemas en su ejecución.
+
+En este sentido, lo primero que debemos hacer es cargar nuestro excel con las preguntas listas.
+
+```{r message=FALSE}
+library(readxl)
+varsrango <- read_xlsx("BBDD/ERRORCON2_EJ.xlsx")
+```
+
+
+Luego, crearemos vectores específicos con los elementos provenientes de nuestro excel.
+
+```{r}
+# vectores de variables y criterios ---------------------------------------
+var<-c(varsrango$Variable)
+criterio.rango<-c(varsrango$Criterio)
+criterio.rango<- str_replace(criterio.rango, "\\.", ",")
+```
+
+
+El siguiente paso es generar un nuevo objeto donde se almacenen los resultados del loop y que contenga el Id del encuestado, para poder así identificar el caso a caso.
+
+```{r}
+# la seleccion del Id puede cambiar segun BBDD. En este ejemplo el id se
+# llamada "Id".
+
+### OJO: si cambian el nombre de "erroresprog" deberán cambiarlo también dentro del loop ###
+erroresrango <- df %>% select(Id)
+```
+
+
+Finalmente, ejecutamos el loop:
+
+```{r}
+# LOOP --------------------------------------------------------------------
+
+# Creamos una funcion que servira para traducir en una secuencia de numeros imputs
+# como "1 3" o "9". Para ambos casos devolver?a "1 2 3"  y "9" respectivamente
+secuencia<-function(objeto){
+  n<-length(objeto)
+  seq(objeto[[1]],objeto[[n]])
+}
+
+
+#
+for (i in 1:length(var)){
+  ifelse ((str_detect(criterio.rango[i],",")),
+          rango<- criterio.rango[i] %>% str_split(",") %>%
+            unlist() %>% as.numeric(),
+          rango<-criterio.rango[i] %>% str_split(":") %>%
+            unlist() %>% as.numeric() %>% secuencia
+  )
+  coordenada1<-grep(paste("^",var[i],"$",sep=""), names(df))
+  variable1<-as.numeric(unlist(df[,coordenada1]))
+  na.check<-(is.na(variable1))*1
+  rango.check<-(variable1 %in%  rango)*1
+  revision<-paste0(na.check,rango.check)
+  erroresrango<-cbind(revision,erroresrango)
+  rm(coordenada1, i, na.check, rango.check, rango, variable1, revision)
+}
+
+# Creamos un vector vacio para almacenar los nombres de las variables
+nombres.u<-c()
+
+# Ingresamos los nombres de las columnas del data frame de revision, pegando los
+# nombres de las variables y salto llegada que correspondan, mas el criterio de salto 
+for (i in 1:length(var)){
+  x1<-paste0(var[i], " (",criterio.rango[i],")")
+  nombres.u<-append(nombres.u,x1)
+}
+
+# Reordenar base de datos de revision y añadir etiquetas
+erroresrango<-rev(erroresrango)
+etiquetas<-  append("id", nombres.u)
+colnames(erroresrango)<-etiquetas
+rm(criterio.rango, etiquetas, i, nombres.u, var, x1, secuencia)
+
+# Recodificacisn sugerida de las observaciones
+erroresrango<-erroresrango %>%
+  dplyr::mutate_at(c(2:ncol(erroresrango)), dplyr::recode, 
+                   '00'='Fuera de rango',
+                   '01'='Rango correcto', 
+                   '10'='NA')
+```
+
+
+Una vez tengamos los resultados del loop insertos en nuestro objeto `erroresrango`, podemos generar tablas de frecuencia que nos indiquen la cantidad de errores de rango en las variables.
+
+Para ello utilizaremos la librería `sjmisc` y su función `frq`.
+
+```{r message=FALSE}
+library(sjmisc)
+
+# Para generar reportes solo pedimos de la frecuencia de las variables de interes
+# frq(errorprog$variable_x)
+frq(erroresrango$`c14_1_1 (0:99)`)
+```
+**Como vemos, solo tenemos un caso que no cumple con el rango establecido**
 
 
 

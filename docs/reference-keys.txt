@@ -1,3 +1,4 @@
+tab:unnamed-chunk-129
 introducción
 procesamiento-de-base-de-datos
 operadores-de-utilidad-general
@@ -67,6 +68,9 @@ errores-de-programación
 a-creación-de-excel-y-criterios-de-salto
 b-aplicación-del-loop
 errores-de-consistencia
+errores-de-rango
+a-creación-de-excel-y-criterios-de-rango
+b-aplicación-del-loop-1
 construcción-de-ponderadores-por-raking
 cargar-bases-de-datos-necesarias
 chequeo-de-variables
@@ -79,3 +83,4 @@ construcción-del-ponderador
 creación-de-un-objeto-sin-pesos
 crear-las-distribuciones-marginales-poblacionales-de-cada-variable-a-utilizar-para-ponderar
 cáluclo-del-ponderador
+tab:unnamed-chunk-14
