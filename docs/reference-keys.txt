@@ -84,3 +84,12 @@ creación-de-un-objeto-sin-pesos
 crear-las-distribuciones-marginales-poblacionales-de-cada-variable-a-utilizar-para-ponderar
 cáluclo-del-ponderador
 tab:unnamed-chunk-14
+introducción-a-rmarkdown-y-creación-de-reportes-automáticos
+qué-es-rmarkdown
+comándos-básicos-de-escritura
+sintaxis-básica-de-escritura
+qué-es-rmarkdown-rmd
+creación-y-opciones-los-chunks
+opciones-de-los-chunks
+reporte-encuestas-presenciales
+reporte-encuestas-telefónicas

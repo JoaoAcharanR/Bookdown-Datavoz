@@ -1,3 +1,136 @@
+# Introducción a RMarkdown y creación de reportes automáticos
+
+## ¿Qué es RMarkdown (RMD)?
+
+En términos sencillos RMarkdown es un procesador de texto que ofrece además la posibilidad de incluir trozos de código desde R (u otros formatos). El principal beneficio de esta herramienta es que permite trabajar en un sólo documento tanto la redacción del contenido narrativo de reportes de investigación, como también la construcción y presentación formal de resultados de análisis estadísticos
+
+**Elementos necesarios para ejecución de RMarkdown: procedimientos de instalación**
+
+| Elemento    |  Procedimiento de instalación | Código para instalación |
+|:------------|:-----------------------------:|:-----------------------:|
+|**RMarkdown**|No es necesario ningún procedimiento adicional a la instalación de R y RStudio pues viene instalado con este último. | No aplica |
+|**Knitr**    |Debe instalarse como cualquier otro paquete de R, asegurando su disponiblidad para ser utilizado por RMarkdown al compilar documentos.| `install.packages(“knitr”)` |
+|**Pandoc**   | No es necesario ningún procedimiento adicional a la instalación de R y RStudio pues viene instalado con este último. | No aplica |
+|**LaTex**    | Debe descargarse como un paquete de R. Para asegurar su disponibilidad para ser utilizado por RMarkdown al compilar documentos, debe instalarse con un comando adicional. | `install.packages(“tinytex”)` `tinytex::install_tinytex()` |
+
+**En síntesis: antes de proceder a la compilación de un documento RMarkdown, debemos asegurar la instalación de estos componentes en nuestros computadores.**
+
+*Contenido extraído de [RStudio para Estadística Descriptiva en Ciencias Sociales](https://bookdown.org/gboccardo/manual-ED-UCH/). Para más información acceder al link*
+
+## Sintaxis básica de escritura
+
+RMarkdown, como su nombre bien nos dice, utiliza el lenguaje de marcado Markdown. En este sentido, la escritura de los informes y reportes deben ser construidos con la estructura de este procesamiento de texto, es decir, bajo una colección simple de convenciones para dar formato a archivos de texto plano. Markdown está diseñado para ser fácil de leer y fácil de escribir. Es también muy fácil de aprender. La siguiente guía muestra cómo usar el Markdown de Pandoc, una versión ligeramente extendida de Markdown que R Markdown comprende.
+
+```{r eval=FALSE}
+Formato de texto
+------------------------------------------------------------
+
+*cursiva*   o _cursiva_
+**negrita**   __negrita__
+`code`
+superíndice^2^ y subíndice~2~
+
+Encabezados
+------------------------------------------------------------
+
+# Encabezado de primer nivel
+
+## Encabezado de segundo nivel
+
+### Encabezado de tercer nivel
+
+Listas
+------------------------------------------------------------
+
+*   Elemento 1 en lista no enumerada
+
+*   Elemento 2
+
+    * Elemento 2a
+
+    * Elemento 2b
+
+1.  Elemento 1 en lista enumerada
+
+1.  Elemento 2. La numeración se incrementa automáticamente en el output.
+
+Enlaces e imágenes
+------------------------------------------------------------
+
+<http://ejemplo.com>
+
+[texto del enlace](http://ejemplo.com)
+
+![pie de página opcional](ruta/de/la/imagen.png)
+
+Tablas 
+------------------------------------------------------------
+
+| Primer encabezado     | Segundo encabezado   |
+|---------------------- | ---------------------|
+| Contenido de la celda | Contenido de la celda|
+| Contenido de la celda | Contenido de la celda|
+```
+
+
+## Creación y opciones los chunks
+
+Una ventaja que tenemos al trabajar con RMarkdown es que podemos insertar códigos, y los resultados de estos, directamente a nuestro documento final. Para lograr lo anterior utilizamos los chunks, que son bloques de código que se introducen en nuestro script RMD. Para crearlos tenemos dos opciones:
+
+1. Pinchar el icono ![](Imagenes/chunks.jpg) en la parte superior de la ventana de edición de Rstudio.
+
+2. Pulsar Alt-Ctrl-I (en Windows y Linux) o Alt-Cmd-I en Mac
+
+
+### Opciones de los chunks:
+
+Los chunks en RMD pueden tener diversas opciones para la visualización o ejecución de los códigos:
+
+* `eval = FALSE` evita que el código sea evaluado. (Y, obviamente, si el código no es ejecutado no se generaran resultados). Esto es útil para mostrar códigos de ejemplo, o para deshabilitar un gran bloque de código sin comentar cada línea.
+
+* `include = FALSE` ejecuta el código, pero no muestra el código o los resultados en el documento final. Usa esto para código de configuración que no quieres que abarrote tu reporte.
+
+* `echo = FALSE` evita que se vea el código, pero sí muestra los resultados en el archivo final. Utiliza esto cuando quieres escribir reportes enfocados a personas que no quieren ver el código subyacente de R.
+
+* `message = FALSE` o `warning = FALSE` evita que aparezcan mensajes o advertencias en el archivo final.
+
+* `results = 'hide'` oculta el output impreso; fig.show = 'hide' oculta gráficos.
+
+* `error = TRUE` causa que el render continúe incluso si el código devuelve un error. Esto es algo que raramente quieres incluir en la versión final de tu reporte, pero puede ser muy útil si necesitas depurar exactamente qué ocurre dentro de tu .Rmd. Es también útil si estás enseñando R y quieres incluir deliberadamente un error. Por defecto, error = FALSE provoca que el knitting falle si hay incluso un error en el documento
+
+Para más iformación sobre las opciones que se pueden agregar a los chunks visitar el [siguiente link](https://rmarkdown.rstudio.com/lesson-3.html)
+
+**Las opciones deben ingresarse al incio del chunk y separadas por comas, tal como se muestra en la siguiente imagen:** ![](Imagenes/ops_chunks.jpg)
+
+
+## Reporte encuestas presenciales
+
+Como mencionamos anteriormente, la ventaja de RMarkdown es poder utilizar código y texto plano a la vez. En tal sentido, trabajar con este formato nos ofrece una gran ventaja al momento de generar informes de forma rápida y sencilla.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## Reporte encuestas telefónicas
+
+
+
+
 
 
 
