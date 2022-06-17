@@ -103,9 +103,17 @@ Para más iformación sobre las opciones que se pueden agregar a los chunks visi
 **Las opciones deben ingresarse al incio del chunk y separadas por comas, tal como se muestra en la siguiente imagen:** ![](Imagenes/ops_chunks.jpg)
 
 
-## Reporte encuestas presenciales
+## Reportes automáticos
 
 Como mencionamos anteriormente, la ventaja de RMarkdown es poder utilizar código y texto plano a la vez. En tal sentido, trabajar con este formato nos ofrece una gran ventaja al momento de generar informes de forma rápida y sencilla.
+
+Los siguientes apartados contemplan la construcción de dos reportes automáticos que se realizan constantemente en D&A. Ambos refieren al monitoreo de las encuestas presenciales y las encuestas telefónicas.
+
+## Reporte encuestas presenciales
+
+[BBDD_Visitas](https://drive.google.com/file/d/172zEFjG-WReAKSEKIGi-he3vekjaoDnc/view?usp=sharing)
+
+[BBDD_Viviendas](https://drive.google.com/file/d/17LEX0yD2vBO4cBViRYiQzjSrpQUKLIbK/view?usp=sharing)
 
 
 

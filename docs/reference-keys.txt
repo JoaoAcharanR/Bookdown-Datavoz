@@ -93,3 +93,4 @@ creación-y-opciones-los-chunks
 opciones-de-los-chunks
 reporte-encuestas-presenciales
 reporte-encuestas-telefónicas
+reportes-automáticos
