@@ -1103,7 +1103,7 @@ Otra manera de hacer esto es sin utilizar el vector de variables. Este caso es r
 
 Para este ejemplo solo utilizaremos dos variables, lo cual no requiere mucho tiempo al escribirlas al mano y tendremos un resultado similar al anterior, pero con un cambio en el código, pues para este caso no necesitaremos los argumentos `!!! syms(variables)`
 
-```{r echo=FALSE}
+```{r echo=FALSE, warning=FALSE}
 df <- data.frame(id = c(153,154,155,156,157),
                  p1 = c("casado",NA,NA,"casado","casado"),
                  p2 = c(NA,"soltero","soltero",NA,NA))
