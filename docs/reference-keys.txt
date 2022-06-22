@@ -94,3 +94,8 @@ opciones-de-los-chunks
 reporte-encuestas-presenciales
 reporte-encuestas-telefónicas
 reportes-automáticos
+antes-de-generar-el-reporte-debemos-realizar-modificaciones-a-la-bbdd-y
+se-crean-dos-nuevos-objetos
+df_viviendas-bbdd-con-la-seleccion-final-de-direccion
+df_visitas-bbdd-con-la-cantidad-de-visitas-que-debieron-realizar-para-lograr
+la-encuesta-en-la-direccion-final

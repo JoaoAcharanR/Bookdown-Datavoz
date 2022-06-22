@@ -72,6 +72,7 @@ Tablas
 | Contenido de la celda | Contenido de la celda|
 ```
 
+Para más información acceder al siguiente [link](https://rpubs.com/CarolinaMolinare/844849).
 
 ## Creación y opciones los chunks
 
@@ -102,6 +103,7 @@ Para más iformación sobre las opciones que se pueden agregar a los chunks visi
 
 **Las opciones deben ingresarse al incio del chunk y separadas por comas, tal como se muestra en la siguiente imagen:** ![](Imagenes/ops_chunks.jpg)
 
+---
 
 ## Reportes automáticos
 
@@ -109,36 +111,77 @@ Como mencionamos anteriormente, la ventaja de RMarkdown es poder utilizar códig
 
 Los siguientes apartados contemplan la construcción de dos reportes automáticos que se realizan constantemente en D&A. Ambos refieren al monitoreo de las encuestas presenciales y las encuestas telefónicas.
 
-## Reporte encuestas presenciales
+### Reporte encuestas presenciales
 
-[BBDD_Visitas](https://drive.google.com/file/d/172zEFjG-WReAKSEKIGi-he3vekjaoDnc/view?usp=sharing)
+Esta sección expone la manera y los elementos necesarios para crear un reporte automático del avance de los terrenos en las encuestas presenciales. Sin embargo, antes de generar el reporte debemos realizar modificaciones a la BBDD, las cuales se encuentran almacenadas en dos scripts. Dentro del reporte utilizamos la función `source()` para ejecutarlos automáticamente. En este sentido, **es imperante descargar los achivos que se presentan a continuación y almacenarlos en la carpeta de nuestro proyecto de R**.
 
-[BBDD_Viviendas](https://drive.google.com/file/d/17LEX0yD2vBO4cBViRYiQzjSrpQUKLIbK/view?usp=sharing)
+**Scripts para construcción de reporte automático**
 
+1) `Reporte_enc_presencial`: script automatizado
+2) `df_viviendas`: BBDD con la selección final de dirección
+3) `df_visitas`: BBDD con la cantidad de visitas que debieron realizar para lograr la encuesta en la dirección final
 
+**Links de descarga**
 
-
-
-
-
-
-
-
-
-
-
-
+| **Elemento**                                                                                       |
+|:--------------------------------------------------------------------------------------------------:|
+|[Script para encuesta presencial](https://drive.google.com/file/d/1bZwiTVX-SPxWfVgRd3FlJG6xXc0Zcyd0/view?usp=sharing)                                                            |
+|[BBDD_Visitas](https://drive.google.com/file/d/172zEFjG-WReAKSEKIGi-he3vekjaoDnc/view?usp=sharing)  |
+|[BBDD_Viviendas](https://drive.google.com/file/d/17LEX0yD2vBO4cBViRYiQzjSrpQUKLIbK/view?usp=sharing)|
 
 
+El script si bien se encuentra automatizado y comentado con el paso a paso, aquí revisaremos los aspectos más importantes para lograr ejecutar el procedimiento.
+
+1. Descargar los archivos anteriores y guardarlos en nuestra carpeta del proyecto.
+
+2. Abrir el Script automatizado y cambiar los elementos atingentes: título, fecha, autor.
+
+3. Cargar BBDD a R. Aquí utilizamos el segundo chunk y debemos ingresar el nombre de nuestro archivo.
+
+4. Una vez tengamos listos los pasos anteriores, presionamos el botón ![](Imagenes/knit.jpg). Esto nos entergará el reporte en formato PDF dentro de la carpeta de nuestro proyecto de R.
+
+Algo más o menos así: ejemplo de reporte de encuesta presencial.
+
+<center>
+![](Imagenes/ej_enc_pres.jpg)
+</center>
+
+---
+
+### Reporte encuestas telefónicas
+
+Lo mismo con los terrenos telefónicos, contamos con un script que nos genera un reporte, sin embargo, este no es tan automático como nosotros desearíamos, pues existen ciertas categorías no estandarizadas que generan conflictos al momento de su construcción. Aquí explicaremos en breve la manera de corregir estas deficiencias, pues el script se presenta con un paso a paso para lograr salvaguardar tal disparidad en la codificación.
+
+Para ello debemos **descargar el siguiente archivo**
+
+| **Elemento**                                                                                       |
+|:--------------------------------------------------------------------------------------------------:|
+|[Script para encuestas telefónicas](https://drive.google.com/file/d/1CBGIEs95P9ueSe-e4gb_NNUB841sopqp/view?usp=sharing)|
+
+1. El primer paso es cargar nuestra data a R, respetando su ruta y su nombre.
+
+2. Luego, ejecutamos el chunk de la tabla 1. Esto nos servirá para confirmar que hayamos recodificado de buena manera las categorías no estandarizadas.
+
+3. Lo más importante es ejecutar el punto 1, 2 y 3 del apartado de "Incidencias". Estos nos permitirán estandarizar las categorías.
+
+    3.1 El paso n°1 nos identifica aquellas categorías faltantes de recodificar. Los elementos que nos entregue `setdiff(bd, estand)` debemos recodificarlos en alguna de las categorías presentes en el objeto `cat_estand`.
+    
+    3.2 El paso n°2 consiste en la recodificación. Aquí debemos incluir todas las categorías que nos arrojó el paso 1 (exluyendo la categoría "NA").
+    
+    3.3 El paso n°3 consiste en asignar el orden de las categorías para luego hacer el cálculo automático de la tabla.
+    
+    3.4 Para comprobar que hayamos hecho bien estos pasos debemos ir a la tabla 1 y comparar la frecuencia de la categoría "Casos contactados" con el total que nos indica la tabla 2. Si son iguales, no nos faltan categorías por recodificar, si no son equivalentes, volvemos a los pasos anteriores y nos sercioramos de haber incluido todas las categorías (es común equivocarse en tíldes, espacios, mayúsculas, etc).
+
+4. Una vez corroborado que la recodificación haya sido un éxito ejecutamos el resto del sript con ![](Imagenes/knit.jpg)
 
 
+Esto nos entregará algo más o menos así: ejemplo de reporte de encuestas telefónicas.
 
+<center>
 
-## Reporte encuestas telefónicas
+![](Imagenes/ej_enc_tel.jpg)
 
-
-
-
+</center>
 
 
 
