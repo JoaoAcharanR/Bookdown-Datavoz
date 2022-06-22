@@ -68,7 +68,7 @@ Hacer esto se torna sencillo gracias a RMarkdown, pues solo debemos crear un nue
 
 * _Proyecto enmarcado en práctica profesional para optar al título profesional de Sociólogo por la Universidad Diego Portales._
 
-* _Agradezco la oportunidad y la gran hospitalidad que se me ha brindado estos meses, Jonatan Salazar._
+* _Agradezco la oportunidad y la gran hospitalidad que se me han brindado estos meses, Jonatan Salazar._
 
 
 
