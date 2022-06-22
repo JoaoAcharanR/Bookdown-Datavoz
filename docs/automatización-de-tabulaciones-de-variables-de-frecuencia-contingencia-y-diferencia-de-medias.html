@@ -23,7 +23,7 @@
 <meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-06-15" />
+<meta name="date" content="2022-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -275,6 +275,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.3" data-path="construcción-de-ponderadores-por-raking.html"><a href="construcción-de-ponderadores-por-raking.html#cáluclo-del-ponderador"><i class="fa fa-check"></i><b>6.4.3</b> <em>Cáluclo del ponderador</em></a></li>
 </ul></li>
 </ul></li>
+<li class="chapter" data-level="7" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><i class="fa fa-check"></i><b>7</b> Introducción a RMarkdown y creación de reportes automáticos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#qué-es-rmarkdown-rmd"><i class="fa fa-check"></i><b>7.1</b> ¿Qué es RMarkdown (RMD)?</a></li>
+<li class="chapter" data-level="7.2" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#sintaxis-básica-de-escritura"><i class="fa fa-check"></i><b>7.2</b> Sintaxis básica de escritura</a></li>
+<li class="chapter" data-level="7.3" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#creación-y-opciones-los-chunks"><i class="fa fa-check"></i><b>7.3</b> Creación y opciones los chunks</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#opciones-de-los-chunks"><i class="fa fa-check"></i><b>7.3.1</b> Opciones de los chunks:</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reportes-automáticos"><i class="fa fa-check"></i><b>7.4</b> Reportes automáticos</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reporte-encuestas-presenciales"><i class="fa fa-check"></i><b>7.4.1</b> Reporte encuestas presenciales</a></li>
+<li class="chapter" data-level="7.4.2" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reporte-encuestas-telefónicas"><i class="fa fa-check"></i><b>7.4.2</b> Reporte encuestas telefónicas</a></li>
+</ul></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -311,8 +325,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb83-7"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-7" aria-hidden="true" tabindex="-1"></a><span class="co"># IMPORTAR BBDD</span></span>
 <span id="cb83-8"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-8" aria-hidden="true" tabindex="-1"></a>director <span class="ot">&lt;-</span> <span class="fu">read_sav</span>(<span class="st">&quot;BBDD/220244 BDD_director_escalas.sav&quot;</span>)  <span class="co"># cargar base</span></span>
 <span id="cb83-9"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb83-9" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(director<span class="sc">$</span>Pond_Nac)      <span class="co"># resumen estadístico del ponderador (si aplica)</span></span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.7903  0.7903  0.7903  1.0000  1.3146  1.3146</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 
+##  0.7903  0.7903  0.7903  1.0000 
+## 3rd Qu.    Max. 
+##  1.3146  1.3146</code></pre>
 </div>
 <div id="creamos-un-banner" class="section level3 hasAnchor" number="3.1.2">
 <h3><span class="header-section-number">3.1.2</span> <strong>2. Creamos un banner</strong><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#creamos-un-banner" class="anchor-section" aria-label="Anchor link to header"></a></h3>
@@ -369,13 +385,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb87-5"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb87-6"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-6" aria-hidden="true" tabindex="-1"></a><span class="co"># corroboramos que la seccion se componga con las variables requeridas</span></span>
 <span id="cb87-7"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(seccion_1_prop)</span></code></pre></div>
-<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;   &quot;ConfDir_P3&quot;  
-##  [4] &quot;ConfDir_P4&quot;   &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
-##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;   &quot;ConfDir_P9&quot;  
-## [10] &quot;ConfDir_P10&quot;  &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
-## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot;  &quot;ConfDir_P15&quot; 
-## [16] &quot;ConfDir_P16&quot;  &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
-## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot;  &quot;ConfProc_P21&quot;</code></pre>
+<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;  
+##  [3] &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
+##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
+##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
+##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot; 
+## [11] &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
+## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot; 
+## [15] &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
+## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
+## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
+## [21] &quot;ConfProc_P21&quot;</code></pre>
 <div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb89-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una lista que contiene los elementos solicitados ()</span></span>
 <span id="cb89-2"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb89-2" aria-hidden="true" tabindex="-1"></a>list_table_seccion1_banner1 <span class="ot">=</span> <span class="fu">lapply</span>(seccion_1_prop, <span class="cf">function</span>(variable) {</span>
 <span id="cb89-3"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  banner_1 <span class="sc">%&gt;%</span> </span>
@@ -407,18 +427,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  |                                                                                                                                                                                                                                                                |
 ##  |                                                                                                                                                                                                                                                                |
 ##  |                                                                                                                                                                                                                                                                |
-##                                           
-##                                 | #Total |
-##  ------------------------------ | ------ |
-##               Muy en desacuerdo |        |
-##                               2 |        |
-##                               3 |    1.6 |
-##                               4 |   28.4 |
-##                               5 |   49.5 |
-##                  Muy de acuerdo |   17.9 |
-##                              NR |    2.6 |
-##     #Número de casos ponderados |     50 |
-##  #Número de casos no ponderados |     50 |</code></pre>
+##                                  
+##                                 |
+##  ------------------------------ |
+##               Muy en desacuerdo |
+##                               2 |
+##                               3 |
+##                               4 |
+##                               5 |
+##                  Muy de acuerdo |
+##                              NR |
+##     #Número de casos ponderados |
+##  #Número de casos no ponderados |
+##          
+##  #Total |
+##  ------ |
+##         |
+##         |
+##     1.6 |
+##    28.4 |
+##    49.5 |
+##    17.9 |
+##     2.6 |
+##      50 |
+##      50 |</code></pre>
 <hr />
 </div>
 </div>
@@ -468,13 +500,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb93-4"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb93-5"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-5" aria-hidden="true" tabindex="-1"></a><span class="co"># corroboramos que la seccion se componga con las variables requeridas</span></span>
 <span id="cb93-6"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb93-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(seccion_1_medias) </span></code></pre></div>
-<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;   &quot;ConfDir_P3&quot;  
-##  [4] &quot;ConfDir_P4&quot;   &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
-##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;   &quot;ConfDir_P9&quot;  
-## [10] &quot;ConfDir_P10&quot;  &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
-## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot;  &quot;ConfDir_P15&quot; 
-## [16] &quot;ConfDir_P16&quot;  &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
-## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot;  &quot;ConfProc_P21&quot;</code></pre>
+<pre><code>##  [1] &quot;ConfDir_P1&quot;   &quot;ConfDir_P2&quot;  
+##  [3] &quot;ConfDir_P3&quot;   &quot;ConfDir_P4&quot;  
+##  [5] &quot;ConfDir_P5&quot;   &quot;ConfDir_P6&quot;  
+##  [7] &quot;ConfDir_P7&quot;   &quot;ConfDir_P8&quot;  
+##  [9] &quot;ConfDir_P9&quot;   &quot;ConfDir_P10&quot; 
+## [11] &quot;ConfDir_P11&quot;  &quot;ConfDir_P12&quot; 
+## [13] &quot;ConfDir_P13&quot;  &quot;ConfDir_P14&quot; 
+## [15] &quot;ConfDir_P15&quot;  &quot;ConfDir_P16&quot; 
+## [17] &quot;ConfDir_P17&quot;  &quot;ConfDir_P18&quot; 
+## [19] &quot;ConfDir_P19&quot;  &quot;ConfDir_P20&quot; 
+## [21] &quot;ConfProc_P21&quot;</code></pre>
 <div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="co"># creamos una lista que contiene los elementos solicitados ()</span></span>
 <span id="cb95-2"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb95-2" aria-hidden="true" tabindex="-1"></a>list_table_seccion1_banner2 <span class="ot">=</span> <span class="fu">lapply</span>(seccion_1_medias, <span class="cf">function</span>(variable) {</span>
 <span id="cb95-3"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html#cb95-3" aria-hidden="true" tabindex="-1"></a>  banner_2 <span class="sc">%&gt;%</span> </span>

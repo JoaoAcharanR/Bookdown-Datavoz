@@ -23,7 +23,7 @@
 <meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-06-15" />
+<meta name="date" content="2022-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="malla-de-validación.html"/>
-
+<link rel="next" href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -273,6 +273,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="6.4.1" data-path="construcción-de-ponderadores-por-raking.html"><a href="construcción-de-ponderadores-por-raking.html#creación-de-un-objeto-sin-pesos"><i class="fa fa-check"></i><b>6.4.1</b> <em>Creación de un objeto sin pesos</em></a></li>
 <li class="chapter" data-level="6.4.2" data-path="construcción-de-ponderadores-por-raking.html"><a href="construcción-de-ponderadores-por-raking.html#crear-las-distribuciones-marginales-poblacionales-de-cada-variable-a-utilizar-para-ponderar"><i class="fa fa-check"></i><b>6.4.2</b> <em>Crear las distribuciones marginales poblacionales de cada variable a utilizar para ponderar</em></a></li>
 <li class="chapter" data-level="6.4.3" data-path="construcción-de-ponderadores-por-raking.html"><a href="construcción-de-ponderadores-por-raking.html#cáluclo-del-ponderador"><i class="fa fa-check"></i><b>6.4.3</b> <em>Cáluclo del ponderador</em></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><i class="fa fa-check"></i><b>7</b> Introducción a RMarkdown y creación de reportes automáticos</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#qué-es-rmarkdown-rmd"><i class="fa fa-check"></i><b>7.1</b> ¿Qué es RMarkdown (RMD)?</a></li>
+<li class="chapter" data-level="7.2" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#sintaxis-básica-de-escritura"><i class="fa fa-check"></i><b>7.2</b> Sintaxis básica de escritura</a></li>
+<li class="chapter" data-level="7.3" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#creación-y-opciones-los-chunks"><i class="fa fa-check"></i><b>7.3</b> Creación y opciones los chunks</a>
+<ul>
+<li class="chapter" data-level="7.3.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#opciones-de-los-chunks"><i class="fa fa-check"></i><b>7.3.1</b> Opciones de los chunks:</a></li>
+</ul></li>
+<li class="chapter" data-level="7.4" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reportes-automáticos"><i class="fa fa-check"></i><b>7.4</b> Reportes automáticos</a>
+<ul>
+<li class="chapter" data-level="7.4.1" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reporte-encuestas-presenciales"><i class="fa fa-check"></i><b>7.4.1</b> Reporte encuestas presenciales</a></li>
+<li class="chapter" data-level="7.4.2" data-path="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reporte-encuestas-telefónicas"><i class="fa fa-check"></i><b>7.4.2</b> Reporte encuestas telefónicas</a></li>
 </ul></li>
 </ul></li>
 <li class="divider"></li>
@@ -575,8 +589,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb159-16"><a href="construcción-de-ponderadores-por-raking.html#cb159-16" aria-hidden="true" tabindex="-1"></a><span class="do">## Comprobamos que los ponderadores esten bien construidos</span></span>
 <span id="cb159-17"><a href="construcción-de-ponderadores-por-raking.html#cb159-17" aria-hidden="true" tabindex="-1"></a><span class="co"># como convención, los valores deben ser mayores a 0.3 (Min) y menores a 3 (Max)</span></span>
 <span id="cb159-18"><a href="construcción-de-ponderadores-por-raking.html#cb159-18" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(<span class="fu">weights</span>(dummy_gender_rake))</span></code></pre></div>
-<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##  0.2457  0.5346  0.8631  1.0000  1.4661  2.2611</code></pre>
+<pre><code>##    Min. 1st Qu.  Median    Mean 
+##  0.2457  0.5346  0.8631  1.0000 
+## 3rd Qu.    Max. 
+##  1.4661  2.2611</code></pre>
 <div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="construcción-de-ponderadores-por-raking.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="do">## En caso que no oscilen entre estos valores tenemos dos opciones:</span></span>
 <span id="cb161-2"><a href="construcción-de-ponderadores-por-raking.html#cb161-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) volver a los pasos anteriores y recodificar de tal manera que los pesos</span></span>
 <span id="cb161-3"><a href="construcción-de-ponderadores-por-raking.html#cb161-3" aria-hidden="true" tabindex="-1"></a><span class="co">#    tomen el rango deseado (recomendado).</span></span>
@@ -600,7 +616,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb161-21"><a href="construcción-de-ponderadores-por-raking.html#cb161-21" aria-hidden="true" tabindex="-1"></a>data1<span class="sc">$</span>Pond <span class="sc">%&gt;%</span> <span class="fu">sum</span>()</span></code></pre></div>
 <pre><code>## [1] 1000</code></pre>
 
-
 </div>
 </div>
 </div>
@@ -609,8 +624,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           </div>
         </div>
       </div>
-<a href="malla-de-validación.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
+<a href="malla-de-validación.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
