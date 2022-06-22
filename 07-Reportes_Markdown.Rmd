@@ -99,7 +99,7 @@ Los chunks en RMD pueden tener diversas opciones para la visualización o ejecuc
 
 * `error = TRUE` causa que el render continúe incluso si el código devuelve un error. Esto es algo que raramente quieres incluir en la versión final de tu reporte, pero puede ser muy útil si necesitas depurar exactamente qué ocurre dentro de tu .Rmd. Es también útil si estás enseñando R y quieres incluir deliberadamente un error. Por defecto, error = FALSE provoca que el knitting falle si hay incluso un error en el documento
 
-Para más iformación sobre las opciones que se pueden agregar a los chunks visitar el [siguiente link](https://rmarkdown.rstudio.com/lesson-3.html)
+Para más información sobre las opciones que se pueden agregar a los chunks visitar el [siguiente link](https://rmarkdown.rstudio.com/lesson-3.html)
 
 **Las opciones deben ingresarse al incio del chunk y separadas por comas, tal como se muestra en la siguiente imagen:** ![](Imagenes/ops_chunks.jpg)
 
@@ -113,13 +113,21 @@ Los siguientes apartados contemplan la construcción de dos reportes automático
 
 ### Reporte encuestas presenciales
 
-Esta sección expone la manera y los elementos necesarios para crear un reporte automático del avance de los terrenos en las encuestas presenciales. Sin embargo, antes de generar el reporte debemos realizar modificaciones a la BBDD, las cuales se encuentran almacenadas en dos scripts. Dentro del reporte utilizamos la función `source()` para ejecutarlos automáticamente. En este sentido, **es imperante descargar los achivos que se presentan a continuación y almacenarlos en la carpeta de nuestro proyecto de R**.
+Esta sección expone la manera y los elementos necesarios para crear un reporte automático del avance de los terrenos en las encuestas presenciales. Sin embargo, antes de generar el reporte debemos realizar modificaciones a la BBDD que contiende los datos de las encuestas presenciales.
 
-**Scripts para construcción de reporte automático**
+Estas modificaciones se encuentran almacenadas en dos scripts: `BBDD_Visitas` y `BBDD_Viviendas`. Dentro del reporte utilizamos la función `source()` para ejecutarlos automáticamente, de esta manera obtenemos dos nuevos objetos (los que utilizaremos para crear el reporte): 
 
-1) `Reporte_enc_presencial`: script automatizado
-2) `df_viviendas`: BBDD con la selección final de dirección
-3) `df_visitas`: BBDD con la cantidad de visitas que debieron realizar para lograr la encuesta en la dirección final
+a. `df_viviendas`: BBDD que contiene la información final según la última dirección utilizada.
+
+b. `df_visitas`: BBDD que contiene la información final en función de la cantidad de visitas realizadas a cada dirección.
+
+**Entonces, necesitamos los siguientes scripts para la construcción del reporte automático**
+
+1) `Reporte_enc_presencial`: script automatizado para generar el reporte.
+2) `BBDD_Vivendas`: script que crea una BBDD con la selección final de dirección.
+3) `BBDD_Visitas`: scripts que crea una BBDD con la cantidad de visitas que se debieron realizar para lograr la encuesta en la dirección final.
+
+**En este sentido, es imperante descargar los archivos que se presentan a continuación y almacenarlos en la carpeta de nuestro proyecto de R**.
 
 **Links de descarga**
 
@@ -136,9 +144,11 @@ El script si bien se encuentra automatizado y comentado con el paso a paso, aqu�
 
 2. Abrir el Script automatizado y cambiar los elementos atingentes: título, fecha, autor.
 
-3. Cargar BBDD a R. Aquí utilizamos el segundo chunk y debemos ingresar el nombre de nuestro archivo.
+3. Cargar BBDD con información de las encuestas presenciales a R. Aquí utilizamos el segundo chunk y debemos ingresar el nombre de nuestro archivo.
 
-4. Una vez tengamos listos los pasos anteriores, presionamos el botón ![](Imagenes/knit.jpg). Esto nos entergará el reporte en formato PDF dentro de la carpeta de nuestro proyecto de R.
+4. Asegurarnos que el los scripts `BBDD_Vivendas` y `BBDD_Visitas` se encuentren especificados con las rutas correspondientes.
+
+5. Una vez tengamos listos los pasos anteriores, presionamos el botón ![](Imagenes/knit.jpg). Esto nos entregará el reporte en formato PDF dentro de la carpeta de nuestro proyecto de R.
 
 Algo más o menos así: ejemplo de reporte de encuesta presencial.
 

@@ -4,26 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title> 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown D&amp;A</title>
-  <meta name="description" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown D&amp;A" />
+  <title> 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown Dirección y Análisis</title>
+  <meta name="description" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown Dirección y Análisis" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown D&amp;A" />
+  <meta property="og:title" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown Dirección y Análisis" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown D&amp;A" />
+  <meta name="twitter:title" content=" 7 Introducción a RMarkdown y creación de reportes automáticos | Bookdown Dirección y Análisis" />
   
   
   
 
-<meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,7 +143,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Bookdown Datavoz</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#cómo-aportar-al-bookdown"><i class="fa fa-check"></i><b>1.1</b> ¿Cómo aportar al bookdown?</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html"><i class="fa fa-check"></i><b>2</b> Procesamiento de Base de Datos</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-de-utilidad-general"><i class="fa fa-check"></i><b>2.1</b> Operadores de utilidad general</a>
@@ -198,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#de-wider-a-long"><i class="fa fa-check"></i><b>2.9.2</b> <strong>2. De wider a long</strong></a></li>
 </ul></li>
 <li class="chapter" data-level="2.10" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#colapsar-variables"><i class="fa fa-check"></i><b>2.10</b> Colapsar variables</a></li>
+<li class="chapter" data-level="2.11" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#for-loops"><i class="fa fa-check"></i><b>2.11</b> For loops</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><i class="fa fa-check"></i><b>3</b> Automatización de tabulaciones de variables (de frecuencia, contingencia y diferencia de medias)</a>
 <ul>
@@ -300,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bookdown D&amp;A</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bookdown Dirección y Análisis</a>
           </h1>
         </div>
 
@@ -356,54 +358,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sintaxis-básica-de-escritura" class="section level2 hasAnchor" number="7.2">
 <h2><span class="header-section-number">7.2</span> Sintaxis básica de escritura<a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#sintaxis-básica-de-escritura" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>RMarkdown, como su nombre bien nos dice, utiliza el lenguaje de marcado Markdown. En este sentido, la escritura de los informes y reportes deben ser construidos con la estructura de este procesamiento de texto, es decir, bajo una colección simple de convenciones para dar formato a archivos de texto plano. Markdown está diseñado para ser fácil de leer y fácil de escribir. Es también muy fácil de aprender. La siguiente guía muestra cómo usar el Markdown de Pandoc, una versión ligeramente extendida de Markdown que R Markdown comprende.</p>
-<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-1" aria-hidden="true" tabindex="-1"></a>Formato de texto</span>
-<span id="cb163-2"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-2" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
-<span id="cb163-3"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-4"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-4" aria-hidden="true" tabindex="-1"></a><span class="er">*</span>cursiva<span class="sc">*</span>   o _cursiva_</span>
-<span id="cb163-5"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-5" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span>negrita<span class="sc">**</span>   __negrita__</span>
-<span id="cb163-6"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-6" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">code</span><span class="st">`</span></span>
-<span id="cb163-7"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-7" aria-hidden="true" tabindex="-1"></a>superíndice<span class="sc">^</span><span class="dv">2</span><span class="sc">^</span> y subíndice<span class="sc">~</span><span class="dv">2</span><span class="sc">~</span></span>
-<span id="cb163-8"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-9"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-9" aria-hidden="true" tabindex="-1"></a>Encabezados</span>
-<span id="cb163-10"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-10" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
-<span id="cb163-11"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-12"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Encabezado de primer nivel</span></span>
-<span id="cb163-13"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-14"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Encabezado de segundo nivel</span></span>
-<span id="cb163-15"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-16"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-16" aria-hidden="true" tabindex="-1"></a><span class="do">### Encabezado de tercer nivel</span></span>
-<span id="cb163-17"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-18"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-18" aria-hidden="true" tabindex="-1"></a>Listas</span>
-<span id="cb163-19"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-19" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
-<span id="cb163-20"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-21"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-21" aria-hidden="true" tabindex="-1"></a><span class="er">*</span>   Elemento <span class="dv">1</span> en lista no enumerada</span>
-<span id="cb163-22"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-23"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-23" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span>   Elemento <span class="dv">2</span></span>
-<span id="cb163-24"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-25"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-25" aria-hidden="true" tabindex="-1"></a>    <span class="sc">*</span> Elemento 2a</span>
-<span id="cb163-26"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-27"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-27" aria-hidden="true" tabindex="-1"></a>    <span class="sc">*</span> Elemento 2b</span>
-<span id="cb163-28"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-29"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-29" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span>  Elemento <span class="dv">1</span> en lista enumerada</span>
-<span id="cb163-30"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-31"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-31" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span>  Elemento <span class="fl">2.</span> La numeración se incrementa automáticamente en el output.</span>
-<span id="cb163-32"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-33"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-33" aria-hidden="true" tabindex="-1"></a>Enlaces e imágenes</span>
-<span id="cb163-34"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-34" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
-<span id="cb163-35"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-36"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-36" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>http<span class="sc">:</span><span class="er">//</span>ejemplo.com<span class="sc">&gt;</span></span>
-<span id="cb163-37"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-38"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-38" aria-hidden="true" tabindex="-1"></a>[texto del enlace](http<span class="sc">:</span><span class="er">//</span>ejemplo.com)</span>
-<span id="cb163-39"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-40"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-40" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span>[pie de página opcional](ruta<span class="sc">/</span>de<span class="sc">/</span>la<span class="sc">/</span>imagen.png)</span>
-<span id="cb163-41"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-42"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-42" aria-hidden="true" tabindex="-1"></a>Tablas </span>
-<span id="cb163-43"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-43" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
-<span id="cb163-44"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb163-45"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-45" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Primer encabezado     <span class="sc">|</span> Segundo encabezado   <span class="sc">|</span></span>
-<span id="cb163-46"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-46" aria-hidden="true" tabindex="-1"></a><span class="er">|</span><span class="sc">----------------------</span> <span class="er">|</span> <span class="sc">---------------------</span><span class="er">|</span></span>
-<span id="cb163-47"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-47" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Contenido de la celda <span class="sc">|</span> Contenido de la celda<span class="sc">|</span></span>
-<span id="cb163-48"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb163-48" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Contenido de la celda <span class="sc">|</span> Contenido de la celda<span class="sc">|</span></span></code></pre></div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-1" aria-hidden="true" tabindex="-1"></a>Formato de texto</span>
+<span id="cb169-2"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-2" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
+<span id="cb169-3"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-4"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-4" aria-hidden="true" tabindex="-1"></a><span class="er">*</span>cursiva<span class="sc">*</span>   o _cursiva_</span>
+<span id="cb169-5"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-5" aria-hidden="true" tabindex="-1"></a><span class="sc">**</span>negrita<span class="sc">**</span>   __negrita__</span>
+<span id="cb169-6"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-6" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">code</span><span class="st">`</span></span>
+<span id="cb169-7"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-7" aria-hidden="true" tabindex="-1"></a>superíndice<span class="sc">^</span><span class="dv">2</span><span class="sc">^</span> y subíndice<span class="sc">~</span><span class="dv">2</span><span class="sc">~</span></span>
+<span id="cb169-8"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-9"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-9" aria-hidden="true" tabindex="-1"></a>Encabezados</span>
+<span id="cb169-10"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-10" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
+<span id="cb169-11"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-12"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Encabezado de primer nivel</span></span>
+<span id="cb169-13"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-14"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Encabezado de segundo nivel</span></span>
+<span id="cb169-15"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-16"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-16" aria-hidden="true" tabindex="-1"></a><span class="do">### Encabezado de tercer nivel</span></span>
+<span id="cb169-17"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-18"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-18" aria-hidden="true" tabindex="-1"></a>Listas</span>
+<span id="cb169-19"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-19" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
+<span id="cb169-20"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-21"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-21" aria-hidden="true" tabindex="-1"></a><span class="er">*</span>   Elemento <span class="dv">1</span> en lista no enumerada</span>
+<span id="cb169-22"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-23"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-23" aria-hidden="true" tabindex="-1"></a><span class="sc">*</span>   Elemento <span class="dv">2</span></span>
+<span id="cb169-24"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-25"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-25" aria-hidden="true" tabindex="-1"></a>    <span class="sc">*</span> Elemento 2a</span>
+<span id="cb169-26"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-27"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-27" aria-hidden="true" tabindex="-1"></a>    <span class="sc">*</span> Elemento 2b</span>
+<span id="cb169-28"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-29"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-29" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span>  Elemento <span class="dv">1</span> en lista enumerada</span>
+<span id="cb169-30"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-31"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-31" aria-hidden="true" tabindex="-1"></a><span class="fl">1.</span>  Elemento <span class="fl">2.</span> La numeración se incrementa automáticamente en el output.</span>
+<span id="cb169-32"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-33"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-33" aria-hidden="true" tabindex="-1"></a>Enlaces e imágenes</span>
+<span id="cb169-34"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-34" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
+<span id="cb169-35"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-36"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-36" aria-hidden="true" tabindex="-1"></a><span class="er">&lt;</span>http<span class="sc">:</span><span class="er">//</span>ejemplo.com<span class="sc">&gt;</span></span>
+<span id="cb169-37"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-38"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-38" aria-hidden="true" tabindex="-1"></a>[texto del enlace](http<span class="sc">:</span><span class="er">//</span>ejemplo.com)</span>
+<span id="cb169-39"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-40"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-40" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span>[pie de página opcional](ruta<span class="sc">/</span>de<span class="sc">/</span>la<span class="sc">/</span>imagen.png)</span>
+<span id="cb169-41"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-42"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-42" aria-hidden="true" tabindex="-1"></a>Tablas </span>
+<span id="cb169-43"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-43" aria-hidden="true" tabindex="-1"></a><span class="sc">------------------------------------------------------------</span></span>
+<span id="cb169-44"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb169-45"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-45" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Primer encabezado     <span class="sc">|</span> Segundo encabezado   <span class="sc">|</span></span>
+<span id="cb169-46"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-46" aria-hidden="true" tabindex="-1"></a><span class="er">|</span><span class="sc">----------------------</span> <span class="er">|</span> <span class="sc">---------------------</span><span class="er">|</span></span>
+<span id="cb169-47"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-47" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Contenido de la celda <span class="sc">|</span> Contenido de la celda<span class="sc">|</span></span>
+<span id="cb169-48"><a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#cb169-48" aria-hidden="true" tabindex="-1"></a><span class="er">|</span> Contenido de la celda <span class="sc">|</span> Contenido de la celda<span class="sc">|</span></span></code></pre></div>
 <p>Para más información acceder al siguiente <a href="https://rpubs.com/CarolinaMolinare/844849">link</a>.</p>
 </div>
 <div id="creación-y-opciones-los-chunks" class="section level2 hasAnchor" number="7.3">
@@ -424,7 +426,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><p><code>results = 'hide'</code> oculta el output impreso; fig.show = ‘hide’ oculta gráficos.</p></li>
 <li><p><code>error = TRUE</code> causa que el render continúe incluso si el código devuelve un error. Esto es algo que raramente quieres incluir en la versión final de tu reporte, pero puede ser muy útil si necesitas depurar exactamente qué ocurre dentro de tu .Rmd. Es también útil si estás enseñando R y quieres incluir deliberadamente un error. Por defecto, error = FALSE provoca que el knitting falle si hay incluso un error en el documento</p></li>
 </ul>
-<p>Para más iformación sobre las opciones que se pueden agregar a los chunks visitar el <a href="https://rmarkdown.rstudio.com/lesson-3.html">siguiente link</a></p>
+<p>Para más información sobre las opciones que se pueden agregar a los chunks visitar el <a href="https://rmarkdown.rstudio.com/lesson-3.html">siguiente link</a></p>
 <p><strong>Las opciones deben ingresarse al incio del chunk y separadas por comas, tal como se muestra en la siguiente imagen:</strong> <img src="Imagenes/ops_chunks.jpg" /></p>
 <hr />
 </div>
@@ -435,13 +437,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Los siguientes apartados contemplan la construcción de dos reportes automáticos que se realizan constantemente en D&amp;A. Ambos refieren al monitoreo de las encuestas presenciales y las encuestas telefónicas.</p>
 <div id="reporte-encuestas-presenciales" class="section level3 hasAnchor" number="7.4.1">
 <h3><span class="header-section-number">7.4.1</span> Reporte encuestas presenciales<a href="introducción-a-rmarkdown-y-creación-de-reportes-automáticos.html#reporte-encuestas-presenciales" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>Esta sección expone la manera y los elementos necesarios para crear un reporte automático del avance de los terrenos en las encuestas presenciales. Sin embargo, antes de generar el reporte debemos realizar modificaciones a la BBDD, las cuales se encuentran almacenadas en dos scripts. Dentro del reporte utilizamos la función <code>source()</code> para ejecutarlos automáticamente. En este sentido, <strong>es imperante descargar los achivos que se presentan a continuación y almacenarlos en la carpeta de nuestro proyecto de R</strong>.</p>
-<p><strong>Scripts para construcción de reporte automático</strong></p>
-<ol style="list-style-type: decimal">
-<li><code>Reporte_enc_presencial</code>: script automatizado</li>
-<li><code>df_viviendas</code>: BBDD con la selección final de dirección</li>
-<li><code>df_visitas</code>: BBDD con la cantidad de visitas que debieron realizar para lograr la encuesta en la dirección final</li>
+<p>Esta sección expone la manera y los elementos necesarios para crear un reporte automático del avance de los terrenos en las encuestas presenciales. Sin embargo, antes de generar el reporte debemos realizar modificaciones a la BBDD que contiende los datos de las encuestas presenciales.</p>
+<p>Estas modificaciones se encuentran almacenadas en dos scripts: <code>BBDD_Visitas</code> y <code>BBDD_Viviendas</code>. Dentro del reporte utilizamos la función <code>source()</code> para ejecutarlos automáticamente, de esta manera obtenemos dos nuevos objetos (los que utilizaremos para crear el reporte):</p>
+<ol style="list-style-type: lower-alpha">
+<li><p><code>df_viviendas</code>: BBDD que contiene la información final según la última dirección utilizada.</p></li>
+<li><p><code>df_visitas</code>: BBDD que contiene la información final en función de la cantidad de visitas realizadas a cada dirección.</p></li>
 </ol>
+<p><strong>Entonces, necesitamos los siguientes scripts para la construcción del reporte automático</strong></p>
+<ol style="list-style-type: decimal">
+<li><code>Reporte_enc_presencial</code>: script automatizado para generar el reporte.</li>
+<li><code>BBDD_Vivendas</code>: script que crea una BBDD con la selección final de dirección.</li>
+<li><code>BBDD_Visitas</code>: scripts que crea una BBDD con la cantidad de visitas que se debieron realizar para lograr la encuesta en la dirección final.</li>
+</ol>
+<p><strong>En este sentido, es imperante descargar los archivos que se presentan a continuación y almacenarlos en la carpeta de nuestro proyecto de R</strong>.</p>
 <p><strong>Links de descarga</strong></p>
 <table>
 <thead>
@@ -465,8 +473,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ol style="list-style-type: decimal">
 <li><p>Descargar los archivos anteriores y guardarlos en nuestra carpeta del proyecto.</p></li>
 <li><p>Abrir el Script automatizado y cambiar los elementos atingentes: título, fecha, autor.</p></li>
-<li><p>Cargar BBDD a R. Aquí utilizamos el segundo chunk y debemos ingresar el nombre de nuestro archivo.</p></li>
-<li><p>Una vez tengamos listos los pasos anteriores, presionamos el botón <img src="Imagenes/knit.jpg" />. Esto nos entergará el reporte en formato PDF dentro de la carpeta de nuestro proyecto de R.</p></li>
+<li><p>Cargar BBDD con información de las encuestas presenciales a R. Aquí utilizamos el segundo chunk y debemos ingresar el nombre de nuestro archivo.</p></li>
+<li><p>Asegurarnos que el los scripts <code>BBDD_Vivendas</code> y <code>BBDD_Visitas</code> se encuentren especificados con las rutas correspondientes.</p></li>
+<li><p>Una vez tengamos listos los pasos anteriores, presionamos el botón <img src="Imagenes/knit.jpg" />. Esto nos entregará el reporte en formato PDF dentro de la carpeta de nuestro proyecto de R.</p></li>
 </ol>
 <p>Algo más o menos así: ejemplo de reporte de encuesta presencial.</p>
 <center>

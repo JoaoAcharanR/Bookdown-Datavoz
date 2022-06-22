@@ -4,26 +4,24 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Bookdown D&amp;A</title>
-  <meta name="description" content="Bookdown D&amp;A" />
+  <title>Bookdown Dirección y Análisis</title>
+  <meta name="description" content="Bookdown Dirección y Análisis" />
   <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Bookdown D&amp;A" />
+  <meta property="og:title" content="Bookdown Dirección y Análisis" />
   <meta property="og:type" content="book" />
   
   
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Bookdown D&amp;A" />
+  <meta name="twitter:title" content="Bookdown Dirección y Análisis" />
   
   
   
 
-<meta name="author" content="Jonatan Salazar" />
 
 
-<meta name="date" content="2022-06-22" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -145,7 +143,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="./">Bookdown Datavoz</a></li>
 
 <li class="divider"></li>
-<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#cómo-aportar-al-bookdown"><i class="fa fa-check"></i><b>1.1</b> ¿Cómo aportar al bookdown?</a></li>
+</ul></li>
 <li class="chapter" data-level="2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html"><i class="fa fa-check"></i><b>2</b> Procesamiento de Base de Datos</a>
 <ul>
 <li class="chapter" data-level="2.1" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#operadores-de-utilidad-general"><i class="fa fa-check"></i><b>2.1</b> Operadores de utilidad general</a>
@@ -198,6 +199,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.9.2" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#de-wider-a-long"><i class="fa fa-check"></i><b>2.9.2</b> <strong>2. De wider a long</strong></a></li>
 </ul></li>
 <li class="chapter" data-level="2.10" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#colapsar-variables"><i class="fa fa-check"></i><b>2.10</b> Colapsar variables</a></li>
+<li class="chapter" data-level="2.11" data-path="procesamiento-de-base-de-datos.html"><a href="procesamiento-de-base-de-datos.html#for-loops"><i class="fa fa-check"></i><b>2.11</b> For loops</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><a href="automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias.html"><i class="fa fa-check"></i><b>3</b> Automatización de tabulaciones de variables (de frecuencia, contingencia y diferencia de medias)</a>
 <ul>
@@ -300,7 +302,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <div class="body-inner">
         <div class="book-header" role="navigation">
           <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bookdown D&amp;A</a>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bookdown Dirección y Análisis</a>
           </h1>
         </div>
 
@@ -309,13 +311,55 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
             <section class="normal" id="section-">
 <div id="header">
-<h1 class="title">Bookdown D&amp;A</h1>
-<p class="author"><em>Jonatan Salazar</em></p>
-<p class="date"><em>2022-06-22</em></p>
+<h1 class="title">Bookdown Dirección y Análisis</h1>
 </div>
 <div id="introducción" class="section level1 hasAnchor" number="1">
 <h1><span class="header-section-number"> 1</span> Introducción<a href="index.html#introducción" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>El siguiente material corresponde a un Bookdown, un formato de libro electrónico creado mediante la combinación del lenguaje de programación R y el lenguaje de marcado Markdown. La finalidad de este proyecto es recopilar funciones de utilidad relacionadas al uso cotidiano de R, incluyendo códigos que sirvan como ejemplo para la recodificación de variables, selección de casos, aplicación de filtros, entre otros. Tal recopilación pretende transformarse en un insumo para el equipo de analistas de D&amp;A, agilizando la búsqueda de información en relación al manejo de R para el análisis de datos.</p>
+<p>A su vez, el proyecto une diversas labores que se realizan de forma regular dentro de Datavoz. Dentro de estas encontramos la creación de tablas automáticas que se utilizan regularmente en los proyectos, la creación de reportes de terreno para las encuestas telefónicas y presenciales, mallas de validación, creación de ponderadores por ranking, etc.</p>
+<p>El presente producto es el inicio del proyecto. Su objetivo final es que este se convierta en un <strong>libro de construcción colaborativa</strong> entre todos y todas las analistas de Datavoz, donde puedan agregar nuevas funciones que consideren de utilidad al momento de enfrentarse a las bases de datos y se agreguen otros procesos que se realicen con frecuencia.</p>
+<div id="cómo-aportar-al-bookdown" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> ¿Cómo aportar al bookdown?<a href="index.html#cómo-aportar-al-bookdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La principal manera de agregar contenido al bookdown es mediante la creación de nuevos capítulos, o nuevos subcapítulos que complementen aquellos ya hechos (como, por ejemplo, agregar nuevas funciones al capítulo de “Procesamiento de bases de datos”).</p>
+<p>Hacer esto se torna sencillo gracias a RMarkdown, pues solo debemos crear un nuevo archivo .RMD y comenzar a explicar aquello que queremos documentar. La escritura del capítulo y la inserción de código siguen la misma lógica que la creación de reportes automáticos en R (véase capítulo 7 del presente documento).</p>
+<p><strong>Pasos para crear un nuevo capítulo o subcapítulo</strong></p>
+<ol style="list-style-type: decimal">
+<li>Crear un nuevo archivo RMD. Para esto presionamos en “new file” y luego “R Markdown”</li>
+</ol>
+<center>
+<img src="Imagenes/rmd.jpg" />
+</center>
+<ol start="2" style="list-style-type: decimal">
+<li>Al presionar en “R Markdown” se nos abrirá una nueva ventana donde debemos definir el título y el formato de salida. Estos elementos no son necesarios, pues los eliminaremos una vez se cree el archivo. En este sentido, solo presionamos “ok” para crear el nuevo RMD.</li>
+</ol>
+<center>
+<p><img src="Imagenes/p1_rmd.jpg" /></p>
+</center>
+<ol start="3" style="list-style-type: decimal">
+<li>Cuando creemos el archivo, seleccionamos todo lo que está en su interior y lo borramos, quedando un documento limpio para comenzar a ser trabajado.</li>
+</ol>
+<center>
+<p><img src="Imagenes/p2_rmd.jpg" /></p>
+</center>
+<ol start="4" style="list-style-type: decimal">
+<li>Luego de limpiar el archivo, podemos comenzar a escribir utilizado Markdown, tal como se muestra en la imagen a continuación.</li>
+</ol>
+<center>
+<p><img src="Imagenes/p3_rmd.jpg" /></p>
+</center>
+<ol start="5" style="list-style-type: decimal">
+<li>Una vez lo tengamos listo, con todas aquellas cosas que queramos agregar, guardamos el archivo, le asignamos un nombre y se lo enviamos a Joao Acharán, quien será el encargado de compilar los capítulos, subirlos a github y actualizar el documento el línea.</li>
+</ol>
+<center>
+<p><strong>Este es un ejemplo de uno de los capítulos realizados</strong></p>
+<p><img src="Imagenes/ej_caps.jpg" /></p>
+</center>
+<ul>
+<li><p><em>Proyecto enmarcado en práctica profesional para optar al título profesional de Sociólogo por la Universidad Diego Portales.</em></p></li>
+<li><p><em>Agradezco la oportunidad y la gran hospitalidad que se me ha brindado estos meses, Jonatan Salazar.</em></p></li>
+</ul>
 
+</div>
 </div>
             </section>
 

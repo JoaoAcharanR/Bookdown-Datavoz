@@ -1,5 +1,6 @@
-tab:unnamed-chunk-129
+tab:unnamed-chunk-157
 introducción
+cómo-aportar-al-bookdown
 procesamiento-de-base-de-datos
 operadores-de-utilidad-general
 operadores-relacionales
@@ -35,6 +36,7 @@ bases-de-datos-long-y-wide
 de-long-a-wider
 de-wider-a-long
 colapsar-variables
+for-loops
 automatización-de-tabulaciones-de-variables-de-frecuencia-contingencia-y-diferencia-de-medias
 tablas-de-frecuenciacontingencia
 cargar-nuestra-bbdd

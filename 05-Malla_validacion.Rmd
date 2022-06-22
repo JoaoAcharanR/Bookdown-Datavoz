@@ -140,13 +140,13 @@ Pregunta filtro ---> 1. Sí trabajó personal servicio doméstico; 2. No trabaj�
 Pregunta llegada --> N° de personas que trabajaron
 
 
-| P. Filtro           | P. Llegada                         | Tipo de error   |
-|:-------------------:|:----------------------------------:|:---------------:|
-| 1 (responde que sí) | 3 (debe responder y lo hace)       | Filtro correcto |
-| 1 (responde que sí) | NA (debe responder y no lo hace)   | Error prog 1    | 
-| 2 (responde que no) | 4 (no debe responder y lo hace)    | Error prog 2    |
-| NA (no responde)    | 2 (no debe responder y lo hace)    | Error prog 2    |
-| NA (no responde)    | NA (no debe responder y no lo hace)| Caso perdido    |
+| P. Filtro           | P. Llegada                         | Tipo de error     |
+|:-------------------:|:----------------------------------:|:-----------------:|
+| 1 (responde que sí) | 3 (debe responder y lo hace)       | Filtro correcto   |
+| 1 (responde que sí) | NA (debe responder y no lo hace)   | Error prog 1      |  
+| 2 (responde que no) | 4 (no debe responder y lo hace)    | Error prog 2      |
+| NA (no responde)    | 2 (no debe responder y lo hace)    | Error prog 2      |
+| NA (no responde)    | NA (no debe responder y no lo hace)| No aplica criterio|
 
 
 
@@ -294,7 +294,7 @@ erroresprog<-erroresprog %>%
                    '11'='FILTRO_CORRECTO',
                    '10'='ERRORPROG_1',
                    '01'='ERRORPROG_2',
-                   '00'='VALOR_PERDIDO')
+                   '00'='NO APLICA')
 ```
 
 Una vez tengamos los resultados del loop insertos en nuestro objeto `erroresprog`, podemos generar tablas de frecuecia que nos indiquen la cantidad de errores en las variables.

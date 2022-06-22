@@ -1120,7 +1120,119 @@ df <- df %>%
 df %>% flextable()
 ```
 
+---
 
+## For loops
+
+También llamados iteración o bucles, son herramientas útiles para repetir una misma operación una serie de veces en un data.frame, vector u otros objetos. Esa cualidad permite ahorrar una cantidad importante de código, sobre todo cuando nuestro objetivo es realizar un proceso idéntico varias veces con distintos valores.
+
+```{r message=FALSE}
+# Ejemplo 1
+
+for (i in 1:4) {
+print(i)
+}
+
+```
+
+La primera parte del "for", consigna los elementos de la secuencia por la cual se irá iterando. En el caso anterior “i” asumiría por ejemplo el valor de 1, luego 2, más tarde 3, y por último 4. La secuencia no necesariamente debe ser ascendente, también puede ir disminuyendo (ejemplo, 5:1 daría como resultado 5,4,3,2,1).  
+
+Los elementos del rango no se limitan tampoco a una secuencia de números, también es posible incluir los componentes de un vector determinado. Veamos el siguiente ejemplo sobre esto último
+
+```{r message=FALSE}
+# Ejemplo 2
+
+rango<-c("hogar", "bus", "trabajo")
+
+for (i in rango) {
+print(i)
+}
+
+```
+
+Los loops permiten realizar una misma operación varias veces. Digamos, por ejemplo, que deseamos saber que valores al cuadrado, de los números del 10 al 13:
+
+```{r message=FALSE}
+# Ejemplo 3
+
+for (i in 10:13) {
+print(i^2)
+}
+
+```
+
+O calcular el resultado de una misma operación a una cierta secuencia de números
+
+```{r message=FALSE}
+# Ejemplo 4
+
+x=10
+
+for (i in 10:13) {
+y=x-i
+print(y)
+}
+
+```
+
+Algunos errores comunes al elaborar un "for" ocurren cuando no se utilizan debidamente los paréntesis que demanda el bucle. En el rango de la secuencia debe usarse "( )", mientras que la función o cuerpo del proceso que deseamos realizar, debe ir entre llaves "{}". Otro error común sucede al especificar el rango: si ingresamos un solo número, este no será interpretado como una secuencia, pues ese valor representa el punto de inicio, en cambio no se cuenta con uno de llegada. 
+
+Puesto que con frecuencia desearemos guardar los resultados del loop en algún tipo de objeto para usarlo fuera del "bucle", es útil aprender como se hace. Con anterioridad, vimos que el "for" nos muestra o imprime un cierto resultado, cuando añadimos en él, el commando "Print", pero eso no crea un objeto que pueda ser manipulado fuera del loop.
+
+Para guardar los resultados en un vector podemos hacerlo de la siguiente forma:
+
+```{r message=FALSE}
+
+# primero creamos un vector vacío
+
+resultados<-c()
+
+# luego montamos nuestro loop
+
+x=10
+
+for (i in 10:13) {
+y=x-i
+
+# Y guardamos los resultados en el vector así:
+resultados<-append(resultados, y)
+}
+
+```
+
+
+```{r message=FALSE}
+
+resultados
+
+```
+
+
+Para realizar este procedimiento con un data frame, una opción sería seguir un procedimiento similar al anterior:
+
+```{r message=FALSE}
+
+# primero creamos un dataframe vacío
+# Es importante que su longitud sea 
+# idéntica al número de resultados 
+# que guardaremos en él
+
+df_r<-data.frame(1:4)
+
+contador =0
+# luego montamos nuestro loop
+
+x=10
+
+for (i in 10:13) {
+y=x-i
+contador <- contador + 1
+# Y guardamos los resultados en el vector así:
+df_r$resultados[contador]<-y
+}
+
+df_r
+```
 
 
 
